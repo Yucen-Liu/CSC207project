@@ -4,16 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 // GUI class for the weather app
 public class WeatherGUI {
     private final WeatherService weatherService;
-    private final DefaultListModel<String> savedCitiesModel; // Model for saved cities list
+    private final CityStorage cityStorage; // Instance of CityStorage
 
     public WeatherGUI(WeatherService weatherService) {
         this.weatherService = weatherService;
-        this.savedCitiesModel = new DefaultListModel<>(); // Initialize the list model
+        this.cityStorage = new CityStorage(); // Initialize CityStorage
     }
 
     public void createAndShowGUI() {
@@ -51,7 +50,7 @@ public class WeatherGUI {
         weatherPanel.add(humidityDisplay);
 
         // List to display saved cities
-        JList<String> savedCitiesList = new JList<>(savedCitiesModel);
+        JList<String> savedCitiesList = new JList<>(cityStorage.getCityListModel());
         savedCitiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         savedCitiesList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -83,10 +82,8 @@ public class WeatherGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String location = locationField.getText();
-                if (!location.isEmpty() && !savedCitiesModel.contains(location)) {
-                    savedCitiesModel.addElement(location);
-                    locationField.setText("");
-                }
+                cityStorage.addCity(location); // Add city to storage
+                locationField.setText("");
             }
         });
 
