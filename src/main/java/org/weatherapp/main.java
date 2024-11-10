@@ -7,5 +7,6 @@ public class main {
 
         // Start the GUI for the weather app
         weatherGUI.createAndShowGUI();
+        // TODO: Add pictures and resources
     }
 }
