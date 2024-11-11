@@ -14,6 +14,7 @@ import okhttp3.Response;
 // Service class to fetch weather data (currently simulated)
 public class WeatherService {
     private JSONObject information;
+    private static final String API_KEY = "a7053dadfa852680faa79393bbab3b4f";
 
     public WeatherService(){
         information = new JSONObject();
@@ -26,9 +27,8 @@ public class WeatherService {
         df.setRoundingMode(RoundingMode.HALF_UP);
 
         //Call API with actual city
-        String apiKey = "a7053dadfa852680faa79393bbab3b4f";
         String city = loc;
-        String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
+        String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + API_KEY;
 
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
         final Request request = new Request.Builder().url(urlString).build();
