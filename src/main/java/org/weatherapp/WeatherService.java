@@ -1,19 +1,11 @@
 package org.weatherapp;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import netscape.javascript.JSObject;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 // Service class to fetch weather data (currently simulated)
@@ -25,13 +17,10 @@ public class WeatherService {
     private int humidity;
     private JSONObject information;
 
-    private static String test;
-
     public WeatherService(){
         String apiKey = "a7053dadfa852680faa79393bbab3b4f";
         String city = "London";
         String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
-        //StringBuilder response = new StringBuilder();
 
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
         final Request request = new Request.Builder().url(urlString).build();
