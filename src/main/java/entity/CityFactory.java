@@ -12,6 +12,6 @@ public interface CityFactory {
      * @param humidity the password of the new city
      * @return the new user
      */
-    City create(String location, float temperature, String condition, int humidity);
+    City create(String location, double temperature, String condition, int humidity);
 
 }

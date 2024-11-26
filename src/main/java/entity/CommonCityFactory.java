@@ -4,7 +4,7 @@ package entity;
  */
 public class CommonCityFactory implements CityFactory {
     @Override
-    public City create(String location, float temperature, String condition, int humidity) {
+    public City create(String location, double temperature, String condition, int humidity) {
         return new CommonCity(location, temperature, condition, humidity);
     }
 }

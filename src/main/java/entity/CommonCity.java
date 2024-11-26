@@ -7,11 +7,11 @@ import java.io.Serializable;
  */
 public class CommonCity implements City{
     private final String location;
-    private final float temperature;
+    private final double temperature;
     private final String condition;
     private final int humidity;
 
-    public CommonCity(String location, float temperature, String condition, int humidity) {
+    public CommonCity(String location, double temperature, String condition, int humidity) {
         this.location = location;
         this.temperature = temperature;
         this.condition = condition;
@@ -24,7 +24,7 @@ public class CommonCity implements City{
     }
 
     @Override
-    public float getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 

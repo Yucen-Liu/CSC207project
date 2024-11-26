@@ -14,7 +14,7 @@ public interface City {
      * Returns the temperature of the city.
      * @return the temperature of the city.
      */
-    float getTemperature();
+    double getTemperature();
 
     /**
      * Returns the condition of the city.
