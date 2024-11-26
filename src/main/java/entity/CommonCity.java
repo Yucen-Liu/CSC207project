@@ -1,7 +1,5 @@
 package entity;
 
-import java.io.Serializable;
-
 /**
  * An implementation of the City interface.
  */

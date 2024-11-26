@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.List;
+import javax.swing.*;
 
 /**
  * Cities saved by a user in the Weather System Program.
@@ -23,8 +23,7 @@ public interface CityStorage {
      * Returns the list of the saved cities.
      * @return the list of the saved cities.
      */
-    List<City> getCities();
-
+    DefaultListModel<City> getCities();
 }
 
 
