@@ -23,3 +23,5 @@ public class CityStorage {
         }
     }
 }
+
+// check push能否成功
