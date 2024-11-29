@@ -67,8 +67,15 @@ public class WeatherGUI {
                     return;
                 }
 
-                WeatherData weatherData = weatherService.getCurrentWeather(location);
-                updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+                // Validate city before showing
+                if (CityValidator.isCityValid(location)) {
+                    WeatherData weatherData = weatherService.getCurrentWeather(location);
+                    updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+                    locationField.setText(""); // Clear the input field
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                }
+
             }
         });
 
@@ -81,10 +88,16 @@ public class WeatherGUI {
                     return;
                 }
 
-                cityStorage.addCity(location);
-                locationField.setText("");
+                // Validate city before adding
+                if (CityValidator.isCityValid(location)) {
+                    cityStorage.addCity(location);
+                    locationField.setText(""); // Clear the input field
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
+
 
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(new JScrollPane(savedCitiesList), BorderLayout.WEST);
@@ -99,5 +112,6 @@ public class WeatherGUI {
         temperatureDisplay.setText("Temperature: " + weatherData.getTemperature() + "°C");
         conditionDisplay.setText("Condition: " + weatherData.getCondition());
         humidityDisplay.setText("Humidity: " + weatherData.getHumidity() + "%");
+
     }
 }
