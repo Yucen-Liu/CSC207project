@@ -1,10 +1,4 @@
-package org.weatherapp.view;
-
-import org.weatherapp.CityStorage;
-import org.weatherapp.MessageBox;
-import org.weatherapp.entities.WeatherData;
-import org.weatherapp.use_cases.WeatherInformation;
-import org.weatherapp.use_cases.WeatherService;
+package org.weatherapp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +52,7 @@ public class WeatherGUI {
             if (!e.getValueIsAdjusting()) {
                 String selectedCity = savedCitiesList.getSelectedValue();
                 if (selectedCity != null) {
-                    WeatherInformation weatherData = weatherService.getCurrentWeather(selectedCity);
+                    WeatherData weatherData = weatherService.getCurrentWeather(selectedCity);
                     updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
                 }
             }
@@ -73,8 +67,15 @@ public class WeatherGUI {
                     return;
                 }
 
-                WeatherInformation weatherData = weatherService.getCurrentWeather(location);
-                updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+                // Validate city before showing
+                if (CityValidator.isCityValid(location)) {
+                    WeatherData weatherData = weatherService.getCurrentWeather(location);
+                    updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+                    locationField.setText(""); // Clear the input field
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                }
+
             }
         });
 
@@ -87,10 +88,16 @@ public class WeatherGUI {
                     return;
                 }
 
-                cityStorage.addCity(location);
-                locationField.setText("");
+                // Validate city before adding
+                if (CityValidator.isCityValid(location)) {
+                    cityStorage.addCity(location);
+                    locationField.setText(""); // Clear the input field
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
+
 
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(new JScrollPane(savedCitiesList), BorderLayout.WEST);
@@ -99,11 +106,12 @@ public class WeatherGUI {
         frame.setVisible(true);
     }
 
-    private void updateWeatherDisplay(WeatherInformation weatherData, JLabel locationDisplay, JLabel temperatureDisplay,
+    private void updateWeatherDisplay(WeatherData weatherData, JLabel locationDisplay, JLabel temperatureDisplay,
                                       JLabel conditionDisplay, JLabel humidityDisplay) {
         locationDisplay.setText("Location: " + weatherData.getLocation());
         temperatureDisplay.setText("Temperature: " + weatherData.getTemperature() + "°C");
         conditionDisplay.setText("Condition: " + weatherData.getCondition());
         humidityDisplay.setText("Humidity: " + weatherData.getHumidity() + "%");
+
     }
 }
