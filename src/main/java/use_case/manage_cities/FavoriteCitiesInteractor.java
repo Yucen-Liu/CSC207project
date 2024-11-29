@@ -1,15 +1,15 @@
-package interface_adapter.manage_cities;
+package use_case.manage_cities;
 
-import use_case.manage_cities.FavoriteCitiesInteractor;
+import data_access.FavoriteCityStorage;
 import java.util.List;
 
-public class ManageCitiesController {
+public class FavoriteCitiesInteractor {
 
-    private final FavoriteCitiesInteractor favoriteCitiesInteractor;
+    private final FavoriteCityStorage favoriteCityStorage;
 
-    // Constructor to initialize the FavoriteCitiesInteractor
-    public ManageCitiesController(FavoriteCitiesInteractor favoriteCitiesInteractor) {
-        this.favoriteCitiesInteractor = favoriteCitiesInteractor;
+    // Constructor that takes a FavoriteCityStorage implementation
+    public FavoriteCitiesInteractor(FavoriteCityStorage favoriteCityStorage) {
+        this.favoriteCityStorage = favoriteCityStorage;
     }
 
     /**
@@ -18,7 +18,7 @@ public class ManageCitiesController {
      * @param cityName The name of the city to be added.
      */
     public void addCityToFavorites(String userId, String cityName) {
-        favoriteCitiesInteractor.addCityToFavorites(userId, cityName);
+        favoriteCityStorage.addFavoriteCity(userId, cityName);
     }
 
     /**
@@ -27,7 +27,7 @@ public class ManageCitiesController {
      * @param cityName The name of the city to be removed.
      */
     public void removeCityFromFavorites(String userId, String cityName) {
-        favoriteCitiesInteractor.removeCityFromFavorites(userId, cityName);
+        favoriteCityStorage.removeFavoriteCity(userId, cityName);
     }
 
     /**
@@ -36,6 +36,6 @@ public class ManageCitiesController {
      * @return A list of favorite city names.
      */
     public List<String> getUserFavorites(String userId) {
-        return favoriteCitiesInteractor.getUserFavorites(userId);
+        return favoriteCityStorage.getFavoriteCities(userId);
     }
 }

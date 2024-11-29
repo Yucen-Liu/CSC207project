@@ -1,4 +1,4 @@
 package interface_adapter.change_password;
 
-public class ChangPasswordViewModel {
+public class LoggedInState {
 }
