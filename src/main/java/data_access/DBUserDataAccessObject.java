@@ -10,11 +10,7 @@ import use_case.manage_cities.ManageCitiesUserDataAccessInterface;
 
 
 /**
- * The DAO for user data of the weather application..
+ * The DAO for user data of the weather application.
  */
-public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
-        LoginUserDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface,
-        ManageCitiesUserDataAccessInterface,SearchCityUserDataAccessInterface {
+public class DBUserDataAccessObject  {
 }
