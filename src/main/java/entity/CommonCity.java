@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * An implementation of the City interface.
+ * A simple implementation of the City interface.
  */
 public class CommonCity implements City{
     private final String location;

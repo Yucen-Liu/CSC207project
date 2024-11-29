@@ -6,22 +6,21 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import data_access.FavoriteCityStorageImpl;
 import interface_adapter.check_city.CheckCityController;
 import interface_adapter.check_city.CheckCityState;
 import interface_adapter.check_city.CheckCityViewModel;
+import interface_adapter.manage_cities.ManageCitiesController;
+import use_case.manage_cities.FavoriteCitiesInteractor;
 
 /**
  * The View for the CheckCity Use Case.
  */
-public class CheckCityView extends JPanel implements ActionListener, PropertyChangeListener {
+public class CheckCityView extends JFrame implements ActionListener, PropertyChangeListener  {
     private final String viewName = "check city";
     private final CheckCityViewModel checkCityViewModel;
 
@@ -118,5 +117,9 @@ public class CheckCityView extends JPanel implements ActionListener, PropertyCha
     public void setCheckCityController(CheckCityController checkCityController) {
         this.checkCityController = checkCityController;
     }
+    public static void main(String[] args) {
+        CheckCityView checkCityView = new CheckCityView(new CheckCityViewModel());
+        checkCityView.setVisible(true);}
+
 }
 
