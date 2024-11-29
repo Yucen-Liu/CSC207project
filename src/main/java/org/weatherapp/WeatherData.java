@@ -1,13 +1,16 @@
-package org.weatherapp.use_cases;
+package org.weatherapp;
 
-public class WeatherInformation {
+// Data model to store weather information
+public class WeatherData {
     private String location;
     private double temperature;
     private String condition;
     private int humidity;
 
     // Getters and Setters
-    public String getLocation() { return location; }
+    public String getLocation() {
+        return location;
+    }
 
     public void setLocation(String location) {
         this.location = location;
