@@ -15,6 +15,12 @@ public class CommonUser implements User {
         this.cities = cities;
     }
 
+    public CommonUser(String name, String password) {
+        this.name = name;
+        this.password = password;
+        this.cities = new CommonCityStorage();
+    }
+
     @Override
     public String getName() {
         return name;
