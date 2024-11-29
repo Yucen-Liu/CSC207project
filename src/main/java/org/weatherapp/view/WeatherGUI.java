@@ -1,4 +1,10 @@
-package org.weatherapp;
+package org.weatherapp.view;
+
+import org.weatherapp.CityStorage;
+import org.weatherapp.MessageBox;
+import org.weatherapp.entities.WeatherData;
+import org.weatherapp.use_cases.WeatherInformation;
+import org.weatherapp.use_cases.WeatherService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +58,7 @@ public class WeatherGUI {
             if (!e.getValueIsAdjusting()) {
                 String selectedCity = savedCitiesList.getSelectedValue();
                 if (selectedCity != null) {
-                    WeatherData weatherData = weatherService.getCurrentWeather(selectedCity);
+                    WeatherInformation weatherData = weatherService.getCurrentWeather(selectedCity);
                     updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
                 }
             }
@@ -67,7 +73,7 @@ public class WeatherGUI {
                     return;
                 }
 
-                WeatherData weatherData = weatherService.getCurrentWeather(location);
+                WeatherInformation weatherData = weatherService.getCurrentWeather(location);
                 updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
             }
         });
@@ -93,7 +99,7 @@ public class WeatherGUI {
         frame.setVisible(true);
     }
 
-    private void updateWeatherDisplay(WeatherData weatherData, JLabel locationDisplay, JLabel temperatureDisplay,
+    private void updateWeatherDisplay(WeatherInformation weatherData, JLabel locationDisplay, JLabel temperatureDisplay,
                                       JLabel conditionDisplay, JLabel humidityDisplay) {
         locationDisplay.setText("Location: " + weatherData.getLocation());
         temperatureDisplay.setText("Temperature: " + weatherData.getTemperature() + "°C");
