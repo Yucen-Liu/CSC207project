@@ -1,7 +1,8 @@
 package data_access;
 
+import entity.City;
 import org.json.JSONObject;
 
 public interface CurWeatherInfo {
-    JSONObject getCurWeather(String location);
+    City getCurWeather(String location);
 }
