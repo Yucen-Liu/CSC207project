@@ -17,6 +17,6 @@ public class MessageBox {
 
     // Shows a warning message dialog
     public static void showWarningNoLoc(JFrame parent) {
-        JOptionPane.showMessageDialog(parent, "Please enter a location!", "Warning", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(parent, "Please enter a Valid location!", "Warning", JOptionPane.WARNING_MESSAGE);
     }
 }
