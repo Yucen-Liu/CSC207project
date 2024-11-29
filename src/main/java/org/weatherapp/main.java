@@ -1,5 +1,8 @@
 package org.weatherapp;
 
+import org.weatherapp.use_cases.WeatherService;
+import org.weatherapp.view.WeatherGUI;
+
 public class main {
     public static void main(String[] args) {
         WeatherService weatherService = new WeatherService();
