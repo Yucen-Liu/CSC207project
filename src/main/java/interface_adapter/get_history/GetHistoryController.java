@@ -16,10 +16,10 @@ public class GetHistoryController {
 
     /**
      * Executes the GetHistory Use Case.
-     * @param cityname the username to sign up
+     * @param cityName the username to sign up
      */
-    public void execute(String cityname) {
-        final GetHistoryInputData getHistoryInputData = new GetHistoryInputData(cityname);
+    public void execute(String cityName) {
+        final GetHistoryInputData getHistoryInputData = new GetHistoryInputData(cityName);
         userGetHistoryUseCaseInteractor.execute(getHistoryInputData);
     }
 

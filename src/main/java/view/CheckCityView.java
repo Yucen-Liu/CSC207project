@@ -25,8 +25,7 @@ public class CheckCityView extends JPanel implements ActionListener, PropertyCha
     private final JTextField cityCheckResultField = new JTextField(15);
     private CheckCityController checkCityController;
 
-    private final JButton login;
-    private final JButton signup;
+    private final JButton save;
     private final JButton check;
 
     public CheckCityView(CheckCityViewModel checkCityViewModel) {
@@ -40,12 +39,10 @@ public class CheckCityView extends JPanel implements ActionListener, PropertyCha
                 new JLabel(CheckCityViewModel.CHECK_CITY_LABEL), cityNameInputField);
 
         final JPanel buttons = new JPanel();
-        signup = new JButton(CheckCityViewModel.SIGNUP_BUTTON_LABEL);
-        buttons.add(signup);
-        login = new JButton(CheckCityViewModel.LOGIN_BUTTON_LABEL);
-        buttons.add(login);
         check = new JButton(CheckCityViewModel.CHECK_CITY_BUTTON_LABEL);
         buttons.add(check);
+        save = new JButton(CheckCityViewModel.SAVE_BUTTON_LABEL);
+        buttons.add(save);
 
         check.addActionListener(
                 new ActionListener() {
@@ -60,15 +57,7 @@ public class CheckCityView extends JPanel implements ActionListener, PropertyCha
                 }
         );
 
-        login.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        checkCityController.switchToLoginView();
-                    }
-                }
-        );
-
-        signup.addActionListener(
+        save.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         checkCityController.switchToSignupView();
@@ -116,7 +105,7 @@ public class CheckCityView extends JPanel implements ActionListener, PropertyCha
     public void propertyChange(PropertyChangeEvent evt) {
         final CheckCityState state = (CheckCityState) evt.getNewValue();
         setFields(state);
-        cityCheckResultField.setText(state.getCitynameResult());
+        cityCheckResultField.setText(state.getCityNameResult());
     }
 
     private void setFields(CheckCityState state) {

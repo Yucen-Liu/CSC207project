@@ -24,7 +24,7 @@ public class HistoryWeatherInfoObject implements GetHistoryDataAccessInterface {
         this.cityFactory = cityFactory;
     }
 
-    public City getWeatherHistory(String loc, int count){
+    public HistoryCity getWeatherHistory(String loc, int count){
         // Call API with the validated city
         String urlString = "http://api.openweathermap.org/data/2.5/forecast?q=" + loc +
                 "&cnt=" + count + "&appid=a7053dadfa852680faa79393bbab3b4f";
@@ -73,11 +73,11 @@ public class HistoryWeatherInfoObject implements GetHistoryDataAccessInterface {
         int humidityNineHoursAgo = information.getJSONArray(
                 "list").getJSONObject(2).getJSONObject("main").getInt("humidity");
 
-        List<String> threeHoursAgo = cityFactory.HistoryCertainHour(
+        List<String> threeHoursAgo = cityFactory.historyCertainHour(
                 temperatureThreeHoursAgo, conditionThreeHoursAgo, humidityThreeHoursAgo);
-        List<String> sixHoursAgo = cityFactory.HistoryCertainHour(
+        List<String> sixHoursAgo = cityFactory.historyCertainHour(
                 temperatureSixHoursAgo, conditionSixHoursAgo, humiditySixHoursAgo);
-        List<String> nineHoursAgo = cityFactory.HistoryCertainHour(
+        List<String> nineHoursAgo = cityFactory.historyCertainHour(
                 temperatureNineHoursAgo, conditionNineHoursAgo, humidityNineHoursAgo);
 
         List<List<String>> history = new ArrayList<>();

@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class HistoryCityFactory implements CityFactory {
     @Override
-    public City create(String location, double temperature, String condition, int humidity) {
+    public HistoryCity create(String location, double temperature, String condition, int humidity) {
         List<String> initialThreeHoursAgo = new ArrayList<>();
         List<String> initialSixHoursAgo = new ArrayList<>();
         List<String> initialNineHoursAgo = new ArrayList<>();
@@ -19,11 +19,11 @@ public class HistoryCityFactory implements CityFactory {
         return new HistoryCity(location, temperature, condition, humidity, weatherHistory);
     }
 
-    public City create(String location, double temperature, String condition, int humidity, List<List<String>> history) {
+    public HistoryCity create(String location, double temperature, String condition, int humidity, List<List<String>> history) {
         return new HistoryCity(location,temperature,condition,humidity,history);
     }
 
-    public List<String> HistoryCertainHour(double temperature, String condition, int humidity) {
+    public List<String> historyCertainHour(double temperature, String condition, int humidity) {
         String temp = String.valueOf(temperature);
         String hum = String.valueOf(humidity);
         List<String> weatherHistory = new ArrayList<>();
