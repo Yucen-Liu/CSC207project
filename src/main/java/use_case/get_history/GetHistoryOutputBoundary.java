@@ -7,7 +7,7 @@ public interface GetHistoryOutputBoundary {
     /**
      * Switches to the SearchCity View.
      */
-    void switchToSearchCityView();
+    void switchToGetDetailsView();
     /**
      * Prepares the success view for the GetHistory Use Case.
      * @param getHistoryOutputData the output data
