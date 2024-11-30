@@ -11,7 +11,7 @@ public interface GetHistoryInputBoundary {
     void execute(GetHistoryInputData getHistoryInputData);
 
     /**
-     * Executes the switch to SearchCity view use case.
+     * Executes the switch to GetDetails view use case.
      */
-    void switchToSearchCityView();
+    void switchToGetDetailsView();
 }

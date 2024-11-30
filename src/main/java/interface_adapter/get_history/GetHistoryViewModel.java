@@ -2,6 +2,8 @@ package interface_adapter.get_history;
 
 import interface_adapter.ViewModel;
 
+import javax.swing.*;
+
 /**
  * The ViewModel for the GetHistory View.
  */
@@ -15,6 +17,10 @@ public class GetHistoryViewModel extends ViewModel<GetHistoryState> {
     public static final String TEMPERATURE_LABEL = "Temperature:";
     public static final String CONDITION_LABEL = "Condition:";
     public static final String HUMIDITY_LABEL = "Humidity:";
+    public static final String GET_HISTORY_BUTTON_LABEL = "Get History";
+    public static final String INFO_LABEL = "Info";
+
+
 
 
     public static final String BACK_BUTTON_LABEL = "Back";
