@@ -1,18 +1,18 @@
-package use_case.get_history;
+package use_case.get_forecast;
 
 /**
  * The output boundary for the GetHistory Use Case.
  */
-public interface GetHistoryOutputBoundary {
+public interface GetForecastOutputBoundary {
     /**
      * Switches to the SearchCity View.
      */
     void switchToGetDetailsView();
     /**
      * Prepares the success view for the GetHistory Use Case.
-     * @param getHistoryOutputData the output data
+     * @param getForecastOutputData the output data
      */
-    void prepareSuccessView(GetHistoryOutputData getHistoryOutputData);
+    void prepareSuccessView(GetForecastOutputData getForecastOutputData);
 
     /**
      * Prepares the failure view for the GetHistory Use Case.

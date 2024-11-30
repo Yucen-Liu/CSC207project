@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.City;
+import entity.CityFactory;
 import entity.CommonCityFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -16,9 +17,9 @@ import java.text.DecimalFormat;
 
 public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccessInterface {
 
-    private final CommonCityFactory cityFactory;
+    private final CityFactory cityFactory;
 
-    public CurWeatherInfoObject(CommonCityFactory cityFactory) {
+    public CurWeatherInfoObject(CityFactory cityFactory) {
         this.cityFactory = cityFactory;
     }
 

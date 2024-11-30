@@ -1,4 +1,4 @@
-package interface_adapter.get_history;
+package interface_adapter.get_forecast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * The state for the GetHistory View Model.
  */
-public class GetHistoryState {
+public class GetForecastState {
     private String cityName = "";
     private List<String> savedCityNames = new ArrayList<>();
 
@@ -39,33 +39,33 @@ public class GetHistoryState {
     public String getConditionNineHoursAgo() {return conditionNineHoursAgo;}
     public String getHumidityNineHoursAgo() {return humidityNineHoursAgo;}
 
-    public void setTemperatureThreeHoursAgo(String temperatureThreeHoursAgo) {
+    public void setTemperatureThreeHoursLater(String temperatureThreeHoursAgo) {
         this.temperatureThreeHoursAgo = temperatureThreeHoursAgo;
     }
-    public void setConditionThreeHoursAgo(String conditionThreeHoursAgo) {
+    public void setConditionThreeHoursLater(String conditionThreeHoursAgo) {
         this.conditionThreeHoursAgo = conditionThreeHoursAgo;
     }
-    public void setHumidityThreeHoursAgo(String humidityThreeHoursAgo) {
+    public void setHumidityThreeHoursLater(String humidityThreeHoursAgo) {
     this.humidityThreeHoursAgo = humidityThreeHoursAgo;
     }
 
-    public void setTemperatureSixHoursAgo(String temperatureSixHoursAgo) {
+    public void setTemperatureSixHoursLater(String temperatureSixHoursAgo) {
         this.temperatureSixHoursAgo = temperatureSixHoursAgo;
     }
-    public void setConditionSixHoursAgo(String conditionSixHoursAgo) {
+    public void setConditionSixHoursLater(String conditionSixHoursAgo) {
         this.conditionSixHoursAgo = conditionSixHoursAgo;
     }
-    public void setHumiditySixHoursAgo(String humiditySixHoursAgo) {
+    public void setHumiditySixHoursLater(String humiditySixHoursAgo) {
         this.humiditySixHoursAgo = humiditySixHoursAgo;
     }
 
-    public void setTemperatureNineHoursAgo(String temperatureNineHoursAgo) {
+    public void setTemperatureNineHoursLater(String temperatureNineHoursAgo) {
         this.temperatureNineHoursAgo = temperatureNineHoursAgo;
     }
-    public void setConditionNineHoursAgo(String conditionNineHoursAgo) {
+    public void setConditionNineHoursLater(String conditionNineHoursAgo) {
         this.conditionNineHoursAgo = conditionNineHoursAgo;
     }
-    public void setHumidityNineHoursAgo(String humidityNineHoursAgo) {
+    public void setHumidityNineHoursLater(String humidityNineHoursAgo) {
         this.humidityNineHoursAgo = humidityNineHoursAgo;
     }
 }

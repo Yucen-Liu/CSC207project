@@ -14,7 +14,7 @@ import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.get_history.GetHistoryViewModel;
+import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.check_city.CheckCityController;
@@ -46,14 +46,14 @@ public class WeatherAppBuilder {
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private CheckCityViewModel checkCityViewModel;
-    private GetHistoryViewModel getHistoryViewModel;
+    private GetForecastViewModel getForecastViewModel;
 
     private LoggedInView loggedInView;
     private LoginView loginView;
     private ManageCityView manageCityView;
     private SearchCityView searchCityView;
     private CheckCityView checkCityView;
-    private GetHistoryView getHistoryView;
+    private GetForecastView getForecastView;
 
     public WeatherAppBuilder() {cardPanel.setLayout(cardLayout);}
 
@@ -105,7 +105,7 @@ public class WeatherAppBuilder {
 //     * @return this builder
 //     */
 //    public WeatherAppBuilder addGetHistoryView() {
-//        getHistoryViewModel = new GetHistoryViewModel();
+//        getForecastViewModel = new GetForecastViewModel();
 //        getHisView = new CheckCityView(checkCityViewModel);
 //        cardPanel.add(checkCityView, checkCityView.getViewName());
 //        return this;

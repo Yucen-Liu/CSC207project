@@ -1,14 +1,14 @@
-package use_case.get_history;
+package use_case.get_forecast;
 
-import entity.HistoryCity;
+import entity.ForecastCity;
 
 /**
  * DAO for the CityHistory Use Case.
  */
-public interface GetHistoryDataAccessInterface {
+public interface GetForecastDataAccessInterface {
     /**
      * Get the history weather information for a specific city.
      * @param count the number of timestamps we want to check on (three).
      */
-    HistoryCity getWeatherHistory(String location, int count);
+    ForecastCity getWeatherForecast(String location, int count);
 }
