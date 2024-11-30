@@ -18,7 +18,7 @@ public class CheckCityInteractor implements CheckCityInputBoundary{
     @Override
     public void execute(CheckCityInputData checkCityInputData) {
         if(userDataAccessObject.existsByName(checkCityInputData.getCityname())){
-            userPresenter.citynameExist("It is in our application! Please signup or login.");
+            userPresenter.citynameExist("It's in our application! You can save it and view more detailed weather info!");
         }
         else{
             userPresenter.citynameNonExist("Sorry, no weather info for this city now...");
