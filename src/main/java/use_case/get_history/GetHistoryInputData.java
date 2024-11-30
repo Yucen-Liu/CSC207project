@@ -4,11 +4,11 @@ package use_case.get_history;
  * The Input Data for the GetHistory Use Case.
  */
 public class GetHistoryInputData {
-    private final String cityname;
-    public GetHistoryInputData(String cityname) {
-        this.cityname = cityname;
+    private final String cityName;
+    public GetHistoryInputData(String cityName) {
+        this.cityName = cityName;
     }
 
-    public String getCityname() { return cityname;}
+    public String getCityName() { return cityName;}
 
 }

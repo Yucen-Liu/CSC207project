@@ -1,37 +1,38 @@
 package entity;
 
-import javax.swing.*;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * An implementation of the CityStorage interface.
  */
 public class CommonCityStorage implements CityStorage {
 
-    private final DefaultListModel<City> cities;
+    private final List<City> cities;
 
     public CommonCityStorage() {
-        this.cities = new DefaultListModel<>();
+        this.cities = new ArrayList<>();
     }
 
-    public CommonCityStorage(DefaultListModel<City> cities) {
+    public CommonCityStorage(List<City> cities) {
         this.cities = cities;
     }
 
-    public DefaultListModel<City> getCities() {
+    public List<City> getCities() {
         return cities;
     }
 
     @Override
     public void addCity(City city) {
         if (city != null && !city.getLocation().isEmpty() && !cities.contains(city)) {
-            cities.addElement(city);
+            cities.add(city);
         }
     }
 
     @Override
     public void removeCity(City city){
         if (city != null && !cities.contains(city)) {
-            cities.removeElement(city);
+            cities.remove(city);
         }
         }
 }
