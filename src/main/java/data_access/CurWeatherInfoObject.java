@@ -6,13 +6,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
+import org.weatherapp.CityValidator;
 import org.weatherapp.MessageBox;
+import use_case.check_city.CheckCityDataAccessInterface;
 
 import javax.swing.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class CurWeatherInfoObject implements CurWeatherInfo {
+public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccessInterface {
 
     private final CommonCityFactory cityFactory;
 
@@ -47,4 +49,8 @@ public class CurWeatherInfoObject implements CurWeatherInfo {
         int humidity = information.getJSONObject("main").getInt("humidity");
         return cityFactory.create(location, temperature, condition, humidity);
     }
+
+    @Override
+    public boolean existsByName(String cityName) {
+        return CityValidator.isCityValid(cityName);}
 }

@@ -4,9 +4,10 @@ public class CheckCityState {
     private String cityname = "";
     private String citynameResult;
 
-    public String getCityname() {return cityname;}
-    public void setCityname(String cityname) {this.cityname = cityname;}
+    public String getCityName() {return cityname;}
+    public void setCityName(String cityName) {this.cityname = cityName;}
     public String getCitynameResult() {return citynameResult;}
-    public void setCitynameResult(String citynameError) {this.citynameResult = citynameError;}
+    public void setCitynameResult(String citynameResult) {this.citynameResult = citynameResult;}
 }
+
 

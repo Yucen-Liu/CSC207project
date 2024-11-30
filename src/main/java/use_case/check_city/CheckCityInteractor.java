@@ -21,8 +21,7 @@ public class CheckCityInteractor implements CheckCityInputBoundary{
             userPresenter.citynameExist("It is in our application! Please signup or login.");
         }
         else{
-            userPresenter.citynameNonExist("Sorry... We currently offer the weather information " +
-                    "for the city you are interested in. Maybe try later?");
+            userPresenter.citynameNonExist("Sorry, no weather info for this city now...");
         }
     }
 

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import use_case.check_city.CheckCityDataAccessInterface;
 
 // Service class to fetch weather data (currently simulated)
-public class WeatherService implements CheckCityDataAccessInterface {
+public class WeatherService{
     private JSONObject information;
 
     public WeatherService() {
@@ -61,11 +61,5 @@ public class WeatherService implements CheckCityDataAccessInterface {
             MessageBox.showWarningNoLoc(new JFrame());
             return null;
         }
-    }
-
-    @Override
-    public boolean existsByName(String cityName) {
-        WeatherService weatherService = new WeatherService();
-        return weatherService.getCurrentWeather(cityName) == null;
     }
 }

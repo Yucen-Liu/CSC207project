@@ -5,16 +5,16 @@ package use_case.check_city;
  */
 public class CheckCityOutputData {
 
-    private final String cityname;
+    private final String cityName;
     private final boolean useCaseFailed;
 
-    public CheckCityOutputData(String cityname, boolean useCaseFailed) {
-        this.cityname = cityname;
+    public CheckCityOutputData(String cityName, boolean useCaseFailed) {
+        this.cityName = cityName;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getCityname() {
-        return cityname;
+    public String getCityName() {
+        return cityName;
     }
 
     public boolean isUseCaseFailed() {

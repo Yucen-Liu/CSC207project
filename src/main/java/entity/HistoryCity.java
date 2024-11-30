@@ -14,28 +14,11 @@ public class HistoryCity implements City {
 
     private final List<List<String>>  history;
 
-    public static List<String> HistoryCertainHour(double temperature, String condition, int humidity) {
-        String temp = String.valueOf(temperature);
-        String hum = String.valueOf(humidity);
-        List<String> history = new ArrayList<>();
-        history.add(temp);
-        history.add(condition);
-        history.add(hum);
-        return history;
-    }
-
-    public HistoryCity(String location, double temperature, String condition, int humidity, List<String> threeHoursAgo,
-                       List<String> sixHoursAgo, List<String> nineHoursAgo) {
+    public HistoryCity(String location, double temperature, String condition, int humidity, List<List<String>> weatherHistory) {
         this.location = location;
         this.temperature = temperature;
         this.condition = condition;
-        this.humidity = humidity;
-
-
-        List<List<String>> weatherHistory = new ArrayList<>();
-        weatherHistory.add(threeHoursAgo);
-        weatherHistory.add(sixHoursAgo);
-        weatherHistory.add(nineHoursAgo);
+        this.humidity = humidity;;
         this.history = weatherHistory;
     }
 
