@@ -29,22 +29,13 @@ public class GetNearbyCitiesView extends JPanel {
 
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton refreshButton = new JButton("Refresh");
         JButton backButton = new JButton("Back");
-        buttonPanel.add(refreshButton);
         buttonPanel.add(backButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Load initial nearby cities
         loadNearbyCities();
 
-        // Action listeners
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadNearbyCities();
-            }
-        });
 
         backButton.addActionListener(new ActionListener() {
             @Override
