@@ -1,10 +1,5 @@
 package use_case.search_city;
 
-import use_case.search_city.SearchCityUserDataAccessInterface;
-import use_case.search_city.SearchCityInputBoundary;
-import use_case.search_city.SearchCityInputData;
-import use_case.search_city.SearchCityOutputBoundary;
-
 /**
  * The SearchCity Interactor.
  */
