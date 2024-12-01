@@ -22,18 +22,11 @@ public class GetForecastState {
     private String conditionNineHoursLater = "";
     private String humidityNineHoursLater = "";
 
-    // Getters and Setters
-    public String getCityName() {
-        return cityName;
-    }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
+    public String getCityName() {return cityName;}
+    public void setCityName(String cityName) {this.cityName = cityName;}
+    public List<String> getSavedCityNames() {return savedCityNames;}
 
-    public List<String> getSavedCityNames() {
-        return savedCityNames;
-    }
 
     public void setSavedCityNames(List<String> savedCityNames) {
         this.savedCityNames = savedCityNames;

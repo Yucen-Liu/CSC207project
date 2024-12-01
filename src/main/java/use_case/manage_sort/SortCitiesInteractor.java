@@ -4,52 +4,40 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import entity.CommonCity;
+
 /**
- * Interactor for the sort cities use case.
+ * Interactor for the SortCities use case.
  */
 public class SortCitiesInteractor implements SortCitiesInputBoundary {
-    private final List<String> cities; // List of saved cities
+
+    private final List<CommonCity> savedCities;
     private final SortCitiesOutputBoundary outputBoundary;
 
-    public SortCitiesInteractor(List<String> cities, SortCitiesOutputBoundary outputBoundary) {
-        this.cities = cities;
+    public SortCitiesInteractor(List<CommonCity> savedCities, SortCitiesOutputBoundary outputBoundary) {
+        this.savedCities = savedCities;
         this.outputBoundary = outputBoundary;
     }
 
     @Override
-    public void sortCities(String sortBy) {
-        // Sort logic based on the sortBy criteria
-        Comparator<String> comparator;
-        switch (sortBy.toLowerCase()) {
+    public void sort(SortCitiesInputData inputData) {
+        String criterion = inputData.getCriterion();
+        switch (criterion.toLowerCase()) {
             case "temperature":
-                comparator = Comparator.comparing(city -> getTemperature(city));
+                Collections.sort(savedCities, Comparator.comparingDouble(CommonCity::getTemperature));
                 break;
             case "condition":
-                comparator = Comparator.comparing(city -> getCondition(city));
+                Collections.sort(savedCities, Comparator.comparing(CommonCity::getCondition));
                 break;
             case "humidity":
-                comparator = Comparator.comparing(city -> getHumidity(city));
+                Collections.sort(savedCities, Comparator.comparingDouble(CommonCity::getHumidity));
                 break;
             default:
-                throw new IllegalArgumentException("Invalid sort criteria: " + sortBy);
+                throw new IllegalArgumentException("Invalid sort criterion: " + criterion);
         }
-        Collections.sort(cities, comparator);
-        outputBoundary.presentSortedCities(cities);
-    }
 
-    // Placeholder methods for fetching data
-    private int getTemperature(String city) {
-        // Dummy implementation
-        return 0;
-    }
-
-    private String getCondition(String city) {
-        // Dummy implementation
-        return "";
-    }
-
-    private int getHumidity(String city) {
-        // Dummy implementation
-        return 0;
+        // Create output data and pass it to the output boundary
+        SortCitiesOutputData outputData = new SortCitiesOutputData(savedCities);
+        outputBoundary.presentSortedCities(outputData);
     }
 }

@@ -1,14 +1,16 @@
 package use_case.manage_sort;
 
 import java.util.List;
+import use_case.manage_sort.SortCitiesOutputData;
 
 /**
- * Output boundary for the sort cities use case.
+ * Output boundary for the SortCities use case.
  */
 public interface SortCitiesOutputBoundary {
     /**
-     * Presents the sorted list of cities.
-     * @param sortedCities the list of sorted cities.
+     * Prepares the sorted cities for output.
+     *
+     * @param outputData The sorted cities data.
      */
-    void presentSortedCities(List<String> sortedCities);
+    void presentSortedCities(SortCitiesOutputData outputData);
 }

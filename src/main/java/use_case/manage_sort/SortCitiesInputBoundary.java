@@ -1,12 +1,13 @@
 package use_case.manage_sort;
 
 /**
- * Input boundary for the sort cities use case.
+ * Input boundary for the SortCities use case.
  */
 public interface SortCitiesInputBoundary {
     /**
-     * Sorts the saved cities based on the given criteria.
-     * @param sortBy the criteria to sort by (e.g., temperature, condition, humidity).
+     * Sort the saved cities based on the given criterion.
+     *
+     * @param inputData The input data containing the sort criterion.
      */
-    void sortCities(String sortBy);
+    void sort(SortCitiesInputData inputData);
 }

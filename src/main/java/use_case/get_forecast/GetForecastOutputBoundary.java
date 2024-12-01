@@ -5,7 +5,7 @@ package use_case.get_forecast;
  */
 public interface GetForecastOutputBoundary {
     /**
-     * Switches to the SearchCity View.
+     * Switches to the GetDetails View.
      */
     void switchToGetDetailsView();
     /**

@@ -6,39 +6,48 @@ import entity.ForecastCity;
  * The GetForecast Interactor.
  */
 public class GetForecastInteractor implements GetForecastInputBoundary {
-    private final GetForecastDataAccessInterface weatherDataAccess;
-    private final GetForecastOutputBoundary outputBoundary;
+    private final GetForecastDataAccessInterface weatherDataAccessObject;
+    private final GetForecastOutputBoundary userPresenter;
 
     public GetForecastInteractor(GetForecastDataAccessInterface weatherDataAccess,
-                                 GetForecastOutputBoundary outputBoundary) {
-        this.weatherDataAccess = weatherDataAccess;
-        this.outputBoundary = outputBoundary;
+                                 GetForecastOutputBoundary userPresenter) {
+        this.weatherDataAccessObject = weatherDataAccess;
+        this.userPresenter = userPresenter;
     }
 
     @Override
-    public void execute(GetForecastInputData inputData) {
-        if (inputData.getCityName() == null || inputData.getCityName().isEmpty()) {
-            outputBoundary.prepareFailView("City name cannot be empty.");
+
+    public void execute(GetForecastInputData getForecastInputData) {
+        if ( getForecastInputData.getCityName() == null || getForecastInputData.getCityName().isEmpty()) {
+            userPresenter.prepareFailView("City name cannot be empty.");
             return;
         }
 
         try {
-            ForecastCity forecastCity = weatherDataAccess.getWeatherForecast(inputData.getCityName(), 4);
+
+            ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 4);
             GetForecastOutputData outputData = new GetForecastOutputData(
                     forecastCity.getForecast(),
-                    inputData.getCityName(),
-                    inputData.getSavedCityNames(),
+                    getForecastInputData.getCityName(),
+                    getForecastInputData.getSavedCityNames(),
                     false
             );
-            outputBoundary.prepareSuccessView(outputData);
+            userPresenter.prepareSuccessView(outputData);
         } catch (Exception e) {
-            outputBoundary.prepareFailView("Failed to retrieve forecast: " + e.getMessage());
+            userPresenter.prepareFailView("Failed to retrieve forecast: " + e.getMessage());
         }
+
+
+         final ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 4);
+         final GetForecastOutputData getForecastOutputData = new GetForecastOutputData((forecastCity.getForecast()),
+                 getForecastInputData.getCityName(), getForecastInputData.getSavedCityNames(),false);
+        userPresenter.prepareSuccessView(getForecastOutputData);
+
     }
 
 
     @Override
     public void switchToGetDetailsView() {
-        outputBoundary.switchToGetDetailsView();
+        userPresenter.switchToGetDetailsView();
     }
 }

@@ -3,7 +3,7 @@ package use_case.get_forecast;
 import java.util.List;
 
 /**
- * The Input Data for the GetHistory Use Case.
+ * The Input Data for the GetForecast Use Case.
  */
 public class GetForecastInputData {
     private final String cityName;
