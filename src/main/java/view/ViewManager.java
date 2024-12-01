@@ -1,34 +1,31 @@
 package view;
 
-import java.awt.CardLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.JPanel;
-
 import interface_adapter.ViewManagerModel;
 
-/**
- * The View Manager for the weather application.
- */
-public class ViewManager implements PropertyChangeListener {
+import javax.swing.*;
+import java.awt.*;
+
+public class ViewManager {
+    private final JPanel cardPanel;
     private final CardLayout cardLayout;
-    private final JPanel views;
     private final ViewManagerModel viewManagerModel;
 
-    public ViewManager(JPanel views, CardLayout cardLayout, ViewManagerModel viewManagerModel) {
-        this.views = views;
+    public ViewManager(JPanel cardPanel, CardLayout cardLayout, ViewManagerModel viewManagerModel) {
+        this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
-        this.viewManagerModel.addPropertyChangeListener(this);
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            final String viewModelName = (String) evt.getNewValue();
-            cardLayout.show(views, viewModelName);
-        }
+    public void switchTo(String viewName) {
+        cardLayout.show(cardPanel, viewName);
+        viewManagerModel.setState(viewName);
+    }
+
+    public String getCurrentView() {
+        return viewManagerModel.getState();
+    }
+
+    public void firePropertyChanged() {
+        viewManagerModel.firePropertyChanged();
     }
 }
-

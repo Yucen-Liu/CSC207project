@@ -1,34 +1,36 @@
 package interface_adapter.get_forecast;
 
 import use_case.get_forecast.GetForecastInputBoundary;
-import use_case.get_forecast.GetForecastInputData;
 
 import java.util.List;
 
-/**
- * The controller for the GetHistory Use Case.
- */
 public class GetForecastController {
 
-    private final GetForecastInputBoundary userGetHistoryUseCaseInteractor;
+    private final GetForecastInputBoundary interactor;
+    private final GetForecastViewModel viewModel;
 
-    public GetForecastController(GetForecastInputBoundary userGetHistoryUseCaseInteractor) {
-        this.userGetHistoryUseCaseInteractor = userGetHistoryUseCaseInteractor;
+    public GetForecastController(GetForecastInputBoundary interactor, GetForecastViewModel viewModel) {
+        this.interactor = interactor;
+        this.viewModel = viewModel;
     }
 
     /**
-     * Executes the GetHistory Use Case.
-     * @param cityName the username to sign up
+     * Executes the GetForecast use case.
+     * @param cityName The city name for which the forecast is requested.
+     * @param savedCityNames The list of saved city names.
      */
     public void execute(String cityName, List<String> savedCityNames) {
-        final GetForecastInputData getForecastInputData = new GetForecastInputData(cityName, savedCityNames);
-        userGetHistoryUseCaseInteractor.execute(getForecastInputData);
+        interactor.execute(new use_case.get_forecast.GetForecastInputData(cityName, savedCityNames));
     }
 
     /**
-     * Executes the "switch to SearchCity View" Use Case.
+     * Switches to the GetDetails view.
      */
     public void switchGetDetailsView() {
-        userGetHistoryUseCaseInteractor.switchToGetDetailsView();
+        interactor.switchToGetDetailsView();
+    }
+
+    public GetForecastViewModel getViewModel() {
+        return viewModel;
     }
 }

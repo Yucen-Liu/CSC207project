@@ -1,37 +1,29 @@
 package use_case.check_city;
 
+import data_access.CurWeatherInfo;
 
-/**
- * The CheckCity Interactor.
- */
-public class CheckCityInteractor implements CheckCityInputBoundary{
+public class CheckCityInteractor implements CheckCityInputBoundary {
+    private final CurWeatherInfo weatherInfo;
+    private final CheckCityOutputBoundary outputBoundary;
 
-    private final CheckCityDataAccessInterface userDataAccessObject;
-    private final CheckCityOutputBoundary userPresenter;
-
-    public CheckCityInteractor(CheckCityDataAccessInterface checkcitydataAccessInterface,
-                               CheckCityOutputBoundary checkCityOutputBoundary) {
-        this.userDataAccessObject= checkcitydataAccessInterface;
-        this.userPresenter = checkCityOutputBoundary;
+    public CheckCityInteractor(CurWeatherInfo weatherInfo, CheckCityOutputBoundary outputBoundary) {
+        this.weatherInfo = weatherInfo;
+        this.outputBoundary = outputBoundary;
     }
 
     @Override
-    public void execute(CheckCityInputData checkCityInputData) {
-        if(userDataAccessObject.existsByName(checkCityInputData.getCityname())){
-            userPresenter.citynameExist("It's in our application! You can save it and view more detailed weather info!");
-        }
-        else{
-            userPresenter.citynameNonExist("Sorry, no weather info for this city now...");
+    public boolean validateCity(String cityName) {
+        if (weatherInfo.existsByName(cityName)) {
+            outputBoundary.presentSuccess(cityName);
+            return true;
+        } else {
+            outputBoundary.presentFailure("City not found: " + cityName);
+            return false;
         }
     }
 
     @Override
-    public void switchToLoginView() {
-        userPresenter.switchToLoginView();
-    }
-
-    @Override
-    public void switchToSignupView() {
-        userPresenter.switchToSignupView();
+    public void execute(CheckCityInputData inputData) {
+        validateCity(inputData.getCityName());
     }
 }
