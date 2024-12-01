@@ -24,11 +24,6 @@ public class ForecastCityFactory implements CityFactory {
         return new ForecastCity(location,temperature,condition,humidity,forecast);
     }
 
-    public ForecastCity addForecast (ForecastCity forecastCity, List<List<String>> forecast) {
-        forecastCity.setForecast(forecast);
-        return forecastCity;
-    }
-
     public List<String> historyCertainHour(double temperature, String condition, int humidity) {
         String temp = String.valueOf(temperature);
         String hum = String.valueOf(humidity);

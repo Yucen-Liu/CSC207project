@@ -27,7 +27,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
     private final JTextField conditionNineHourLaterField = new JTextField(15);
     private final JTextField humidityNineHourLaterField = new JTextField(15);
 
-    private final JTextField cityNameField = new JTextField(15);
+    private final JLabel cityNameLabel = new JLabel("");
 
 
     private final JButton get;
@@ -42,8 +42,10 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
         final JLabel title = new JLabel(getForecastViewModel.GET_FORECAST_TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel cityName = new LabelTextPanel(
-                new JLabel(getForecastViewModel.CITY_NAME_LABEL), cityNameField);
+        final JPanel citySelected = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        citySelected.setAlignmentX(Component.CENTER_ALIGNMENT);
+        citySelected.add(new JLabel(getForecastViewModel.CITY_NAME_LABEL));
+        citySelected.add(cityNameLabel);
 
         String[][] data = {{getForecastViewModel.TEMPERATURE_LABEL, temperatureThreeHourLaterField.getText(),
         temperatureSixHourLaterField.getText(), temperatureNineHourLaterField.getText()},
@@ -86,7 +88,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(cityName);
+        this.add(citySelected);
         this.add(buttons);
         this.add(scrollPane);
     }
@@ -95,8 +97,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
      * React to a button click that results in evt.
      * @param evt the ActionEvent to react to
      */
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+    public void actionPerformed(ActionEvent evt) {System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
@@ -106,7 +107,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
     }
 
     private void setFields(GetForecastState state) {
-        cityNameField.setText(state.getCityName());
+        cityNameLabel.setText(state.getCityName());
         temperatureThreeHourLaterField.setText(state.getTemperatureThreeHoursAgo());
         conditionThreeHourLaterField.setText(state.getConditionThreeHoursAgo());
         humidityThreeHourLaterField.setText(state.getHumidityThreeHoursAgo());
@@ -124,7 +125,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
         return viewName;
     }
 
-    public void setLoginController(GetForecastController getForecastController) {
+    public void setGetForecastController(GetForecastController getForecastController) {
         this.getForecastController = getForecastController;
     }
 

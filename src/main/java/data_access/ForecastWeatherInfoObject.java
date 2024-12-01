@@ -17,8 +17,7 @@ import java.util.List;
 
 public class ForecastWeatherInfoObject implements GetForecastDataAccessInterface {
 
-    private ForecastCityFactory cityFactory = new ForecastCityFactory();
-    private CurWeatherInfoObject curWeatherInfoObject = new CurWeatherInfoObject(cityFactory);
+    private ForecastCityFactory cityFactory;
 
     public ForecastWeatherInfoObject(ForecastCityFactory cityFactory) {
         this.cityFactory = cityFactory;
@@ -45,27 +44,36 @@ public class ForecastWeatherInfoObject implements GetForecastDataAccessInterface
             return null;
         }
 
+
+        double temperature = Double.parseDouble(df.format(information.getJSONArray(
+                "list").getJSONObject(1).getJSONObject("main").getDouble("temp") - 273.15));
+        String condition = information.getJSONArray(
+                "list").getJSONObject(1).getJSONArray("weather").getJSONObject(0).getString("description");
+        int humidity = information.getJSONArray(
+                "list").getJSONObject(1).getJSONObject("main").getInt("humidity");
+
+
         double temperatureThreeHoursAgo = Double.parseDouble(df.format(information.getJSONArray(
-                "list").getJSONObject(0).getJSONObject("main").getDouble("temp") - 273.15));
+                "list").getJSONObject(1).getJSONObject("main").getDouble("temp") - 273.15));
         String conditionThreeHoursAgo = information.getJSONArray(
-                "list").getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("description");
+                "list").getJSONObject(1).getJSONArray("weather").getJSONObject(0).getString("description");
         int humidityThreeHoursAgo = information.getJSONArray(
-                "list").getJSONObject(0).getJSONObject("main").getInt("humidity");
+                "list").getJSONObject(1).getJSONObject("main").getInt("humidity");
 
 
         double temperatureSixHoursAgo = Double.parseDouble(df.format(information.getJSONArray(
-                "list").getJSONObject(1).getJSONObject("main").getDouble("temp") - 273.15));
+                "list").getJSONObject(2).getJSONObject("main").getDouble("temp") - 273.15));
         String conditionSixHoursAgo = information.getJSONArray(
-                "list").getJSONObject(1).getJSONArray("weather").getJSONObject(0).getString("description");
+                "list").getJSONObject(2).getJSONArray("weather").getJSONObject(0).getString("description");
         int humiditySixHoursAgo = information.getJSONArray(
-                "list").getJSONObject(1).getJSONObject("main").getInt("humidity");
+                "list").getJSONObject(2).getJSONObject("main").getInt("humidity");
 
         double temperatureNineHoursAgo = Double.parseDouble(df.format(information.getJSONArray(
-                "list").getJSONObject(2).getJSONObject("main").getDouble("temp") - 273.15));
+                "list").getJSONObject(3).getJSONObject("main").getDouble("temp") - 273.15));
         String conditionNineHoursAgo = information.getJSONArray(
-                "list").getJSONObject(2).getJSONArray("weather").getJSONObject(0).getString("description");
+                "list").getJSONObject(3).getJSONArray("weather").getJSONObject(0).getString("description");
         int humidityNineHoursAgo = information.getJSONArray(
-                "list").getJSONObject(2).getJSONObject("main").getInt("humidity");
+                "list").getJSONObject(3).getJSONObject("main").getInt("humidity");
 
         List<String> threeHoursAgo = cityFactory.historyCertainHour(
                 temperatureThreeHoursAgo, conditionThreeHoursAgo, humidityThreeHoursAgo);
@@ -79,8 +87,6 @@ public class ForecastWeatherInfoObject implements GetForecastDataAccessInterface
         forecast.add(sixHoursAgo);
         forecast.add(nineHoursAgo);
 
-        ForecastCity forecastCity = (ForecastCity)curWeatherInfoObject.getCurWeather(loc);
-        cityFactory.addForecast(forecastCity,forecast);
-        return forecastCity;
+        return cityFactory.create(loc,temperature,condition,humidity,forecast);
     }
 }

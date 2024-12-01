@@ -9,21 +9,30 @@ import javax.swing.WindowConstants;
 
 import data_access.CurWeatherInfoObject;
 import data_access.DBUserDataAccessObject;
+import data_access.ForecastWeatherInfoObject;
 import entity.CommonCityFactory;
 import entity.CommonUserFactory;
+import entity.ForecastCityFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.get_forecast.GetForecastController;
+import interface_adapter.get_forecast.GetForecastPresenter;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.check_city.CheckCityController;
 import interface_adapter.check_city.CheckCityPresenter;
 import interface_adapter.check_city.CheckCityViewModel;
+import interface_adapter.get_details.GetDetailsViewModel;
 import use_case.check_city.CheckCityDataAccessInterface;
 import use_case.check_city.CheckCityInteractor;
 import use_case.check_city.CheckCityInputBoundary;
 import use_case.check_city.CheckCityOutputBoundary;
+import use_case.get_forecast.GetForecastDataAccessInterface;
+import use_case.get_forecast.GetForecastInputBoundary;
+import use_case.get_forecast.GetForecastInteractor;
+import use_case.get_forecast.GetForecastOutputBoundary;
 import view.*;
 
 /**
@@ -39,7 +48,9 @@ public class WeatherAppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject();
-    private final CheckCityDataAccessInterface weatherService = new CurWeatherInfoObject(new CommonCityFactory());
+    private final CheckCityDataAccessInterface curWeatherInfo = new CurWeatherInfoObject(new CommonCityFactory());
+    private final GetForecastDataAccessInterface forecastWeatherInfo = new ForecastWeatherInfoObject(
+            new ForecastCityFactory());
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -47,6 +58,7 @@ public class WeatherAppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private CheckCityViewModel checkCityViewModel;
     private GetForecastViewModel getForecastViewModel;
+    private GetDetailsViewModel getDetailsViewModel;
 
     private LoggedInView loggedInView;
     private LoginView loginView;
@@ -100,16 +112,16 @@ public class WeatherAppBuilder {
         return this;
     }
 
-//    /**
-//     * Adds the GetHistory View to the application.
-//     * @return this builder
-//     */
-//    public WeatherAppBuilder addGetHistoryView() {
-//        getForecastViewModel = new GetForecastViewModel();
-//        getHisView = new CheckCityView(checkCityViewModel);
-//        cardPanel.add(checkCityView, checkCityView.getViewName());
-//        return this;
-//    }
+    /**
+     * Adds the GetForecast View to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addGetForecastView() {
+        getForecastViewModel = new GetForecastViewModel();
+        getForecastView = new GetForecastView(getForecastViewModel);
+        cardPanel.add(getForecastView, getForecastView.getViewName());
+        return this;
+    }
 
 //    /**
 //     * Adds the Signup Use Case to the application.
@@ -182,10 +194,24 @@ public class WeatherAppBuilder {
         final CheckCityOutputBoundary checkCityOutputBoundary = new CheckCityPresenter(checkCityViewModel,
                 viewManagerModel, loginViewModel, signupViewModel);
         final CheckCityInputBoundary userCheckCityInteractor = new CheckCityInteractor(
-                weatherService, checkCityOutputBoundary);
+                curWeatherInfo, checkCityOutputBoundary);
 
         final CheckCityController controller = new CheckCityController(userCheckCityInteractor);
         checkCityView.setCheckCityController(controller);
+        return this;
+    }
+
+    /**
+     * Adds the GetForecast Use Case to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addGetForecastUseCase() {
+        final GetForecastOutputBoundary getForecastOutputBoundary = new GetForecastPresenter(getForecastViewModel,
+                viewManagerModel, getDetailsViewModel);
+        final GetForecastInputBoundary userGetForecastInteractor = new GetForecastInteractor(
+                forecastWeatherInfo, getForecastOutputBoundary);
+        final GetForecastController controller = new GetForecastController(userGetForecastInteractor);
+        getForecastView.setGetForecastController(controller);
         return this;
     }
 
@@ -199,7 +225,7 @@ public class WeatherAppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(checkCityView.getViewName());
+        viewManagerModel.setState(getForecastView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

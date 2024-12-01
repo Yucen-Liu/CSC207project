@@ -1,7 +1,8 @@
 package interface_adapter.get_forecast;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.search_city.GetDetailsViewModel;
+import interface_adapter.get_details.GetDetailsViewModel;
+import interface_adapter.search_city.SearchCityViewModel;
 import use_case.get_forecast.GetForecastOutputBoundary;
 import use_case.get_forecast.GetForecastOutputData;
 
@@ -15,10 +16,10 @@ public class GetForecastPresenter implements GetForecastOutputBoundary {
 
     public GetForecastPresenter(GetForecastViewModel getForecastViewModel,
                                 ViewManagerModel viewManagerModel,
-                                GetDetailsViewModel searchCityViewModel) {
+                                GetDetailsViewModel getDetailsViewModel) {
         this.getForecastViewModel = getForecastViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.getDetailsViewModel = searchCityViewModel;
+        this.getDetailsViewModel = getDetailsViewModel;
     }
 
     @Override

@@ -17,7 +17,7 @@ public class GetForecastInteractor implements GetForecastInputBoundary {
 
     @Override
     public void execute(GetForecastInputData getForecastInputData) {
-         final ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 3);
+         final ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 4);
          final GetForecastOutputData getForecastOutputData = new GetForecastOutputData((forecastCity.getForecast()),
                  getForecastInputData.getCityName(), getForecastInputData.getSavedCityNames(),false);
         userPresenter.prepareSuccessView(getForecastOutputData);
