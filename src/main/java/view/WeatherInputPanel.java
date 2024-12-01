@@ -5,39 +5,34 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class WeatherInputPanel extends JPanel {
-    private final JTextField locationField;
-    private final JButton getWeatherButton;
-    private final JButton saveCityButton;
+    private final JTextField searchField; // Input field for city search
 
-    public WeatherInputPanel(ActionListener getWeatherListener, ActionListener saveCityListener) {
+    public WeatherInputPanel(ActionListener searchActionListener, ActionListener saveActionListener) {
         setLayout(new FlowLayout());
 
-        JLabel locationLabel = new JLabel("Enter Location:");
-        locationField = new JTextField(15);
-        getWeatherButton = new JButton("Get Weather");
-        saveCityButton = new JButton("Save City");
+        // Add input field and buttons
+        JLabel searchLabel = new JLabel("Enter City:");
+        searchField = new JTextField(15); // Initialize input field
+        JButton searchButton = new JButton("Search");
+        JButton saveButton = new JButton("Save");
 
-        add(locationLabel);
-        add(locationField);
-        add(getWeatherButton);
-        add(saveCityButton);
+        // Attach action listeners
+        searchButton.addActionListener(searchActionListener);
+        saveButton.addActionListener(saveActionListener);
 
-        getWeatherButton.addActionListener(getWeatherListener);
-        saveCityButton.addActionListener(saveCityListener);
+        // Add components to the panel
+        add(searchLabel);
+        add(searchField);
+        add(searchButton);
+        add(saveButton);
     }
 
     /**
-     * Gets the text from the location input field.
-     * @return the entered location as a string
+     * Returns the text entered in the search field.
+     *
+     * @return the search query entered by the user
      */
-    public String getLocationInput() {
-        return locationField.getText();
-    }
-
-    /**
-     * Clears the text from the location input field.
-     */
-    public void clearLocationField() {
-        locationField.setText("");
+    public String getSearchQuery() {
+        return searchField.getText().trim(); // Retrieve and trim the input
     }
 }

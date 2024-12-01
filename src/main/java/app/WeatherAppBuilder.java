@@ -3,22 +3,18 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 
+import data_access.FavoriteCityStorageImpl;
+import entity.*;
+import interface_adapter.get_details.GetDetailsViewModel;
+import interface_adapter.manage_cities.ManageCitiesController;
+import use_case.manage_cities.FavoriteCitiesInteractor;
 import view.*;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.check_city.CheckCityController;
-import interface_adapter.check_city.CheckCityPresenter;
-import interface_adapter.check_city.CheckCityViewModel;
 import interface_adapter.get_forecast.GetForecastController;
+import interface_adapter.get_forecast.GetForecastPresenter;
 import interface_adapter.get_forecast.GetForecastViewModel;
-import interface_adapter.manage_cities.ManageCitiesController;
-import use_case.check_city.CheckCityInteractor;
 import use_case.get_forecast.GetForecastInteractor;
-import use_case.manage_cities.FavoriteCitiesInteractor;
-import data_access.CurWeatherInfoObject;
-import data_access.FavoriteCityStorageImpl;
 import data_access.ForecastWeatherInfoObject;
-import entity.CommonCityFactory;
-import entity.ForecastCityFactory;
 
 public class WeatherAppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -30,48 +26,51 @@ public class WeatherAppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
-    public WeatherAppBuilder addCheckCityView() {
-        // Create dependencies for the interactor
-        CurWeatherInfoObject weatherInfo = new CurWeatherInfoObject(new CommonCityFactory());
-        CheckCityViewModel viewModel = new CheckCityViewModel();
+    public WeatherAppBuilder addWeatherAppView() {
+        // Create dependencies for WeatherAppView
+        CityStorage cityStorage = new CommonCityStorage(); // Replace with the actual CityStorage implementation
+        CityFactory cityFactory = new CommonCityFactory(); // Replace with the actual CityFactory implementation
 
-        // Create the presenter (implements CheckCityOutputBoundary)
-        CheckCityPresenter presenter = new CheckCityPresenter(viewModel);
+        // Create GetForecastController dependencies
+        ForecastWeatherInfoObject forecastInfo = new ForecastWeatherInfoObject(new ForecastCityFactory());
+        GetForecastViewModel forecastViewModel = new GetForecastViewModel();
+        GetDetailsViewModel detailsViewModel = new GetDetailsViewModel();
+        GetForecastPresenter presenter = new GetForecastPresenter(forecastViewModel, viewManagerModel, detailsViewModel);
+        GetForecastInteractor interactor = new GetForecastInteractor(forecastInfo, presenter);
 
-        // Create the interactor with the weatherInfo and presenter
-        CheckCityInteractor interactor = new CheckCityInteractor(weatherInfo, presenter);
+        // Pass both interactor and viewModel to the controller
+        GetForecastController forecastController = new GetForecastController(interactor, forecastViewModel);
 
-        // Create the controller
-        CheckCityController controller = new CheckCityController(interactor);
-
-        // Create the view and connect it to the controller
-        CheckCityView view = new CheckCityView(viewModel);
-        view.setCheckCityController(controller);
-
-        // Add the view to the card panel
-        cardPanel.add(view, view.getViewName());
+        // Instantiate WeatherAppView with required dependencies
+        WeatherAppView weatherAppView = new WeatherAppView(cityStorage, cityFactory, forecastController);
+        cardPanel.add(weatherAppView, "weather app");
         return this;
     }
-
 
 
     public WeatherAppBuilder addGetForecastView() {
+        // Create dependencies for GetForecastView
         ForecastWeatherInfoObject forecastInfo = new ForecastWeatherInfoObject(new ForecastCityFactory());
-        GetForecastInteractor interactor = new GetForecastInteractor(forecastInfo, null); // Provide OutputBoundary
-        GetForecastController controller = new GetForecastController(interactor);
-        GetForecastViewModel viewModel = new GetForecastViewModel();
+        GetForecastViewModel forecastViewModel = new GetForecastViewModel();
+        GetDetailsViewModel detailsViewModel = new GetDetailsViewModel();
+        GetForecastPresenter presenter = new GetForecastPresenter(forecastViewModel, viewManagerModel, detailsViewModel);
+        GetForecastInteractor interactor = new GetForecastInteractor(forecastInfo, presenter);
 
-        GetForecastView view = new GetForecastView(viewModel);
+        // Pass both interactor (as InputBoundary) and ViewModel to the controller
+        GetForecastController controller = new GetForecastController(interactor, forecastViewModel);
+
+        // Instantiate the view
+        GetForecastView view = new GetForecastView(forecastViewModel);
         view.setGetForecastController(controller);
-        cardPanel.add(view, view.getViewName());
+        cardPanel.add(view, "get forecast");
         return this;
     }
+
 
     public WeatherAppBuilder addManageCityView() {
         FavoriteCitiesInteractor interactor = new FavoriteCitiesInteractor(new FavoriteCityStorageImpl());
         ManageCitiesController controller = new ManageCitiesController(interactor);
         ManageCityView view = new ManageCityView(controller);
-
         cardPanel.add(view, "manage cities");
         return this;
     }
@@ -80,11 +79,12 @@ public class WeatherAppBuilder {
         JFrame application = new JFrame("Weather App");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.setLayout(new BorderLayout());
-
         application.add(cardPanel, BorderLayout.CENTER);
         application.setSize(800, 600);
 
-        viewManagerModel.setState("check city");
+        // Use ViewManager to set default view
+        viewManager.switchTo("weather app");
+
         return application;
     }
 }

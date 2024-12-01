@@ -17,6 +17,11 @@ public class GetForecastInteractor implements GetForecastInputBoundary {
 
     @Override
     public void execute(GetForecastInputData inputData) {
+        if (inputData.getCityName() == null || inputData.getCityName().isEmpty()) {
+            outputBoundary.prepareFailView("City name cannot be empty.");
+            return;
+        }
+
         try {
             ForecastCity forecastCity = weatherDataAccess.getWeatherForecast(inputData.getCityName(), 4);
             GetForecastOutputData outputData = new GetForecastOutputData(
@@ -30,6 +35,7 @@ public class GetForecastInteractor implements GetForecastInputBoundary {
             outputBoundary.prepareFailView("Failed to retrieve forecast: " + e.getMessage());
         }
     }
+
 
     @Override
     public void switchToGetDetailsView() {

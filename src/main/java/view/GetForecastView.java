@@ -108,17 +108,17 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
 
     private void setFields(GetForecastState state) {
         cityNameLabel.setText(state.getCityName());
-        temperatureThreeHourLaterField.setText(state.getTemperatureThreeHoursAgo());
-        conditionThreeHourLaterField.setText(state.getConditionThreeHoursAgo());
-        humidityThreeHourLaterField.setText(state.getHumidityThreeHoursAgo());
+        temperatureThreeHourLaterField.setText(state.getTemperatureThreeHoursLater());
+        conditionThreeHourLaterField.setText(state.getConditionThreeHoursLater());
+        humidityThreeHourLaterField.setText(state.getHumidityThreeHoursLater());
 
-        temperatureSixHourLaterField.setText(state.getTemperatureSixHoursAgo());
-        conditionSixHourLaterField.setText(state.getConditionSixHoursAgo());
-        humiditySixHourLaterField.setText(state.getHumiditySixHoursAgo());
+        temperatureSixHourLaterField.setText(state.getTemperatureSixHoursLater());
+        conditionSixHourLaterField.setText(state.getConditionSixHoursLater());
+        humiditySixHourLaterField.setText(state.getHumiditySixHoursLater());
 
-        temperatureNineHourLaterField.setText(state.getTemperatureNineHoursAgo());
-        conditionNineHourLaterField.setText(state.getConditionNineHoursAgo());
-        humidityNineHourLaterField.setText(state.getHumidityNineHoursAgo());
+        temperatureNineHourLaterField.setText(state.getTemperatureNineHoursLater());
+        conditionNineHourLaterField.setText(state.getConditionNineHoursLater());
+        humidityNineHourLaterField.setText(state.getHumidityNineHoursLater());
     }
 
     public String getViewName() {

@@ -6,7 +6,8 @@ public class Main {
     public static void main(String[] args) {
         WeatherAppBuilder appBuilder = new WeatherAppBuilder();
         JFrame application = appBuilder
-                .addCheckCityView()
+//                .addCheckCityView()
+                .addWeatherAppView()
                 .addGetForecastView()
                 .addManageCityView()
                 .build();
