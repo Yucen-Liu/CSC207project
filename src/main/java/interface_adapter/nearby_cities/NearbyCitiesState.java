@@ -5,7 +5,7 @@ import java.util.List;
 
 public class NearbyCitiesState {
     private String cityName = "";
-    private List<String> savedCityNames = new ArrayList<String>();
+    private List<String> nearbyCityNames = new ArrayList<String>();
     private List<Double> nearbyCityTemperatures = new ArrayList<>();
     private List<String> nearbyCityConditions = new ArrayList<>();
     private List<Integer> nearbyCityHumidities = new ArrayList<>();
@@ -18,12 +18,12 @@ public class NearbyCitiesState {
         this.cityName = cityName;
     }
 
-    public List<String> getSavedCityNames() {
-        return savedCityNames;
+    public List<String> getNearbyCityNames() {
+        return nearbyCityNames;
     }
 
-    public void setSavedCityNames(List<String> savedCityNames) {
-        this.savedCityNames = savedCityNames;
+    public void setNearbyCityNames(List<String> nearbyCityNames) {
+        this.nearbyCityNames = nearbyCityNames;
     }
 
     public List<Double> getNearbyCityTemperatures() {
