@@ -14,15 +14,10 @@ public class Main {
         final WeatherAppBuilder appBuilder = new WeatherAppBuilder();
         // add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
-//                .addLoginView()
-//                .addSignupView()
-//                .addLoggedInView()
-                  .addCheckCityView()
-//                .addSignupUseCase()
-//                .addLoginUseCase()
-//                .addChangePasswordUseCase()
-//                .addLogoutUseCase()
-                  .addCheckCityUseCase()
+//                  .addCheckCityView()
+                  .addGetForecastView()
+//                  .addCheckCityUseCase()
+                  .addGetForecastUseCase()
                   .build();
 
         application.pack();

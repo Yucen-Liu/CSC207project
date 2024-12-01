@@ -1,19 +1,98 @@
 package view;
 
-import interface_adapter.get_history.GetHistoryViewModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
+import interface_adapter.get_forecast.GetForecastViewModel;
+import org.weatherapp.WeatherData;
+import org.weatherapp.WeatherService;
+import view.GetForecastView;
+import view.GetNearbyCitiesView;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-public class GetDetailsView {
+public class GetDetailsView extends JFrame {
+    private final String cityName;
+    private final WeatherService weatherService;
 
+    public GetDetailsView(String cityName) {
+        this.cityName = cityName;
+        this.weatherService = new WeatherService();
+
+        // Frame configuration
+        setTitle("Details for " + cityName);
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this window
+        setLayout(new BorderLayout());
+
+        // Button panel at the top
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton getForecastButton = new JButton("Get Forecast");
+        JButton getNearbyCitiesButton = new JButton("Get Nearby Cities");
+
+        buttonPanel.add(getForecastButton);
+        buttonPanel.add(getNearbyCitiesButton);
+
+        add(buttonPanel, BorderLayout.NORTH);
+
+        // Add ActionListeners for buttons
+        getForecastButton.addActionListener(e -> openGetForecastView());
+        getNearbyCitiesButton.addActionListener(e -> openGetNearbyCitiesView());
+
+        // Fetch detailed weather data for the city
+        WeatherData weatherData = weatherService.getCurrentWeather(cityName);
+
+        if (weatherData == null) {
+            JOptionPane.showMessageDialog(this, "Unable to fetch weather details for " + cityName,
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Create and populate the details panel
+        JPanel detailsPanel = new JPanel();
+        detailsPanel.setLayout(new GridLayout(6, 1, 5, 5)); // 6 rows, 1 column
+
+        JLabel cityLabel = new JLabel("City: " + weatherData.getLocation());
+        JLabel temperatureLabel = new JLabel("Temperature: " + weatherData.getTemperature() + "°C");
+        JLabel conditionLabel = new JLabel("Condition: " + weatherData.getCondition());
+        JLabel humidityLabel = new JLabel("Humidity: " + weatherData.getHumidity() + "%");
+
+        // Optional fields for additional data from the API
+        JLabel windSpeedLabel = new JLabel();
+        JLabel pressureLabel = new JLabel();
+
+        // Add labels to the details panel
+        detailsPanel.add(cityLabel);
+        detailsPanel.add(temperatureLabel);
+        detailsPanel.add(conditionLabel);
+        detailsPanel.add(humidityLabel);
+        detailsPanel.add(windSpeedLabel);
+        detailsPanel.add(pressureLabel);
+
+        // Add components to the frame
+        add(detailsPanel, BorderLayout.CENTER);
+
+        // Close button at the bottom
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(e -> dispose());
+        add(closeButton, BorderLayout.SOUTH);
+    }
+
+    private void openGetForecastView() {
+        // Initialize and show GetForecastView
+        GetForecastView forecastView = new GetForecastView(new GetForecastViewModel());
+        JFrame forecastFrame = new JFrame("Weather Forecast for " + cityName);
+        forecastFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        forecastFrame.setSize(600, 400);
+        forecastFrame.add(forecastView);
+        forecastFrame.setVisible(true);
+    }
+
+    private void openGetNearbyCitiesView() {
+        // Initialize and show GetNearbyCitiesView
+        GetNearbyCitiesView nearbyCitiesView = new GetNearbyCitiesView(cityName);
+        JFrame nearbyCitiesFrame = new JFrame("Nearby Cities for " + cityName);
+        nearbyCitiesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nearbyCitiesFrame.setSize(600, 400);
+        nearbyCitiesFrame.add(nearbyCitiesView);
+        nearbyCitiesFrame.setVisible(true);
+    }
 }
