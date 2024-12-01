@@ -4,6 +4,7 @@ import data_access.FavoriteCityStorageImpl;
 import entity.City;
 import entity.CityFactory;
 import entity.CityStorage;
+import interface_adapter.check_city.CheckCityController;
 import interface_adapter.get_forecast.GetForecastController;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
@@ -18,11 +19,14 @@ public class WeatherAppView extends JPanel {
     private final CityStorage cityStorage; // Dependency injected
     private final CityFactory cityFactory; // Dependency injected
     private final GetForecastController getForecastController;
+    private final CheckCityController checkCityController;
 
-    public WeatherAppView(CityStorage cityStorage, CityFactory cityFactory, GetForecastController getForecastController) {
+    public WeatherAppView(CityStorage cityStorage, CityFactory cityFactory,
+                          GetForecastController getForecastController, CheckCityController checkCityController) {
         this.cityStorage = cityStorage;
         this.cityFactory = cityFactory;
         this.getForecastController = getForecastController;
+        this.checkCityController = checkCityController;
 
         setLayout(new BorderLayout());
 
@@ -68,6 +72,8 @@ public class WeatherAppView extends JPanel {
         add(cityListPanel, BorderLayout.WEST);
         add(forecastPanel, BorderLayout.CENTER);
 
+
+
         // Get Forecast Button Action
         getForecastButton.addActionListener(e -> {
             String location = locationField.getText().trim();
@@ -75,6 +81,9 @@ public class WeatherAppView extends JPanel {
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+
+            // Validate the city name
+            checkCityController.execute(location);
 
             // Prepare saved city names
             List<String> savedCityNames = cityStorage.getCities()
@@ -89,6 +98,7 @@ public class WeatherAppView extends JPanel {
             GetForecastViewModel viewModel = getForecastController.getViewModel();
             updateForecastDisplay(viewModel, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
         });
+
 
     }
 
@@ -112,7 +122,6 @@ public class WeatherAppView extends JPanel {
         conditionDisplay.setText("Condition: " + viewModel.getConditionThreeHoursLater());
         humidityDisplay.setText("Humidity: " + viewModel.getHumidityThreeHoursLater() + "%");
     }
-
 
     private void manageCities() {
         // Link to the ManageCityView window
