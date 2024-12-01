@@ -5,8 +5,8 @@ import interface_adapter.ViewModel;
 /**
  * The ViewModel for the CheckCity View.
  */
-public class GetDetailsViewModel extends ViewModel<SearchCityState> {
-    public GetDetailsViewModel() {
+public class SearchCityViewModel extends ViewModel<SearchCityState> {
+    public SearchCityViewModel() {
         super("search city");
         setState(new SearchCityState());
     }

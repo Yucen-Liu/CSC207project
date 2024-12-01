@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Factory for creating HistoryCity objects.
+ * Factory for creating ForecastCity objects.
  */
-public class HistoryCityFactory implements CityFactory {
+public class ForecastCityFactory implements CityFactory {
     @Override
-    public HistoryCity create(String location, double temperature, String condition, int humidity) {
+    public ForecastCity create(String location, double temperature, String condition, int humidity) {
         List<String> initialThreeHoursAgo = new ArrayList<>();
         List<String> initialSixHoursAgo = new ArrayList<>();
         List<String> initialNineHoursAgo = new ArrayList<>();
@@ -16,11 +16,12 @@ public class HistoryCityFactory implements CityFactory {
         weatherHistory.add(initialThreeHoursAgo);
         weatherHistory.add(initialSixHoursAgo);
         weatherHistory.add(initialNineHoursAgo);
-        return new HistoryCity(location, temperature, condition, humidity, weatherHistory);
+        return new ForecastCity(location, temperature, condition, humidity, weatherHistory);
     }
 
-    public HistoryCity create(String location, double temperature, String condition, int humidity, List<List<String>> history) {
-        return new HistoryCity(location,temperature,condition,humidity,history);
+    public ForecastCity create(String location, double temperature, String condition, int humidity,
+                               List<List<String>> forecast) {
+        return new ForecastCity(location,temperature,condition,humidity,forecast);
     }
 
     public List<String> historyCertainHour(double temperature, String condition, int humidity) {

@@ -1,15 +1,15 @@
-package use_case.get_history;
+package use_case.get_forecast;
 
 import java.util.List;
 
 /**
  * The Input Data for the GetHistory Use Case.
  */
-public class GetHistoryInputData {
+public class GetForecastInputData {
     private final String cityName;
     private final List<String> savedCityNames;
 
-    public GetHistoryInputData(String cityName, List<String> savedCityNames) {
+    public GetForecastInputData(String cityName, List<String> savedCityNames) {
         this.cityName = cityName;
         this.savedCityNames = savedCityNames;
     }

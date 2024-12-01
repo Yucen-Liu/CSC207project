@@ -1,18 +1,18 @@
-package interface_adapter.get_history;
+package interface_adapter.get_forecast;
 
-import use_case.get_history.GetHistoryInputBoundary;
-import use_case.get_history.GetHistoryInputData;
+import use_case.get_forecast.GetForecastInputBoundary;
+import use_case.get_forecast.GetForecastInputData;
 
 import java.util.List;
 
 /**
  * The controller for the GetHistory Use Case.
  */
-public class GetHistoryController {
+public class GetForecastController {
 
-    private final GetHistoryInputBoundary userGetHistoryUseCaseInteractor;
+    private final GetForecastInputBoundary userGetHistoryUseCaseInteractor;
 
-    public GetHistoryController(GetHistoryInputBoundary userGetHistoryUseCaseInteractor) {
+    public GetForecastController(GetForecastInputBoundary userGetHistoryUseCaseInteractor) {
         this.userGetHistoryUseCaseInteractor = userGetHistoryUseCaseInteractor;
     }
 
@@ -21,8 +21,8 @@ public class GetHistoryController {
      * @param cityName the username to sign up
      */
     public void execute(String cityName, List<String> savedCityNames) {
-        final GetHistoryInputData getHistoryInputData = new GetHistoryInputData(cityName, savedCityNames);
-        userGetHistoryUseCaseInteractor.execute(getHistoryInputData);
+        final GetForecastInputData getForecastInputData = new GetForecastInputData(cityName, savedCityNames);
+        userGetHistoryUseCaseInteractor.execute(getForecastInputData);
     }
 
     /**

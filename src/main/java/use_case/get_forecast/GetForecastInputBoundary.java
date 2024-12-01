@@ -1,14 +1,14 @@
-package use_case.get_history;
+package use_case.get_forecast;
 
 /**
  * Input Boundary for actions which are related to checking the weather history of the selected city in a user's account.
  */
-public interface GetHistoryInputBoundary {
+public interface GetForecastInputBoundary {
     /**
-     * Executes the signup use case.
-     * @param getHistoryInputData the input data
+     * Executes the getForecast use case.
+     * @param getForecastInputData the input data
      */
-    void execute(GetHistoryInputData getHistoryInputData);
+    void execute(GetForecastInputData getForecastInputData);
 
     /**
      * Executes the switch to GetDetails view use case.
