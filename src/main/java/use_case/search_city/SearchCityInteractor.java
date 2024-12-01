@@ -5,13 +5,13 @@ package use_case.search_city;
  */
 public class SearchCityInteractor implements SearchCityInputBoundary {
 
-    private final SearchCityUserDataAccessInterface userDataAccessObject;
+    private final SearchCityDataAccessInterface searchCityDataAccessObject;
     private final SearchCityOutputBoundary userPresenter;
 
-    public SearchCityInteractor(SearchCityUserDataAccessInterface SearchcitydataAccessInterface,
-                                SearchCityOutputBoundary SearchCityOutputBoundary) {
-        this.userDataAccessObject= SearchcitydataAccessInterface;
-        this.userPresenter = SearchCityOutputBoundary;
+    public SearchCityInteractor(SearchCityDataAccessInterface searchCityDataAccessInterface,
+                                SearchCityOutputBoundary searchCityOutputBoundary) {
+        this.searchCityDataAccessObject= searchCityDataAccessInterface;
+        this.userPresenter = searchCityOutputBoundary;
     }
 
     @Override
