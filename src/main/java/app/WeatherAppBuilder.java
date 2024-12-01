@@ -10,25 +10,16 @@ import javax.swing.WindowConstants;
 import data_access.CurWeatherInfoObject;
 import data_access.ForecastWeatherInfoObject;
 import entity.CommonCityFactory;
-import entity.CommonUserFactory;
 import entity.ForecastCityFactory;
-import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 ;
 import interface_adapter.get_forecast.GetForecastController;
 import interface_adapter.get_forecast.GetForecastPresenter;
 import interface_adapter.get_forecast.GetForecastViewModel;
 
-import interface_adapter.check_city.CheckCityController;
-import interface_adapter.check_city.CheckCityPresenter;
-import interface_adapter.check_city.CheckCityViewModel;
-
 import interface_adapter.get_details.GetDetailsViewModel;
 
 import use_case.check_city.CheckCityDataAccessInterface;
-import use_case.check_city.CheckCityInteractor;
-import use_case.check_city.CheckCityInputBoundary;
-import use_case.check_city.CheckCityOutputBoundary;
 
 import use_case.get_forecast.GetForecastDataAccessInterface;
 import use_case.get_forecast.GetForecastInputBoundary;
@@ -44,7 +35,6 @@ public class WeatherAppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
@@ -52,7 +42,6 @@ public class WeatherAppBuilder {
     private final GetForecastDataAccessInterface forecastWeatherInfo = new ForecastWeatherInfoObject(
             new ForecastCityFactory());
 
-    private CheckCityViewModel checkCityViewModel;
     private GetForecastViewModel getForecastViewModel;
     private GetDetailsViewModel getDetailsViewModel;
 

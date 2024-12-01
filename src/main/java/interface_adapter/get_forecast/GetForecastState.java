@@ -25,7 +25,6 @@ public class GetForecastState {
     public String getCityName() {return cityName;}
     public void setCityName(String cityName) {this.cityName = cityName;}
     public List<String> getSavedCityNames() {return savedCityNames;}
-    public void setSavedCityNames(List<String> savedCityNames) {}
 
     public String getTemperatureThreeHoursAgo() {return temperatureThreeHoursAgo;}
     public String getConditionThreeHoursAgo() {return conditionThreeHoursAgo;}

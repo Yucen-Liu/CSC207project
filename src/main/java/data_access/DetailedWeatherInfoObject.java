@@ -2,27 +2,28 @@ package data_access;
 
 import entity.City;
 import entity.CommonCityFactory;
+import entity.DetailedCity;
+import entity.DetailedCityFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
-import org.weatherapp.CityValidator;
 import org.weatherapp.MessageBox;
-import use_case.check_city.CheckCityDataAccessInterface;
+import use_case.get_details.GetDetailsDataAccessInterface;
+import use_case.get_forecast.GetForecastDataAccessInterface;
 
 import javax.swing.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccessInterface {
+public class DetailedWeatherInfoObject implements GetDetailsDataAccessInterface {
+    private final DetailedCityFactory cityFactory;
 
-    private final CommonCityFactory cityFactory;
-
-    public CurWeatherInfoObject(CommonCityFactory cityFactory) {
+    public DetailedWeatherInfoObject(DetailedCityFactory cityFactory) {
         this.cityFactory = cityFactory;
     }
-
-    public City getCurWeather(String loc){
+    @Override
+    public DetailedCity getDetailedWeather(String loc){
         // Call API with the validated city
         String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + loc +
                 "&appid=a7053dadfa852680faa79393bbab3b4f";
@@ -47,12 +48,7 @@ public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccess
         double temperature = Double.parseDouble(df.format(information.getJSONObject("main").getDouble("temp") - 273.15));
         String condition = information.getJSONArray("weather").getJSONObject(0).getString("description");
         int humidity = information.getJSONObject("main").getInt("humidity");
+
         return cityFactory.create(location, temperature, condition, humidity);
-    }
-
-
-    @Override
-    public boolean existsByName(String cityName) {
-        return CityValidator.isCityValid(cityName);
     }
 }
