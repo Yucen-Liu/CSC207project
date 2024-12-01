@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class NearbyCityWeatherAccessObject implements NearbyCitiesDataAccessInterface {
 
@@ -25,7 +24,7 @@ public class NearbyCityWeatherAccessObject implements NearbyCitiesDataAccessInte
         nearbyCities = new ArrayList<>();
     }
 
-    public List<NearbyCity> getWeatherHistory(String loc){
+    public ArrayList<NearbyCity> getNearbyCities(String loc){
         // Call API with the validated city
         String urlString = "http://api.openweathermap.org/data/2.5/forecast?q=" + loc +
                 "&cnt=1&appid=a7053dadfa852680faa79393bbab3b4f";
