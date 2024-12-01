@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.get_forecast.GetForecastViewModel;
+import interface_adapter.nearby_cities.NearbyCitiesViewModel;
 import org.weatherapp.WeatherData;
 import org.weatherapp.WeatherService;
 import view.GetForecastView;
@@ -88,7 +89,7 @@ public class GetDetailsView extends JFrame {
 
     private void openGetNearbyCitiesView() {
         // Initialize and show GetNearbyCitiesView
-        GetNearbyCitiesView nearbyCitiesView = new GetNearbyCitiesView(cityName);
+        GetNearbyCitiesView nearbyCitiesView = new GetNearbyCitiesView(new NearbyCitiesViewModel());
         JFrame nearbyCitiesFrame = new JFrame("Nearby Cities for " + cityName);
         nearbyCitiesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nearbyCitiesFrame.setSize(600, 400);

@@ -36,16 +36,6 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
 
         int numberNearbyCities = nearbyCitiesViewModel.getNearbyCityNames().size();
 
-//        String[][] data = {{getHistoryViewModel.TEMPERATURE_LABEL,temperatureThreeHourAgoField.getText(),
-//                temperatureSixHourAgoField.getText(), temperatureNineHourAgoField.getText()},
-//                {getHistoryViewModel.CONDITION_LABEL,conditionThreeHourAgoField.getText(),
-//                        conditionSixHourAgoField.getText(), conditionNineHourAgoField.getText()},
-//                {getHistoryViewModel.HUMIDITY_LABEL,humidityThreeHourAgoField.getText(),
-//                        humiditySixHourAgoField.getText(), humidityNineHourAgoField.getText()}};
-//
-//        String[] columnNames = {getHistoryViewModel.INFO_LABEL, getHistoryViewModel.THREE_HOURS_AGO_LABEL,
-//                getHistoryViewModel.SIX_HOURS_AGO_LABEL, getHistoryViewModel.NINE_HOURS_AGO_LABEL};
-
         String[][] data = new String[numberNearbyCities][4];
         for (int i = 0; i < numberNearbyCities; i++) {
             data[i][0] = nearbyCitiesViewModel.getNearbyCityNames().get(i);
