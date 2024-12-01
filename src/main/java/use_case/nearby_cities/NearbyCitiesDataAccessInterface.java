@@ -2,8 +2,9 @@ package use_case.nearby_cities;
 
 import entity.NearbyCity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface NearbyCitiesDataAccessInterface {
-    List<NearbyCity> getWeatherHistory(String loc);
+    ArrayList<NearbyCity> getNearbyCities(String loc);
 }
