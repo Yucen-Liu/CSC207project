@@ -52,5 +52,6 @@ public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccess
 
     @Override
     public boolean existsByName(String cityName) {
-        return CityValidator.isCityValid(cityName);}
+        return CityValidator.isCityValid(cityName);
+    }
 }
