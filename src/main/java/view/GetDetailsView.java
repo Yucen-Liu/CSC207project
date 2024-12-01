@@ -1,8 +1,10 @@
 package view;
 
-import org.json.JSONObject;
+import interface_adapter.get_forecast.GetForecastViewModel;
 import org.weatherapp.WeatherData;
 import org.weatherapp.WeatherService;
+import view.GetForecastView;
+import view.GetNearbyCitiesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +19,23 @@ public class GetDetailsView extends JFrame {
 
         // Frame configuration
         setTitle("Details for " + cityName);
-        setSize(400, 300);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this window
         setLayout(new BorderLayout());
+
+        // Button panel at the top
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton getForecastButton = new JButton("Get Forecast");
+        JButton getNearbyCitiesButton = new JButton("Get Nearby Cities");
+
+        buttonPanel.add(getForecastButton);
+        buttonPanel.add(getNearbyCitiesButton);
+
+        add(buttonPanel, BorderLayout.NORTH);
+
+        // Add ActionListeners for buttons
+        getForecastButton.addActionListener(e -> openGetForecastView());
+        getNearbyCitiesButton.addActionListener(e -> openGetNearbyCitiesView());
 
         // Fetch detailed weather data for the city
         WeatherData weatherData = weatherService.getCurrentWeather(cityName);
@@ -51,12 +67,32 @@ public class GetDetailsView extends JFrame {
         detailsPanel.add(windSpeedLabel);
         detailsPanel.add(pressureLabel);
 
-        // Add a Close button
-        JButton closeButton = new JButton("Close");
-        closeButton.addActionListener(e -> dispose()); // Close the window when clicked
-
         // Add components to the frame
         add(detailsPanel, BorderLayout.CENTER);
+
+        // Close button at the bottom
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(e -> dispose());
         add(closeButton, BorderLayout.SOUTH);
+    }
+
+    private void openGetForecastView() {
+        // Initialize and show GetForecastView
+        GetForecastView forecastView = new GetForecastView(new GetForecastViewModel());
+        JFrame forecastFrame = new JFrame("Weather Forecast for " + cityName);
+        forecastFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        forecastFrame.setSize(600, 400);
+        forecastFrame.add(forecastView);
+        forecastFrame.setVisible(true);
+    }
+
+    private void openGetNearbyCitiesView() {
+        // Initialize and show GetNearbyCitiesView
+        GetNearbyCitiesView nearbyCitiesView = new GetNearbyCitiesView(cityName);
+        JFrame nearbyCitiesFrame = new JFrame("Nearby Cities for " + cityName);
+        nearbyCitiesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nearbyCitiesFrame.setSize(600, 400);
+        nearbyCitiesFrame.add(nearbyCitiesView);
+        nearbyCitiesFrame.setVisible(true);
     }
 }
