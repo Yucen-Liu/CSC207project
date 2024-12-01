@@ -1,13 +1,10 @@
 package use_case.search_city;
 
+import entity.City;
+
 /**
  * DAO for the SearchCity Use Case.
  */
 public interface SearchCityDataAccessInterface {
-
-    /**
-     * Search if the given city exists in the application.
-     * @param cityname the username to look for
-     * @return true if a user with the given username exists; false otherwise
-     */
+    City getCurWeather(String location);
 }

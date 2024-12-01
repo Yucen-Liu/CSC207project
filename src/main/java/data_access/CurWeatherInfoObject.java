@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.City;
+import entity.CommonCity;
 import entity.CommonCityFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

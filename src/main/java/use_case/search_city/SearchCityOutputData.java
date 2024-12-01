@@ -11,16 +11,14 @@ public class SearchCityOutputData {
     private final double temperature;
     private final String condition;
     private final int humidity;
-    private final boolean useCaseFailed;
 
-    public SearchCityOutputData(String cityName, List<String> savedCityNames, double temperature, String condition,
-                                int humidity, boolean useCaseFailed) {
+    public SearchCityOutputData(String cityName, double temperature, String condition, int humidity,
+                                List<String> savedCityNames) {
         this.cityName = cityName;
-        this.savedCityNames = savedCityNames;
         this.temperature = temperature;
         this.condition = condition;
         this.humidity = humidity;
-        this.useCaseFailed = useCaseFailed;
+        this.savedCityNames = savedCityNames;
     }
 
     public String getCityName() {
@@ -41,9 +39,5 @@ public class SearchCityOutputData {
 
     public int getHumidity() {
         return humidity;
-    }
-
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
     }
 }
