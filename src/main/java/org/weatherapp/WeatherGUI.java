@@ -1,13 +1,15 @@
 package org.weatherapp;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import data_access.FavoriteCityStorageImpl;
 import interface_adapter.manage_cities.ManageCitiesController;
 import use_case.manage_cities.FavoriteCitiesInteractor;
-import data_access.FavoriteCityStorageImpl;
+import view.GetDetailsView;
 import view.ManageCityView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class WeatherGUI {
     private final WeatherService weatherService;
@@ -55,12 +57,16 @@ public class WeatherGUI {
         // Saved Cities List
         JList<String> savedCitiesList = new JList<>(cityStorage.getCityListModel());
         savedCitiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        savedCitiesList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                String selectedCity = savedCitiesList.getSelectedValue();
-                if (selectedCity != null) {
-                    WeatherData weatherData = weatherService.getCurrentWeather(selectedCity);
-                    updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+
+        // Add MouseListener for Double-Click Action
+        savedCitiesList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Double-click detected
+                    String selectedCity = savedCitiesList.getSelectedValue();
+                    if (selectedCity != null) {
+                        openCityDetails(selectedCity);
+                    }
                 }
             }
         });
@@ -70,52 +76,41 @@ public class WeatherGUI {
         cityListPanel.setLayout(new BorderLayout());
 
         JButton manageCitiesButton = new JButton("Manage Cities");
-        manageCitiesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manageCities();
-            }
-        });
+        manageCitiesButton.addActionListener(e -> manageCities());
 
         cityListPanel.add(manageCitiesButton, BorderLayout.NORTH);
         cityListPanel.add(new JScrollPane(savedCitiesList), BorderLayout.CENTER);
 
         // Get Weather Button Action
-        getWeatherButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String location = locationField.getText();
-                if (location.isEmpty()) {
-                    MessageBox.showWarningNoLoc(frame);
-                    return;
-                }
+        getWeatherButton.addActionListener(e -> {
+            String location = locationField.getText();
+            if (location.isEmpty()) {
+                MessageBox.showWarningNoLoc(frame);
+                return;
+            }
 
-                if (CityValidator.isCityValid(location)) {
-                    WeatherData weatherData = weatherService.getCurrentWeather(location);
-                    updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
-                    locationField.setText(""); // Clear the input field
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-                }
+            if (CityValidator.isCityValid(location)) {
+                WeatherData weatherData = weatherService.getCurrentWeather(location);
+                updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+                locationField.setText(""); // Clear the input field
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         // Save City Button Action
-        saveCityButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String location = locationField.getText();
-                if (location.isEmpty()) {
-                    MessageBox.showWarningNoLoc(frame);
-                    return;
-                }
+        saveCityButton.addActionListener(e -> {
+            String location = locationField.getText();
+            if (location.isEmpty()) {
+                MessageBox.showWarningNoLoc(frame);
+                return;
+            }
 
-                if (CityValidator.isCityValid(location)) {
-                    cityStorage.addCity(location);
-                    locationField.setText(""); // Clear the input field
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-                }
+            if (CityValidator.isCityValid(location)) {
+                cityStorage.addCity(location);
+                locationField.setText(""); // Clear the input field
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -140,5 +135,11 @@ public class WeatherGUI {
         ManageCitiesController controller = new ManageCitiesController(new FavoriteCitiesInteractor(new FavoriteCityStorageImpl()));
         ManageCityView manageCityView = new ManageCityView(controller);
         manageCityView.setVisible(true); // Show the ManageCityView window
+    }
+
+    private void openCityDetails(String cityName) {
+        // Link to the GetDetailsView window
+        GetDetailsView getDetailsView = new GetDetailsView(cityName);
+        getDetailsView.setVisible(true); // Show the GetDetailsView window
     }
 }
