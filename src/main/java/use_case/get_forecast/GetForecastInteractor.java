@@ -6,13 +6,13 @@ import entity.ForecastCity;
  * The GetForecast Interactor.
  */
 public class GetForecastInteractor implements GetForecastInputBoundary {
-    private final GetForecastDataAccessInterface weatherDataAccess;
-    private final GetForecastOutputBoundary outputBoundary;
+    private final GetForecastDataAccessInterface weatherDataAccessObject;
+    private final GetForecastOutputBoundary userPresenter;
 
     public GetForecastInteractor(GetForecastDataAccessInterface weatherDataAccess,
-                                 GetForecastOutputBoundary outputBoundary) {
-        this.weatherDataAccess = weatherDataAccess;
-        this.outputBoundary = outputBoundary;
+                                 GetForecastOutputBoundary userPresenter) {
+        this.weatherDataAccessObject = weatherDataAccess;
+        this.userPresenter = userPresenter;
     }
 
     @Override
@@ -48,6 +48,6 @@ public class GetForecastInteractor implements GetForecastInputBoundary {
 
     @Override
     public void switchToGetDetailsView() {
-        outputBoundary.switchToGetDetailsView();
+        userPresenter.switchToGetDetailsView();
     }
 }

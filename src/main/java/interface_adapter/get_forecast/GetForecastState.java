@@ -27,18 +27,6 @@ public class GetForecastState {
     public void setCityName(String cityName) {this.cityName = cityName;}
     public List<String> getSavedCityNames() {return savedCityNames;}
 
-    // Getters and Setters
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public List<String> getSavedCityNames() {
-        return savedCityNames;
-    }
 
     public void setSavedCityNames(List<String> savedCityNames) {
         this.savedCityNames = savedCityNames;
