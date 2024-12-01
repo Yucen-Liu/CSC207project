@@ -24,15 +24,5 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
 //                    "for the city you are interested in. Maybe try later?");
 //        }
     }
-
-    @Override
-    public void switchToLoginView() {
-        userPresenter.switchToLoginView();
-    }
-
-    @Override
-    public void switchToSignupView() {
-        userPresenter.switchToSignupView();
-    }
 }
 

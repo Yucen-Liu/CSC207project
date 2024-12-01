@@ -4,68 +4,110 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The state for the GetHistory View Model.
+ * The state for the GetForecast View Model.
  */
 public class GetForecastState {
     private String cityName = "";
     private List<String> savedCityNames = new ArrayList<>();
 
-    private String temperatureThreeHoursAgo = "";
-    private String conditionThreeHoursAgo = "";
-    private String humidityThreeHoursAgo = "";
+    private String temperatureThreeHoursLater = "";
+    private String conditionThreeHoursLater = "";
+    private String humidityThreeHoursLater = "";
 
-    private String temperatureSixHoursAgo = "";
-    private String conditionSixHoursAgo = "";
-    private String humiditySixHoursAgo = "";
+    private String temperatureSixHoursLater = "";
+    private String conditionSixHoursLater = "";
+    private String humiditySixHoursLater = "";
 
-    private String temperatureNineHoursAgo = "";
-    private String conditionNineHoursAgo = "";
-    private String humidityNineHoursAgo = "";
+    private String temperatureNineHoursLater = "";
+    private String conditionNineHoursLater = "";
+    private String humidityNineHoursLater = "";
 
-    public String getCityName() {return cityName;}
-    public void setCityName(String cityName) {this.cityName = cityName;}
-    public List<String> getSavedCityNames() {return savedCityNames;}
-    public void setSavedCityNames(List<String> savedCityNames) {}
-
-    public String getTemperatureThreeHoursAgo() {return temperatureThreeHoursAgo;}
-    public String getConditionThreeHoursAgo() {return conditionThreeHoursAgo;}
-    public String getHumidityThreeHoursAgo() {return humidityThreeHoursAgo;}
-
-    public String getTemperatureSixHoursAgo() {return temperatureSixHoursAgo;}
-    public String getConditionSixHoursAgo() {return conditionSixHoursAgo;}
-    public String getHumiditySixHoursAgo() {return humiditySixHoursAgo;}
-
-    public String getTemperatureNineHoursAgo() {return temperatureNineHoursAgo;}
-    public String getConditionNineHoursAgo() {return conditionNineHoursAgo;}
-    public String getHumidityNineHoursAgo() {return humidityNineHoursAgo;}
-
-    public void setTemperatureThreeHoursLater(String temperatureThreeHoursAgo) {
-        this.temperatureThreeHoursAgo = temperatureThreeHoursAgo;
-    }
-    public void setConditionThreeHoursLater(String conditionThreeHoursAgo) {
-        this.conditionThreeHoursAgo = conditionThreeHoursAgo;
-    }
-    public void setHumidityThreeHoursLater(String humidityThreeHoursAgo) {
-    this.humidityThreeHoursAgo = humidityThreeHoursAgo;
+    // Getters and Setters
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setTemperatureSixHoursLater(String temperatureSixHoursAgo) {
-        this.temperatureSixHoursAgo = temperatureSixHoursAgo;
-    }
-    public void setConditionSixHoursLater(String conditionSixHoursAgo) {
-        this.conditionSixHoursAgo = conditionSixHoursAgo;
-    }
-    public void setHumiditySixHoursLater(String humiditySixHoursAgo) {
-        this.humiditySixHoursAgo = humiditySixHoursAgo;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
-    public void setTemperatureNineHoursLater(String temperatureNineHoursAgo) {
-        this.temperatureNineHoursAgo = temperatureNineHoursAgo;
+    public List<String> getSavedCityNames() {
+        return savedCityNames;
     }
-    public void setConditionNineHoursLater(String conditionNineHoursAgo) {
-        this.conditionNineHoursAgo = conditionNineHoursAgo;
+
+    public void setSavedCityNames(List<String> savedCityNames) {
+        this.savedCityNames = savedCityNames;
     }
-    public void setHumidityNineHoursLater(String humidityNineHoursAgo) {
-        this.humidityNineHoursAgo = humidityNineHoursAgo;
+
+    public String getTemperatureThreeHoursLater() {
+        return temperatureThreeHoursLater;
+    }
+
+    public void setTemperatureThreeHoursLater(String temperatureThreeHoursLater) {
+        this.temperatureThreeHoursLater = temperatureThreeHoursLater;
+    }
+
+    public String getConditionThreeHoursLater() {
+        return conditionThreeHoursLater;
+    }
+
+    public void setConditionThreeHoursLater(String conditionThreeHoursLater) {
+        this.conditionThreeHoursLater = conditionThreeHoursLater;
+    }
+
+    public String getHumidityThreeHoursLater() {
+        return humidityThreeHoursLater;
+    }
+
+    public void setHumidityThreeHoursLater(String humidityThreeHoursLater) {
+        this.humidityThreeHoursLater = humidityThreeHoursLater;
+    }
+
+    public String getTemperatureSixHoursLater() {
+        return temperatureSixHoursLater;
+    }
+
+    public void setTemperatureSixHoursLater(String temperatureSixHoursLater) {
+        this.temperatureSixHoursLater = temperatureSixHoursLater;
+    }
+
+    public String getConditionSixHoursLater() {
+        return conditionSixHoursLater;
+    }
+
+    public void setConditionSixHoursLater(String conditionSixHoursLater) {
+        this.conditionSixHoursLater = conditionSixHoursLater;
+    }
+
+    public String getHumiditySixHoursLater() {
+        return humiditySixHoursLater;
+    }
+
+    public void setHumiditySixHoursLater(String humiditySixHoursLater) {
+        this.humiditySixHoursLater = humiditySixHoursLater;
+    }
+
+    public String getTemperatureNineHoursLater() {
+        return temperatureNineHoursLater;
+    }
+
+    public void setTemperatureNineHoursLater(String temperatureNineHoursLater) {
+        this.temperatureNineHoursLater = temperatureNineHoursLater;
+    }
+
+    public String getConditionNineHoursLater() {
+        return conditionNineHoursLater;
+    }
+
+    public void setConditionNineHoursLater(String conditionNineHoursLater) {
+        this.conditionNineHoursLater = conditionNineHoursLater;
+    }
+
+    public String getHumidityNineHoursLater() {
+        return humidityNineHoursLater;
+    }
+
+    public void setHumidityNineHoursLater(String humidityNineHoursLater) {
+        this.humidityNineHoursLater = humidityNineHoursLater;
     }
 }

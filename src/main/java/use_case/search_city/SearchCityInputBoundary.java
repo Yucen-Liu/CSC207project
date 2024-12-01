@@ -9,17 +9,8 @@ public interface SearchCityInputBoundary {
 
     /**
      * Executes the home use case.
+     *
      * @param searchcityInputData the input data
      */
     void execute(SearchCityInputData searchcityInputData);
-
-    /**
-     * Executes the switch to login view use case.
-     */
-    void switchToLoginView();
-
-    /**
-     * Executes the switch to signup view use case.
-     */
-    void switchToSignupView();
 }

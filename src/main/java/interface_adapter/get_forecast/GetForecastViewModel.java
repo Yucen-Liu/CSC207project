@@ -27,4 +27,20 @@ public class GetForecastViewModel extends ViewModel<GetForecastState> {
         super("get forecast");
         setState(new GetForecastState());
     }
+    // Expose state fields through ViewModel
+    public String getCityName() {
+        return getState().getCityName();
+    }
+
+    public String getTemperatureThreeHoursLater() {
+        return getState().getTemperatureThreeHoursLater();
+    }
+
+    public String getConditionThreeHoursLater() {
+        return getState().getConditionThreeHoursLater();
+    }
+
+    public String getHumidityThreeHoursLater() {
+        return getState().getHumidityThreeHoursLater();
+    }
 }
