@@ -45,6 +45,7 @@ public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccess
         }
     }
 
+
     @Override
     public boolean existsByName(String cityName) {
         String urlString = WEATHER_API_URL + "?q=" + cityName + "&appid=" + API_KEY;

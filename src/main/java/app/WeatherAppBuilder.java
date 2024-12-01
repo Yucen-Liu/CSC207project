@@ -4,6 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 
 import data_access.CurWeatherInfoObject;
+
+import data_access.ForecastWeatherInfoObject;
+import entity.CommonCityFactory;
+import entity.ForecastCityFactory;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.get_forecast.GetForecastController;
+import interface_adapter.get_forecast.GetForecastPresenter;
+import interface_adapter.get_forecast.GetForecastViewModel;
+
+import interface_adapter.get_details.GetDetailsViewModel;
+
+import use_case.check_city.CheckCityDataAccessInterface;
+
+import use_case.get_forecast.GetForecastDataAccessInterface;
+import use_case.get_forecast.GetForecastInputBoundary;
+import use_case.get_forecast.GetForecastInteractor;
+import use_case.get_forecast.GetForecastOutputBoundary;
 import data_access.FavoriteCityStorageImpl;
 import entity.*;
 import interface_adapter.check_city.CheckCityController;
@@ -24,9 +41,14 @@ import data_access.ForecastWeatherInfoObject;
 public class WeatherAppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
+
+
+    private GetForecastViewModel getForecastViewModel;
+    private GetDetailsViewModel getDetailsViewModel;
 
     public WeatherAppBuilder() {
         cardPanel.setLayout(cardLayout);
