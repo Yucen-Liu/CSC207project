@@ -24,7 +24,7 @@ public class ManageCityView extends JFrame {
 
         setTitle("Manage Favorite Cities");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
         // Input panel for adding/removing cities
