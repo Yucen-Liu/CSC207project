@@ -1,5 +1,6 @@
 package interface_adapter.check_city;
 
+
 import use_case.check_city.CheckCityOutputBoundary;
 
 public class CheckCityPresenter implements CheckCityOutputBoundary {
@@ -22,4 +23,5 @@ public class CheckCityPresenter implements CheckCityOutputBoundary {
   viewModel.setValid(false);
   System.out.println("City validation failed: " + errorMessage);
  }
+  
 }

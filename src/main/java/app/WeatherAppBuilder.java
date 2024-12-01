@@ -27,6 +27,7 @@ public class WeatherAppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
+
     public WeatherAppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
@@ -76,6 +77,59 @@ public class WeatherAppBuilder {
         cardPanel.add(view, "get forecast");
         return this;
     }
+
+//     private final CheckCityDataAccessInterface curWeatherInfo = new CurWeatherInfoObject(new CommonCityFactory());
+//     private final GetForecastDataAccessInterface forecastWeatherInfo = new ForecastWeatherInfoObject(
+//             new ForecastCityFactory());
+
+//     private CheckCityViewModel checkCityViewModel;
+//     private GetForecastViewModel getForecastViewModel;
+//     private GetDetailsViewModel getDetailsViewModel;
+
+//     private ManageCityView manageCityView;
+//     private SearchCityView searchCityView;
+//     private CheckCityView checkCityView;
+//     private GetForecastView getForecastView;
+
+//     public WeatherAppBuilder() {cardPanel.setLayout(cardLayout);}
+
+//    /**
+//     * Adds the CheckCity View to the application.
+//     * @return this builder
+//     */
+//    public WeatherAppBuilder addCheckCityView() {
+//        checkCityViewModel = new CheckCityViewModel();
+//        checkCityView = new CheckCityView(checkCityViewModel);
+//        cardPanel.add(checkCityView, checkCityView.getViewName());
+//        return this;
+//    }
+
+//     /**
+//      * Adds the GetForecast View to the application.
+//      * @return this builder
+//      */
+//     public WeatherAppBuilder addGetForecastView() {
+//         getForecastViewModel = new GetForecastViewModel();
+//         getForecastView = new GetForecastView(getForecastViewModel);
+//         cardPanel.add(getForecastView, getForecastView.getViewName());
+//         return this;
+//     }
+
+//    /**
+//     * Adds the CheckCity Use Case to the application.
+//     * @return this builder
+//     */
+//    public WeatherAppBuilder addCheckCityUseCase() {
+//        final CheckCityOutputBoundary checkCityOutputBoundary = new CheckCityPresenter(checkCityViewModel,
+//                viewManagerModel, loginViewModel, signupViewModel);
+//        final CheckCityInputBoundary userCheckCityInteractor = new CheckCityInteractor(
+//                curWeatherInfo, checkCityOutputBoundary);
+//
+//        final CheckCityController controller = new CheckCityController(userCheckCityInteractor);
+//        checkCityView.setCheckCityController(controller);
+//        return this;
+//    }
+
 
 
     public WeatherAppBuilder addManageCityView() {
