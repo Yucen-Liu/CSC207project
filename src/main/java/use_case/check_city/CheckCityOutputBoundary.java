@@ -1,29 +1,17 @@
 package use_case.check_city;
 
-/**
- * The output boundary for the CheckCity Use Case.
- */
 public interface CheckCityOutputBoundary {
     /**
-     * Switches to the Login View.
+     * Presents a successful validation result.
+     *
+     * @param cityName the name of the successfully validated city
      */
-    void switchToLoginView();
+    void presentSuccess(String cityName);
 
     /**
-     * Switches to the Signup View.
+     * Presents a failure result with an error message.
+     *
+     * @param errorMessage the error message to present
      */
-    void switchToSignupView();
-
-    /**
-     * Prepares the success lookup for city for the CheckCity Use Case.
-     * @param successResult the explanation of the success.
-     */
-    void citynameExist(String successResult);
-
-    /**
-     * Prepares the success lookup for city for the CheckCity Use Case.
-     * @param failedResult the explanation of the success.
-     */
-    void citynameNonExist(String failedResult);
+    void presentFailure(String errorMessage);
 }
-

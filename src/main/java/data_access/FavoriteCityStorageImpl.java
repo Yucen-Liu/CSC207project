@@ -1,18 +1,12 @@
 package data_access;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class FavoriteCityStorageImpl implements FavoriteCityStorage {
-
-    // Map to store user's favorite cities. Key is userId, value is the list of favorite cities.
-    private final Map<String, List<String>> userFavorites;
-
-    public FavoriteCityStorageImpl() {
-        this.userFavorites = new HashMap<>();
-    }
+    private final Map<String, List<String>> userFavorites = new HashMap<>();
 
     @Override
     public void addFavoriteCity(String userId, String cityName) {

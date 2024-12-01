@@ -1,133 +1,90 @@
 package app;
 
-import java.awt.CardLayout;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-
-
-import data_access.CurWeatherInfoObject;
-import data_access.ForecastWeatherInfoObject;
-import entity.CommonCityFactory;
-import entity.CommonUserFactory;
-import entity.ForecastCityFactory;
-import entity.UserFactory;
+import view.*;
 import interface_adapter.ViewManagerModel;
-;
-import interface_adapter.get_forecast.GetForecastController;
-import interface_adapter.get_forecast.GetForecastPresenter;
-import interface_adapter.get_forecast.GetForecastViewModel;
-
 import interface_adapter.check_city.CheckCityController;
 import interface_adapter.check_city.CheckCityPresenter;
 import interface_adapter.check_city.CheckCityViewModel;
-
-import interface_adapter.get_details.GetDetailsViewModel;
-
-import use_case.check_city.CheckCityDataAccessInterface;
+import interface_adapter.get_forecast.GetForecastController;
+import interface_adapter.get_forecast.GetForecastViewModel;
+import interface_adapter.manage_cities.ManageCitiesController;
 import use_case.check_city.CheckCityInteractor;
-import use_case.check_city.CheckCityInputBoundary;
-import use_case.check_city.CheckCityOutputBoundary;
-
-import use_case.get_forecast.GetForecastDataAccessInterface;
-import use_case.get_forecast.GetForecastInputBoundary;
 import use_case.get_forecast.GetForecastInteractor;
-import use_case.get_forecast.GetForecastOutputBoundary;
-import view.*;
-
-/**
- * The WeatherAppBuilder class responsible for putting together the CA.
- */
+import use_case.manage_cities.FavoriteCitiesInteractor;
+import data_access.CurWeatherInfoObject;
+import data_access.FavoriteCityStorageImpl;
+import data_access.ForecastWeatherInfoObject;
+import entity.CommonCityFactory;
+import entity.ForecastCityFactory;
 
 public class WeatherAppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
-    // thought question: is the hard dependency below a problem?
-    private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    private final CheckCityDataAccessInterface curWeatherInfo = new CurWeatherInfoObject(new CommonCityFactory());
-    private final GetForecastDataAccessInterface forecastWeatherInfo = new ForecastWeatherInfoObject(
-            new ForecastCityFactory());
+    public WeatherAppBuilder() {
+        cardPanel.setLayout(cardLayout);
+    }
 
-    private CheckCityViewModel checkCityViewModel;
-    private GetForecastViewModel getForecastViewModel;
-    private GetDetailsViewModel getDetailsViewModel;
+    public WeatherAppBuilder addCheckCityView() {
+        // Create dependencies for the interactor
+        CurWeatherInfoObject weatherInfo = new CurWeatherInfoObject(new CommonCityFactory());
+        CheckCityViewModel viewModel = new CheckCityViewModel();
 
-    private ManageCityView manageCityView;
-    private SearchCityView searchCityView;
-    private CheckCityView checkCityView;
-    private GetForecastView getForecastView;
+        // Create the presenter (implements CheckCityOutputBoundary)
+        CheckCityPresenter presenter = new CheckCityPresenter(viewModel);
 
-    public WeatherAppBuilder() {cardPanel.setLayout(cardLayout);}
+        // Create the interactor with the weatherInfo and presenter
+        CheckCityInteractor interactor = new CheckCityInteractor(weatherInfo, presenter);
 
-//    /**
-//     * Adds the CheckCity View to the application.
-//     * @return this builder
-//     */
-//    public WeatherAppBuilder addCheckCityView() {
-//        checkCityViewModel = new CheckCityViewModel();
-//        checkCityView = new CheckCityView(checkCityViewModel);
-//        cardPanel.add(checkCityView, checkCityView.getViewName());
-//        return this;
-//    }
+        // Create the controller
+        CheckCityController controller = new CheckCityController(interactor);
 
-    /**
-     * Adds the GetForecast View to the application.
-     * @return this builder
-     */
+        // Create the view and connect it to the controller
+        CheckCityView view = new CheckCityView(viewModel);
+        view.setCheckCityController(controller);
+
+        // Add the view to the card panel
+        cardPanel.add(view, view.getViewName());
+        return this;
+    }
+
+
+
     public WeatherAppBuilder addGetForecastView() {
-        getForecastViewModel = new GetForecastViewModel();
-        getForecastView = new GetForecastView(getForecastViewModel);
-        cardPanel.add(getForecastView, getForecastView.getViewName());
+        ForecastWeatherInfoObject forecastInfo = new ForecastWeatherInfoObject(new ForecastCityFactory());
+        GetForecastInteractor interactor = new GetForecastInteractor(forecastInfo, null); // Provide OutputBoundary
+        GetForecastController controller = new GetForecastController(interactor);
+        GetForecastViewModel viewModel = new GetForecastViewModel();
+
+        GetForecastView view = new GetForecastView(viewModel);
+        view.setGetForecastController(controller);
+        cardPanel.add(view, view.getViewName());
         return this;
     }
 
-//    /**
-//     * Adds the CheckCity Use Case to the application.
-//     * @return this builder
-//     */
-//    public WeatherAppBuilder addCheckCityUseCase() {
-//        final CheckCityOutputBoundary checkCityOutputBoundary = new CheckCityPresenter(checkCityViewModel,
-//                viewManagerModel, loginViewModel, signupViewModel);
-//        final CheckCityInputBoundary userCheckCityInteractor = new CheckCityInteractor(
-//                curWeatherInfo, checkCityOutputBoundary);
-//
-//        final CheckCityController controller = new CheckCityController(userCheckCityInteractor);
-//        checkCityView.setCheckCityController(controller);
-//        return this;
-//    }
+    public WeatherAppBuilder addManageCityView() {
+        FavoriteCitiesInteractor interactor = new FavoriteCitiesInteractor(new FavoriteCityStorageImpl());
+        ManageCitiesController controller = new ManageCitiesController(interactor);
+        ManageCityView view = new ManageCityView(controller);
 
-    /**
-     * Adds the GetForecast Use Case to the application.
-     * @return this builder
-     */
-    public WeatherAppBuilder addGetForecastUseCase() {
-        final GetForecastOutputBoundary getForecastOutputBoundary = new GetForecastPresenter(getForecastViewModel,
-                viewManagerModel, getDetailsViewModel);
-        final GetForecastInputBoundary userGetForecastInteractor = new GetForecastInteractor(
-                forecastWeatherInfo, getForecastOutputBoundary);
-        final GetForecastController controller = new GetForecastController(userGetForecastInteractor);
-        getForecastView.setGetForecastController(controller);
+        cardPanel.add(view, "manage cities");
         return this;
     }
 
-     /**
-     * Creates the JFrame for the application and initially sets the SignupView to be displayed.
-     * @return the application
-     */
     public JFrame build() {
-        final JFrame application = new JFrame("Weather Information Application");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JFrame application = new JFrame("Weather App");
+        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        application.setLayout(new BorderLayout());
 
-        application.add(cardPanel);
+        application.add(cardPanel, BorderLayout.CENTER);
+        application.setSize(800, 600);
 
-        viewManagerModel.setState(getForecastView.getViewName());
-        viewManagerModel.firePropertyChanged();
-
+        viewManagerModel.setState("check city");
         return application;
-
     }
-    }
+}

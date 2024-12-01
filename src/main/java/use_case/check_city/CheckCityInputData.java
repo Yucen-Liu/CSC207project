@@ -1,15 +1,16 @@
 package use_case.check_city;
 
 /**
- * The Input Data for the CheckCity Use Case.
+ * Input Data for the CheckCity Use Case.
  */
 public class CheckCityInputData {
+    private final String cityName;
 
-    private final String cityname;
-
-    public CheckCityInputData(String cityname) {
-        this.cityname = cityname;
+    public CheckCityInputData(String cityName) {
+        this.cityName = cityName;
     }
 
-    public String getCityname() { return cityname; }
+    public String getCityName() {
+        return cityName;
+    }
 }

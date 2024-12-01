@@ -1,22 +1,68 @@
 package interface_adapter.check_city;
 
-import interface_adapter.ViewModel;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-/**
- * The ViewModel for the CheckCity View.
- */
-public class CheckCityViewModel extends ViewModel<CheckCityState> {
+public class CheckCityViewModel {
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private String cityName;
+    private boolean isValid;
 
-    public static final String APPLICATION_TITLE_LABEL = "Weather Information";
-    public static final String CHECK_CITY_LABEL = "See if we have the city you are interested in:";
-
-    public static final String SAVE_BUTTON_LABEL = "Save";
-    public static final String CHECK_CITY_BUTTON_LABEL = "Check";
-
-    public CheckCityViewModel() {
-        super("check city");
-        setState(new CheckCityState());
+    /**
+     * Adds a listener to observe state changes.
+     *
+     * @param listener the listener to add
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Removes a previously added listener.
+     *
+     * @param listener the listener to remove
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
+    }
 
+    /**
+     * Gets the name of the city.
+     *
+     * @return the city name
+     */
+    public String getCityName() {
+        return cityName;
+    }
+
+    /**
+     * Sets the name of the city and notifies listeners.
+     *
+     * @param cityName the new city name
+     */
+    public void setCityName(String cityName) {
+        String oldCityName = this.cityName;
+        this.cityName = cityName;
+        support.firePropertyChange("cityName", oldCityName, cityName);
+    }
+
+    /**
+     * Returns whether the city is valid.
+     *
+     * @return true if the city is valid, false otherwise
+     */
+    public boolean isValid() {
+        return isValid;
+    }
+
+    /**
+     * Sets whether the city is valid and notifies listeners.
+     *
+     * @param isValid the new validity status
+     */
+    public void setValid(boolean isValid) {
+        boolean oldIsValid = this.isValid;
+        this.isValid = isValid;
+        support.firePropertyChange("isValid", oldIsValid, isValid);
+    }
 }
