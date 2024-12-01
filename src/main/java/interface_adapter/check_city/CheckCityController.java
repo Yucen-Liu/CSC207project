@@ -14,5 +14,9 @@ public class CheckCityController {
         CheckCityInputData inputData = new CheckCityInputData(cityName);
         checkCityUseCaseInteractor.execute(inputData);
     }
+
+    public boolean isValid(String cityName) {
+        return this.checkCityUseCaseInteractor.validateCity(cityName);
+    }
 }
 

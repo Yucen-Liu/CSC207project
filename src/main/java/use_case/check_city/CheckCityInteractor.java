@@ -12,11 +12,13 @@ public class CheckCityInteractor implements CheckCityInputBoundary {
     }
 
     @Override
-    public void validateCity(String cityName) {
+    public boolean validateCity(String cityName) {
         if (weatherInfo.existsByName(cityName)) {
             outputBoundary.presentSuccess(cityName);
+            return true;
         } else {
             outputBoundary.presentFailure("City not found: " + cityName);
+            return false;
         }
     }
 

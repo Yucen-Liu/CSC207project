@@ -81,9 +81,12 @@ public class WeatherAppView extends JPanel {
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-
             // Validate the city name
-            checkCityController.execute(location);
+            if (checkCityController.isValid(location)) {
+                checkCityController.execute(location);
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            }
 
             // Prepare saved city names
             List<String> savedCityNames = cityStorage.getCities()
@@ -99,6 +102,18 @@ public class WeatherAppView extends JPanel {
             updateForecastDisplay(viewModel, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
         });
 
+        // Save City Button Action
+        saveCityButton.addActionListener(e -> {
+            String location = locationField.getText();
+            if (location.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (checkCityController.isValid(location)) {
+                // Save city list function here
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
     }
 
@@ -128,5 +143,6 @@ public class WeatherAppView extends JPanel {
         ManageCitiesController controller = new ManageCitiesController(new FavoriteCitiesInteractor(new FavoriteCityStorageImpl()));
         ManageCityView manageCityView = new ManageCityView(controller);
         manageCityView.setVisible(true); // Show the ManageCityView window
+
     }
 }

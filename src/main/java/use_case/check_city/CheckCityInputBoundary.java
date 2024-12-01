@@ -9,7 +9,7 @@ public interface CheckCityInputBoundary {
      *
      * @param cityName the name of the city to validate
      */
-    void validateCity(String cityName);
+    boolean validateCity(String cityName);
 
     /**
      * Executes the check city use case with structured input data.

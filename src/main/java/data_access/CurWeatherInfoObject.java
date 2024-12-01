@@ -57,6 +57,7 @@ public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccess
         }
     }
 
+
     private JSONObject fetchWeatherData(String urlString) throws Exception {
         Request request = new Request.Builder().url(urlString).build();
 
