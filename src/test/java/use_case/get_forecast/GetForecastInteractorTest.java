@@ -1,17 +1,5 @@
 package use_case.get_forecast;
 
-import data_access.ForecastWeatherInfoObject;
-import entity.*;
-import use_case.login.*;
-
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 
 public class GetForecastInteractorTest {
 //
