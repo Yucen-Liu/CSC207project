@@ -26,7 +26,7 @@ public class GetForecastController {
     /**
      * Switches to the GetDetails view.
      */
-    public void switchGetDetailsView() {
+    public void switchToGetDetailsView() {
         interactor.switchToGetDetailsView();
     }
 
