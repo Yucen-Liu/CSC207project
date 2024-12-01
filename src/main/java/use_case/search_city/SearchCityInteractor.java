@@ -16,13 +16,13 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
 
     @Override
     public void execute(SearchCityInputData searchcityInputData) {
-        if(userDataAccessObject.existsByName(SearchCityInputData.getCityname())){
-            userPresenter.citynameExist("It is in our application! Please signup or login.");
-        }
-        else{
-            userPresenter.citynameNonExist("Sorry... We currently offer the weather information " +
-                    "for the city you are interested in. Maybe try later?");
-        }
+//        if(userDataAccessObject.existsByName(SearchCityInputData.getCityname())){
+//            userPresenter.citynameExist("It is in our application! Please signup or login.");
+//        }
+//        else{
+//            userPresenter.citynameNonExist("Sorry... We currently offer the weather information " +
+//                    "for the city you are interested in. Maybe try later?");
+//        }
     }
 
     @Override

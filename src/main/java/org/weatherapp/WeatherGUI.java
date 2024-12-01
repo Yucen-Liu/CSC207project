@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import interface_adapter.manage_cities.ManageCitiesController;
+import use_case.manage_cities.FavoriteCitiesInteractor;
+import data_access.FavoriteCityStorageImpl;
+import view.ManageCityView;
 
 public class WeatherGUI {
     private final WeatherService weatherService;
@@ -20,6 +24,7 @@ public class WeatherGUI {
         frame.setSize(600, 300);
         frame.setLayout(new BorderLayout());
 
+        // Input Panel
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new FlowLayout());
 
@@ -33,6 +38,7 @@ public class WeatherGUI {
         inputPanel.add(getWeatherButton);
         inputPanel.add(saveCityButton);
 
+        // Weather Display Panel
         JPanel weatherPanel = new JPanel();
         weatherPanel.setLayout(new GridLayout(4, 1));
 
@@ -46,6 +52,7 @@ public class WeatherGUI {
         weatherPanel.add(conditionDisplay);
         weatherPanel.add(humidityDisplay);
 
+        // Saved Cities List
         JList<String> savedCitiesList = new JList<>(cityStorage.getCityListModel());
         savedCitiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         savedCitiesList.addListSelectionListener(e -> {
@@ -58,6 +65,22 @@ public class WeatherGUI {
             }
         });
 
+        // City List Panel with "Manage Cities" Button
+        JPanel cityListPanel = new JPanel();
+        cityListPanel.setLayout(new BorderLayout());
+
+        JButton manageCitiesButton = new JButton("Manage Cities");
+        manageCitiesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                manageCities();
+            }
+        });
+
+        cityListPanel.add(manageCitiesButton, BorderLayout.NORTH);
+        cityListPanel.add(new JScrollPane(savedCitiesList), BorderLayout.CENTER);
+
+        // Get Weather Button Action
         getWeatherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +90,6 @@ public class WeatherGUI {
                     return;
                 }
 
-                // Validate city before showing
                 if (CityValidator.isCityValid(location)) {
                     WeatherData weatherData = weatherService.getCurrentWeather(location);
                     updateWeatherDisplay(weatherData, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
@@ -75,10 +97,10 @@ public class WeatherGUI {
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
         });
 
+        // Save City Button Action
         saveCityButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,7 +110,6 @@ public class WeatherGUI {
                     return;
                 }
 
-                // Validate city before adding
                 if (CityValidator.isCityValid(location)) {
                     cityStorage.addCity(location);
                     locationField.setText(""); // Clear the input field
@@ -98,9 +119,9 @@ public class WeatherGUI {
             }
         });
 
-
+        // Adding Components to Frame
         frame.add(inputPanel, BorderLayout.NORTH);
-        frame.add(new JScrollPane(savedCitiesList), BorderLayout.WEST);
+        frame.add(cityListPanel, BorderLayout.WEST);
         frame.add(weatherPanel, BorderLayout.CENTER);
 
         frame.setVisible(true);
@@ -112,6 +133,12 @@ public class WeatherGUI {
         temperatureDisplay.setText("Temperature: " + weatherData.getTemperature() + "°C");
         conditionDisplay.setText("Condition: " + weatherData.getCondition());
         humidityDisplay.setText("Humidity: " + weatherData.getHumidity() + "%");
+    }
 
+    private void manageCities() {
+        // Link to the ManageCityView window
+        ManageCitiesController controller = new ManageCitiesController(new FavoriteCitiesInteractor(new FavoriteCityStorageImpl()));
+        ManageCityView manageCityView = new ManageCityView(controller);
+        manageCityView.setVisible(true); // Show the ManageCityView window
     }
 }
