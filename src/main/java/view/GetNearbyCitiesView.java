@@ -25,7 +25,7 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
 
     public GetNearbyCitiesView(NearbyCitiesViewModel nearbyCitiesViewModel) {
         this.nearbyCitiesViewModel = nearbyCitiesViewModel;
-        nearbyCitiesViewModel.addPropertyChangeListener(this);
+        this.nearbyCitiesViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel(nearbyCitiesViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -69,10 +69,7 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
         this.add(scrollPane);
     }
 
-    /**
-     * React to a button click that results in evt.
-     * @param evt the ActionEvent to react to
-     */
+    @Override
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }

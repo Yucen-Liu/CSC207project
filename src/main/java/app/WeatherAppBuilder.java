@@ -3,8 +3,6 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 
-import data_access.CurWeatherInfoObject;
-
 import data_access.ForecastWeatherInfoObject;
 import entity.CommonCityFactory;
 import entity.ForecastCityFactory;
@@ -15,24 +13,15 @@ import interface_adapter.get_forecast.GetForecastViewModel;
 
 import interface_adapter.get_details.GetDetailsViewModel;
 
-import use_case.get_forecast.GetForecastDataAccessInterface;
-import use_case.get_forecast.GetForecastInputBoundary;
+import interface_adapter.search_city.SearchCityViewModel;
 import use_case.get_forecast.GetForecastInteractor;
-import use_case.get_forecast.GetForecastOutputBoundary;
 import data_access.FavoriteCityStorageImpl;
 import entity.*;
 
-import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
 
 import use_case.manage_cities.FavoriteCitiesInteractor;
 import view.*;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.get_forecast.GetForecastController;
-import interface_adapter.get_forecast.GetForecastPresenter;
-import interface_adapter.get_forecast.GetForecastViewModel;
-import use_case.get_forecast.GetForecastInteractor;
-import data_access.ForecastWeatherInfoObject;
 
 public class WeatherAppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -63,10 +52,12 @@ public class WeatherAppBuilder {
         GetForecastInteractor forecastInteractor = new GetForecastInteractor(forecastInfo, forecastPresenter);
         GetForecastController forecastController = new GetForecastController(forecastInteractor, forecastViewModel);
 
+        SearchCityViewModel searchCityViewModel = new SearchCityViewModel();
+
 
         // Instantiate WeatherAppView with required dependencies
-        WeatherAppView weatherAppView = new WeatherAppView(cityStorage, cityFactory, forecastController);
-        cardPanel.add(weatherAppView, "weather app");
+        SearchCityView searchCityView = new SearchCityView(searchCityViewModel);
+        cardPanel.add(searchCityView, "weather app");
         return this;
     }
 

@@ -8,6 +8,9 @@ import java.util.List;
  * The ViewModel for the CheckCity View.
  */
 public class SearchCityViewModel extends ViewModel<SearchCityState> {
+
+    public static final String TITLE_LABEL = "Search City";
+
     public SearchCityViewModel() {
         super("search city");
         setState(new SearchCityState());

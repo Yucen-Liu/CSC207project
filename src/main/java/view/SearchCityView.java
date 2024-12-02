@@ -7,30 +7,40 @@ import entity.CityStorage;
 import interface_adapter.get_forecast.GetForecastController;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
+import interface_adapter.search_city.SearchCityController;
+import interface_adapter.search_city.SearchCityViewModel;
 import use_case.manage_cities.FavoriteCitiesInteractor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WeatherAppView extends JPanel {
-    private final CityStorage cityStorage; // Dependency injected
-    private final CityFactory cityFactory; // Dependency injected
-    private final GetForecastController getForecastController;
+public class SearchCityView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    public WeatherAppView(CityStorage cityStorage, CityFactory cityFactory,
-                          GetForecastController getForecastController) {
-        this.cityStorage = cityStorage;
-        this.cityFactory = cityFactory;
-        this.getForecastController = getForecastController;
+    private final String viewName = "search city";
+    private final SearchCityViewModel searchCityViewModel;
+
+    private final JTextField locationField = new JTextField(15);
+
+    private SearchCityController searchCityController;
+
+    public SearchCityView(SearchCityViewModel searchCityViewModel) {
+        this.searchCityViewModel = searchCityViewModel;
+        this.searchCityViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
+
+        final JLabel title = new JLabel(searchCityViewModel.TITLE_LABEL);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Input Panel
         JPanel inputPanel = new JPanel(new FlowLayout());
         JLabel locationLabel = new JLabel("Enter Location:");
-        JTextField locationField = new JTextField(15);
         JButton getWeatherButton = new JButton("Get Weather");
         JButton saveCityButton = new JButton("Save City");
 
@@ -42,7 +52,7 @@ public class WeatherAppView extends JPanel {
         // Forecast Display Panel
         JPanel forecastPanel = new JPanel(new GridLayout(4, 1));
         JLabel locationDisplay = new JLabel("Location: ");
-        JLabel temperatureDisplay = new JLabel("Temperature (Next 3 Hours): ");
+        JLabel temperatureDisplay = new JLabel("Temperature: ");
         JLabel conditionDisplay = new JLabel("Condition: ");
         JLabel humidityDisplay = new JLabel("Humidity: ");
 
@@ -52,7 +62,7 @@ public class WeatherAppView extends JPanel {
         forecastPanel.add(humidityDisplay);
 
         // Saved Cities List
-        DefaultListModel<String> listModel = getCityListModel(cityStorage.getCities());
+        DefaultListModel<String> listModel = getCityListModel(searchCityViewModel.getSavedCityNames());
         JList<String> savedCitiesList = new JList<>(listModel);
         savedCitiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -82,22 +92,20 @@ public class WeatherAppView extends JPanel {
 //            if (checkCityController.isValid(location)) {
 //                checkCityController.execute(location);
 //            }
-            else {
-
-                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-            }
+//            else {
+//
+//                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+//            }
+            searchCityController.execute(location, searchCityViewModel.getSavedCityNames());
 
             // Prepare saved city names
-            List<String> savedCityNames = cityStorage.getCities()
-                    .stream()
-                    .map(City::getLocation)
-                    .collect(Collectors.toList());
+            List<String> savedCityNames = searchCityViewModel.getSavedCityNames();
 
             // Use the controller to execute the forecast use case
-            getForecastController.execute(location, savedCityNames);
+            searchCityController.execute(location, savedCityNames);
 
             // Update display based on the ViewModel
-            GetForecastViewModel viewModel = getForecastController.getViewModel();
+            SearchCityViewModel viewModel = searchCityController.getSearchCityViewModel();
             updateForecastDisplay(viewModel, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
         });
 
@@ -118,25 +126,22 @@ public class WeatherAppView extends JPanel {
 
     }
 
-    /**
-     * Converts a List<City> to a DefaultListModel<String>.
-     * @param cities the list of cities to convert.
-     * @return a DefaultListModel containing the city names.
-     */
-    private DefaultListModel<String> getCityListModel(List<City> cities) {
+    private DefaultListModel<String> getCityListModel(List<String> cityNames) {
         DefaultListModel<String> model = new DefaultListModel<>();
-        for (City city : cities) {
-            model.addElement(city.getLocation());
+        if(cityNames != null) {
+            for (String cityName : cityNames) {
+                model.addElement(cityName);
+            }
         }
         return model;
     }
 
-    private void updateForecastDisplay(GetForecastViewModel viewModel, JLabel locationDisplay, JLabel temperatureDisplay,
+    private void updateForecastDisplay(SearchCityViewModel viewModel, JLabel locationDisplay, JLabel temperatureDisplay,
                                        JLabel conditionDisplay, JLabel humidityDisplay) {
-        locationDisplay.setText("Location: " + viewModel.getCityName());
-        temperatureDisplay.setText("Temperature (Next 3 Hours): " + viewModel.getTemperatureThreeHoursLater() + "°C");
-        conditionDisplay.setText("Condition: " + viewModel.getConditionThreeHoursLater());
-        humidityDisplay.setText("Humidity: " + viewModel.getHumidityThreeHoursLater() + "%");
+        locationDisplay.setText("Location: " + viewModel.getLocation());
+        temperatureDisplay.setText("Temperature: " + viewModel.getTemperature() + "°C");
+        conditionDisplay.setText("Condition: " + viewModel.getCondition());
+        humidityDisplay.setText("Humidity: " + viewModel.getHumidity() + "%");
     }
 
     private void manageCities() {
@@ -144,6 +149,16 @@ public class WeatherAppView extends JPanel {
         ManageCitiesController controller = new ManageCitiesController(new FavoriteCitiesInteractor(new FavoriteCityStorageImpl()));
         ManageCityView manageCityView = new ManageCityView(controller);
         manageCityView.setVisible(true); // Show the ManageCityView window
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
 
     }
 }
