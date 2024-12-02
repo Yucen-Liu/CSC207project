@@ -1,8 +1,8 @@
 package use_case.manage_sort;
 
 import org.junit.jupiter.api.Test;
-import use_case.manage_sort.SortCitiesOutputBoundary;
-import use_case.manage_sort.SortCitiesOutputData;
+import use_case.manage_sort.*;
+import entity.CommonCity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,13 +13,19 @@ public class SortCitiesOutputBoundaryTest {
 
     @Test
     public void testPresentSortedCities() {
-        SortCitiesOutputBoundary outputBoundary = mock(SortCitiesOutputBoundary.class);
+        // Arrange
+        SortCitiesOutputBoundary outputBoundaryMock = mock(SortCitiesOutputBoundary.class);
+        List<CommonCity> sortedCities = Arrays.asList(
+                new CommonCity("CityA", 10.0, "Sunny", 50),
+                new CommonCity("CityB", 15.0, "Cloudy", 60)
+        );
+        SortCitiesOutputData outputData = new SortCitiesOutputData(sortedCities);
 
-        SortCitiesOutputData outputData = mock(SortCitiesOutputData.class);
-        when(outputData.getSortedCities()).thenReturn(Arrays.asList());
+        // Act
+        outputBoundaryMock.presentSortedCities(outputData);
 
-        outputBoundary.presentSortedCities(outputData);
-
-        verify(outputBoundary, times(1)).presentSortedCities(outputData);
+        // Assert
+        verify(outputBoundaryMock, times(1)).presentSortedCities(outputData);
     }
 }
+
