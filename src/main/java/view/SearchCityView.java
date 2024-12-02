@@ -213,4 +213,8 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
     public void setSearchCityController(SearchCityController controller) {
         this.searchCityController = controller;
     }
+
+    public String getViewName() {
+        return viewName;
+    }
 }
