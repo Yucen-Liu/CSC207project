@@ -95,5 +95,13 @@ Use your preferred build tool (e.g., Maven or Gradle) to install the necessary d
 **Fork the Repository**:
 - Click the "Fork" button at the top-right corner of the repository page.
 
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
 ## Contact
 - For any queries or feedback, please reach out to the project maintainers. Contributions, suggestions, and improvements are always welcome!
