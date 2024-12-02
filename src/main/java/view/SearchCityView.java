@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchCityView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -104,8 +105,11 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
                 return;
             }
             if (searchCityController.isValidCityName(location)) {
-                if(!savedCityNames.contains(location)) {
+                if (!savedCityNames.contains(location)) {
                     savedCityNames.add(location);
+                    searchCityViewModel.getState().setSavedCityNames(new ArrayList<>(savedCityNames));
+                    System.out.println("Updated savedCityNames in state: " + searchCityViewModel.getState().getSavedCityNames());
+
                 }
                 listModel.clear(); // Clear the current items
                 for (String city : savedCityNames) {

@@ -118,15 +118,32 @@ public class SortCitiesView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final SortCitiesState state = (SortCitiesState) evt.getNewValue();
-        setFields(state);
+        if ("sortedCities".equals(evt.getPropertyName())) {
+            System.out.println("View: Detected property change for sortedCities.");
+            SortCitiesState state = (SortCitiesState) evt.getNewValue();
+            setFields(state);
+        }
     }
 
     private void setFields(SortCitiesState state) {
-        for(String cityName: state.getCityNames()) {
-            panel.add(new JLabel(getFormattedCities(cityName,state)));
+        JPanel cityListPanel = new JPanel();
+        cityListPanel.setLayout(new GridLayout(0, 1));
+
+        for (CommonCity city : state.getSortedCities()) {
+            cityListPanel.add(new JLabel(String.format(
+                    "%s: Temperature = %.1f°C, Condition = %s, Humidity = %d%%",
+                    city.getLocation(), city.getTemperature(), city.getCondition(), city.getHumidity()
+            )));
         }
+
+        System.out.println("View: Updating panel with sorted cities: " + state.getSortedCities());
+
+        panel.setViewportView(cityListPanel);
+        panel.revalidate();
+        panel.repaint();
     }
+
+
 
     public String getViewName() {
         return viewName;

@@ -31,7 +31,12 @@ public class SortCitiesPresenter implements SortCitiesOutputBoundary {
         final SortCitiesState sortCitiesState = sortCitiesViewModel.getState();
         sortCitiesState.setSortedCities(outputData.getSortedCities());
 
+        // 修正为传递整个状态对象
+        sortCitiesViewModel.firePropertyChanged("sortedCities", null, sortCitiesState);
     }
+
+
+
 
     @Override
     public void switchToSearchCityView() {
