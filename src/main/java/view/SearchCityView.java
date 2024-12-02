@@ -34,6 +34,9 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
 
     private SearchCityController searchCityController;
 
+    private JButton showForecastButton;
+    private JButton nearbyCitiesButton;
+
     public SearchCityView(SearchCityViewModel searchCityViewModel) {
         this.searchCityViewModel = searchCityViewModel;
         this.searchCityViewModel.addPropertyChangeListener(this);
@@ -55,7 +58,7 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         inputPanel.add(getWeatherButton);
         inputPanel.add(saveCityButton);
 
-        // Forecast Display Panel
+        // Weather Display Panel
         JPanel forecastPanel = new JPanel(new GridLayout(4, 1));
         locationDisplay = new JLabel("Location: ");
         temperatureDisplay = new JLabel("Temperature: ");
@@ -80,10 +83,18 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         cityListPanel.add(manageCitiesButton, BorderLayout.NORTH);
         cityListPanel.add(new JScrollPane(savedCitiesList), BorderLayout.CENTER);
 
+        JPanel advancedPanel = new JPanel(new FlowLayout());
+        showForecastButton = new JButton("Show Forecast");
+        nearbyCitiesButton = new JButton("Nearby Cities");
+
+        advancedPanel.add(showForecastButton);
+        advancedPanel.add(nearbyCitiesButton);
+
         // Adding Components to Main Panel
         add(inputPanel, BorderLayout.NORTH);
         add(cityListPanel, BorderLayout.WEST);
         add(forecastPanel, BorderLayout.CENTER);
+        add(advancedPanel, BorderLayout.SOUTH);
 
         // Get Weather Button Action
         getWeatherButton.addActionListener(e -> {
@@ -136,6 +147,22 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
                 fetchAndDisplayWeatherForCity(selectedCity);
             }
         });
+
+        showForecastButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        searchCityController.switchToGetForecastView();
+                    }
+                }
+        );
+
+        nearbyCitiesButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        searchCityController.switchToGetNearbyCitiesView();
+                    }
+                }
+        );
     }
 
     private DefaultListModel<String> getCityListModel(List<String> cityNames) {
