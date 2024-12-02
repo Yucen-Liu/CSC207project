@@ -1,7 +1,7 @@
 package data_access;
 
 import java.util.List;
-
+// this is good
 /**
  * Interface for managing the storage of favorite cities for users.
  * Provides methods to add, remove, and retrieve a user's favorite cities.
