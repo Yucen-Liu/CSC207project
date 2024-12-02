@@ -12,6 +12,6 @@ public interface SearchCityInputBoundary {
      * @param searchcityInputData the input data
      */
     void execute(SearchCityInputData searchcityInputData);
-    void switchToGetForecastView();
-    void switchToGetNearbyCitiesView();
+    void switchToGetDetailsView();
+    void switchToSortCitiesView();
 }
