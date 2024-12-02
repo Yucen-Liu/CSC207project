@@ -2,6 +2,8 @@ package interface_adapter.get_details;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.get_forecast.GetForecastViewModel;
+import interface_adapter.manage_sort.SortCitiesState;
+import interface_adapter.nearby_cities.NearbyCitiesState;
 import interface_adapter.nearby_cities.NearbyCitiesViewModel;
 import interface_adapter.search_city.SearchCityViewModel;
 import use_case.get_details.GetDetailsOutputBoundary;
@@ -31,10 +33,14 @@ public class GetDetailsPresenter implements GetDetailsOutputBoundary {
     }
 
     @Override
-    public void switchToGetNearbyCitiesView() {
+    public void switchToGetNearbyCitiesView(String cityName) {
+        final NearbyCitiesState nearbyCitiesState = nearbyCitiesViewModel.getState();
+        nearbyCitiesState.setCityName(cityName);
+        nearbyCitiesViewModel.setState(nearbyCitiesState);
+        nearbyCitiesViewModel.firePropertyChanged();
+
         viewManagerModel.setState(nearbyCitiesViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-
     }
 
     @Override

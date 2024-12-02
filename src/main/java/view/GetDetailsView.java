@@ -81,6 +81,8 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
         getNearbyCities = new JButton("Get nearby cities");
         buttons.add(getNearbyCities);
 
+        final GetDetailsState currentState = getDetailsViewModel.getState();
+
         getForecast.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -89,13 +91,10 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
                 }
         );
 
-        getNearbyCities.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        getDetailsController.switchToGetNearbyCitiesView();
-                    }
-                }
-        );
+        getNearbyCities.addActionListener(e -> {
+            String cityName = currentState.getCityName();
+            getDetailsController.switchToGetNearbyCitiesView(cityName);
+        });
 
         back.addActionListener(
                 new ActionListener() {
@@ -118,7 +117,6 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
 //        );
 
         get.addActionListener(e -> {
-            final GetDetailsState currentState = getDetailsViewModel.getState();
             getDetailsController.execute(
                     currentState.getCityName(), currentState.getSavedCityNames()
             );
