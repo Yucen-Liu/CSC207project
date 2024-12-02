@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.get_details.GetDetailsController;
+import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.nearby_cities.NearbyCitiesViewModel;
 import org.weatherapp.WeatherData;
@@ -97,3 +99,32 @@ public class GetDetailsView extends JFrame {
         nearbyCitiesFrame.setVisible(true);
     }
 }
+//private final String viewName = "get details;
+//private final GetDetailsViewModel getDetailsViewModel;
+//
+//private final JTextField temperature = new JTextField(15);
+//private final JTextField condition= new JTextField(15);
+//private final JTextField humidity = new JTextField(15);
+//
+//private final JTextField tempMax = new JTextField(15);
+//private final JTextField tempMin = new JTextField(15);
+//private final JTextField pressure = new JTextField(15);
+//
+//private final JTextField visibility = new JTextField(15);
+//
+//private final JLabel cityNameLabel = new JLabel("");
+//
+//private final JButton close;
+//private final JButton getForecast;
+//private final JButton getNearbyCities;
+//
+//private GetDetailsController getDetailsController;
+//
+//public GetDetailsView(GetDetailsViewModel getDetailsViewModel, String cityName) {
+//    this.getDetailsViewModel = getDetailsViewModel;
+//    this.getDetailsViewModel.addPropertyChangeListener(this);
+//
+//    final JLabel title = new JLabel("Detailed Information");
+//    title.setAlignmentX(Component.CENTER_ALIGNMENT);
+//
+//    final JPanel temp
