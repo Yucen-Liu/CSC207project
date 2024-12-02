@@ -56,8 +56,6 @@ public class WeatherAppBuilder {
     private final CommonCityFactory commonCityFactory = new CommonCityFactory();
     private final CurWeatherInfoObject curWeatherInfoObject = new CurWeatherInfoObject(commonCityFactory);
 
-    private SearchCityViewModel searchCityViewModel;
-    private SearchCityView searchCityView;
     private final ForecastWeatherInfoObject forecastWeatherInfoObject = new ForecastWeatherInfoObject(new ForecastCityFactory());
     private final DetailedWeatherInfoObject detailedWeatherInfoObject = new DetailedWeatherInfoObject(new DetailedCityFactory());
     private final NearbyCityWeatherAccessObject nearbyCityWeatherAccessObject = new NearbyCityWeatherAccessObject(new NearbyCityFactory());
@@ -74,7 +72,7 @@ public class WeatherAppBuilder {
     private SortCitiesView sortCitiesView;
 
     private SearchCityViewModel searchCityViewModel;
-//    private SearchCityView searchCityView;
+    private SearchCityView searchCityView;
 
     private GetDetailsViewModel getDetailsViewModel;
     private GetDetailsView getDetailsView;
@@ -138,24 +136,6 @@ public class WeatherAppBuilder {
 //        cardPanel.add(view, "get forecast");
 //        return this;
 //    }
-
-    public WeatherAppBuilder addGetForecastView() {
-        // Create dependencies for GetForecastView
-        ForecastWeatherInfoObject forecastInfo = new ForecastWeatherInfoObject(new ForecastCityFactory());
-        GetForecastViewModel forecastViewModel = new GetForecastViewModel();
-        GetDetailsViewModel detailsViewModel = new GetDetailsViewModel();
-        GetForecastPresenter presenter = new GetForecastPresenter(forecastViewModel, viewManagerModel, detailsViewModel);
-        GetForecastInteractor interactor = new GetForecastInteractor(forecastInfo, presenter);
-
-        // Pass both interactor (as InputBoundary) and ViewModel to the controller
-        GetForecastController controller = new GetForecastController(interactor, forecastViewModel);
-
-        // Instantiate the view
-        GetForecastView view = new GetForecastView(forecastViewModel);
-        view.setGetForecastController(controller);
-        cardPanel.add(view, "get forecast");
-        return this;
-    }
 
      /**
       * Adds the GetForecast View to the application.
