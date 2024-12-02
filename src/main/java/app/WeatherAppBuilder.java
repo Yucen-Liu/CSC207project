@@ -246,7 +246,8 @@ public class WeatherAppBuilder {
      * @return this builder
      */
     public WeatherAppBuilder addSearchCityUseCase() {
-        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter(searchCityViewModel, viewManagerModel);
+        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter(searchCityViewModel,
+                getForecastViewModel, nearbyCitiesViewModel, viewManagerModel);
         final SearchCityInputBoundary userInteractor = new SearchCityInteractor(
                 curWeatherInfoObject, outputBoundary);
 

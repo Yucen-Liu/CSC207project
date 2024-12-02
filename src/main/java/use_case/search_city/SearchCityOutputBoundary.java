@@ -5,4 +5,6 @@ package use_case.search_city;
  */
 public interface SearchCityOutputBoundary {
     void searchCityInformationView(SearchCityOutputData searchCityOutputData);
+    void switchToGetForecastView();
+    void switchToGetNearbyCitiesView();
 }
