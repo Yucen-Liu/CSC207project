@@ -144,16 +144,16 @@ public class WeatherAppBuilder {
 //        return this;
 //    }
 
-     /**
-      * Adds the GetForecast View to the application.
-      * @return this builder
-      */
-     public WeatherAppBuilder addGetForecastView() {
-         getForecastViewModel = new GetForecastViewModel();
-         getForecastView = new GetForecastView(getForecastViewModel);
-         cardPanel.add(getForecastView, getForecastView.getViewName());
-         return this;
-     }
+    /**
+     * Adds the GetForecast View to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addGetForecastView() {
+        getForecastViewModel = new GetForecastViewModel();
+        getForecastView = new GetForecastView(getForecastViewModel);
+        cardPanel.add(getForecastView, getForecastView.getViewName());
+        return this;
+    }
 
     /**
      * Adds the GetDetails View to the application.

@@ -1,3 +1,4 @@
+
 package app;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class Main {
 //                .addSearchCityUseCase()
                 .build();
 
-
+        application.pack();
         application.setVisible(true);
     }
 }
