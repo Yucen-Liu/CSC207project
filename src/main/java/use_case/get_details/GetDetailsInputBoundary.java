@@ -15,7 +15,7 @@ public interface GetDetailsInputBoundary {
     /**
      * Executes the switch to GetNearbyCities view use case.
      */
-    void switchToGetNearbyCitiesView();
+    void switchToGetNearbyCitiesView(String cityName);
 
     /**
      * Executes the switch to SearchCity view use case.

@@ -39,7 +39,9 @@ public class GetDetailsController {
     /**
      * Switches to the GetNearbyCities view.
      */
-    public void switchToGetNearbyCitiesView() {interactor.switchToGetNearbyCitiesView();}
+    public void switchToGetNearbyCitiesView(String cityName) {
+        interactor.switchToGetNearbyCitiesView(cityName);
+    }
 
     public GetDetailsViewModel
     getViewModel() {

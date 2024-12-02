@@ -13,7 +13,7 @@ public interface GetDetailsOutputBoundary {
     /**
      * Executes the switch to GetNearbyCities view use case.
      */
-    void switchToGetNearbyCitiesView();
+    void switchToGetNearbyCitiesView(String cityName);
 
     /**
      * Executes the switch to GetForecast view use case.

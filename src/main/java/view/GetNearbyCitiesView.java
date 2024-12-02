@@ -1,10 +1,12 @@
 package view;
 
+import interface_adapter.get_details.GetDetailsState;
 import interface_adapter.nearby_cities.NearbyCitiesController;
 import interface_adapter.nearby_cities.NearbyCitiesState;
 import interface_adapter.nearby_cities.NearbyCitiesViewModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +22,9 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
     private final JLabel cityNameField = new JLabel("");
 
     private NearbyCitiesController nearbyCitiesController;
+    private DefaultTableModel nearbyCitiesTableModel;
 
+    private final JButton get;
     private final JButton back;
 
     public GetNearbyCitiesView(NearbyCitiesViewModel nearbyCitiesViewModel) {
@@ -47,11 +51,13 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
         String [] columnNames = {nearbyCitiesViewModel.CITY_NAMES_LABEL, nearbyCitiesViewModel.TEMPERATURE_LABEL,
                 nearbyCitiesViewModel.CONDITION_LABEL, nearbyCitiesViewModel.HUMIDITY_LABEL};
 
-        final JTable table = new JTable(data, columnNames);
-        JScrollPane scrollPane = new JScrollPane(table);
-
+        nearbyCitiesTableModel = new DefaultTableModel(data, columnNames);
+        final JTable table = new JTable(nearbyCitiesTableModel);
 
         final JPanel buttons = new JPanel();
+        get = new JButton("Get Nearby Weather");
+        buttons.add(get);
+        get.addActionListener(this);
         back = new JButton(nearbyCitiesViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
 
@@ -63,10 +69,18 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
                 }
         );
 
+        get.addActionListener(e -> {
+            final NearbyCitiesState currentState = nearbyCitiesViewModel.getState();
+            nearbyCitiesController.execute(
+                    currentState.getCityName(), currentState.getNearbyCityNames()
+            );
+            setFields(currentState);
+        });
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(buttons);
-        this.add(scrollPane);
+        this.add(table);
     }
 
     @Override
@@ -82,6 +96,18 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
 
     private void setFields(NearbyCitiesState state) {
         cityNameField.setText(state.getCityName());
+        nearbyCitiesTableModel.setRowCount(0);
+
+        // Rounding for temperature
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        int numberNearbyCities = state.getNearbyCityNames().size();
+        for (int i = 0; i < numberNearbyCities; i++) {
+            String[] rowData = {state.getNearbyCityNames().get(i), df.format(state.getNearbyCityTemperatures().get(i)),
+                    state.getNearbyCityConditions().get(i), String.valueOf(state.getNearbyCityHumidities().get(i))};
+            nearbyCitiesTableModel.addRow(rowData);
+        }
     }
 
     public String getViewName() {

@@ -27,6 +27,7 @@ public class NearbyCitiesPresenter implements NearbyCitiesOutputBoundary {
     @Override
     public void nearbyCitiesInformationView(NearbyCitiesOutputData nearbyCitiesOutputData) {
         final NearbyCitiesState nearbyCitiesState = nearbyCitiesViewModel.getState();
+        nearbyCitiesState.setNearbyCityNames(nearbyCitiesOutputData.getNearbyCityNames());
         nearbyCitiesState.setNearbyCityTemperatures(nearbyCitiesOutputData.getNearbyCitiesTemperature());
         nearbyCitiesState.setNearbyCityConditions(nearbyCitiesOutputData.getNearbyCitiesCondition());
         nearbyCitiesState.setNearbyCityHumidities(nearbyCitiesOutputData.getNearbyCitiesHumidity());
