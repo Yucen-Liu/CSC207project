@@ -30,6 +30,6 @@ public class NearbyCitiesPresenter implements NearbyCitiesOutputBoundary {
         nearbyCitiesState.setNearbyCityTemperatures(nearbyCitiesOutputData.getNearbyCitiesTemperature());
         nearbyCitiesState.setNearbyCityConditions(nearbyCitiesOutputData.getNearbyCitiesCondition());
         nearbyCitiesState.setNearbyCityHumidities(nearbyCitiesOutputData.getNearbyCitiesHumidity());
-        this.nearbyCitiesViewModel.firePropertyChanged();
+        nearbyCitiesViewModel.firePropertyChanged();
     }
 }
