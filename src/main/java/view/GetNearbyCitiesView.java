@@ -104,8 +104,10 @@ public class GetNearbyCitiesView extends JPanel implements ActionListener, Prope
 
         int numberNearbyCities = state.getNearbyCityNames().size();
         for (int i = 0; i < numberNearbyCities; i++) {
-            String[] rowData = {state.getNearbyCityNames().get(i), df.format(state.getNearbyCityTemperatures().get(i)),
-                    state.getNearbyCityConditions().get(i), String.valueOf(state.getNearbyCityHumidities().get(i))};
+            String[] rowData = {state.getNearbyCityNames().get(i),
+                    df.format(state.getNearbyCityTemperatures().get(i)) + " °C",
+                    state.getNearbyCityConditions().get(i),
+                    String.valueOf(state.getNearbyCityHumidities().get(i)) + "%"};
             nearbyCitiesTableModel.addRow(rowData);
         }
     }
