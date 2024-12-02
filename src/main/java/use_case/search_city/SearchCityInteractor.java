@@ -26,7 +26,7 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
     }
 
     @Override
-    public void switchToGetDetailsView() { userPresenter.switchToGetDetailsView(); }
+    public void switchToGetDetailsView(String cityName) { userPresenter.switchToGetDetailsView(cityName); }
 
     @Override
     public void switchToSortCitiesView() { userPresenter.switchToSortCitiesView(); }

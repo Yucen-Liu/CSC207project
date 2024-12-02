@@ -1,5 +1,7 @@
 package interface_adapter.search_city;
 
+import interface_adapter.get_details.GetDetailsState;
+import interface_adapter.get_details.GetDetailsViewModel;
 import use_case.search_city.SearchCityInputBoundary;
 import use_case.search_city.SearchCityInputData;
 
@@ -25,6 +27,8 @@ public class SearchCityController {
     }
 
     public SearchCityViewModel getSearchCityViewModel() { return searchCityViewModel; }
-    public void switchToGetDetailsView() { searchCityUseCaseInteractor.switchToGetDetailsView(); }
+    public void switchToGetDetailsView(String selectedCity) {
+        searchCityUseCaseInteractor.switchToGetDetailsView(selectedCity);
+    }
     public void switchToSortCitiesView() { searchCityUseCaseInteractor.switchToSortCitiesView(); }
 }
