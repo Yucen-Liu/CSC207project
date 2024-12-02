@@ -30,11 +30,11 @@ public class GetDetailsState {
         this.humidity = humidity;
     }
     public double getTemp_min() {return temp_min;}
-    public void setTemp_min(double temp_min) {
+    public void setTempMin(double temp_min) {
         this.temp_min = temp_min;
     }
     public double getTemp_max() {return temp_max;}
-    public void setTemp_max(double temp_max) {
+    public void setTempMax(double temp_max) {
         this.temp_max = temp_max;
     }
     public int getPressure() {return pressure;}
