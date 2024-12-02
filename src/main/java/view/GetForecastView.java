@@ -5,6 +5,7 @@ import interface_adapter.get_forecast.GetForecastState;
 import interface_adapter.get_forecast.GetForecastViewModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +34,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
     private final JButton get;
     private final JButton back;
     private GetForecastController getForecastController;
+    private DefaultTableModel getForecastTableModel;
 
     public GetForecastView(GetForecastViewModel getForecastViewModel) {
 
@@ -57,7 +59,9 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
         String[] columnNames = {getForecastViewModel.INFO_LABEL, getForecastViewModel.THREE_HOURS_AGO_LABEL,
                 getForecastViewModel.SIX_HOURS_AGO_LABEL, getForecastViewModel.NINE_HOURS_AGO_LABEL};
 
-        final JTable table = new JTable(data, columnNames);
+
+        getForecastTableModel = new DefaultTableModel(data, columnNames);
+        final JTable table = new JTable(getForecastTableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
 
@@ -74,6 +78,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
                         getForecastController.execute(
                                 currentState.getCityName(), currentState.getSavedCityNames()
                         );
+                        setFields(currentState);
                     }
                 }
                 );
@@ -108,17 +113,17 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
 
     private void setFields(GetForecastState state) {
         cityNameLabel.setText(state.getCityName());
-        temperatureThreeHourLaterLabel.setText(state.getTemperatureThreeHoursLater());
-        conditionThreeHourLaterLabel.setText(state.getConditionThreeHoursLater());
-        humidityThreeHourLaterLabel.setText(state.getHumidityThreeHoursLater());
+        getForecastTableModel.setValueAt(state.getTemperatureThreeHoursLater(), 0, 1);
+        getForecastTableModel.setValueAt(state.getTemperatureSixHoursLater(), 0, 2);
+        getForecastTableModel.setValueAt(state.getTemperatureNineHoursLater(), 0, 3);
 
-        temperatureSixHourLaterLabel.setText(state.getTemperatureSixHoursLater());
-        conditionSixHourLaterLabel.setText(state.getConditionSixHoursLater());
-        humiditySixHourLaterLabel.setText(state.getHumiditySixHoursLater());
+        getForecastTableModel.setValueAt(state.getConditionThreeHoursLater(), 1, 1);
+        getForecastTableModel.setValueAt(state.getConditionSixHoursLater(), 1, 2);
+        getForecastTableModel.setValueAt(state.getConditionNineHoursLater(), 1, 3);
 
-        temperatureNineHourLaterLabel.setText(state.getTemperatureNineHoursLater());
-        conditionNineHourLaterLabel.setText(state.getConditionNineHoursLater());
-        humidityNineHourLaterLabel.setText(state.getHumidityNineHoursLater());
+        getForecastTableModel.setValueAt(state.getHumidityThreeHoursLater(), 2, 1);
+        getForecastTableModel.setValueAt(state.getHumiditySixHoursLater(), 2, 2);
+        getForecastTableModel.setValueAt(state.getHumidityNineHoursLater(), 2, 3);
     }
 
     public String getViewName() {
