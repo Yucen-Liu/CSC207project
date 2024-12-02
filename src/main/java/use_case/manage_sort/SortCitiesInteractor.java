@@ -49,6 +49,13 @@ public class SortCitiesInteractor implements SortCitiesInputBoundary {
         while (index < cityNames.size()){
             String name = cityNames.get(index);
             CommonCity city = (CommonCity) dataAccessInterface.getCurWeather(name);
+
+            //Test
+            System.out.println("Interactor: Weather data for city " + name + " = " + city);
+
+            //Test
+
+
             newSavedCities.add(city);
             index++;
         }
@@ -65,11 +72,22 @@ public class SortCitiesInteractor implements SortCitiesInputBoundary {
             default:
                 throw new IllegalArgumentException("Invalid sort criterion: " + theCriterion);
         }
+        // 调试信息
+        System.out.println("Interactor: Sorted cities: " + newSavedCities);
+
+        SortCitiesOutputData outputData1 = new SortCitiesOutputData(newSavedCities);
+        outputBoundary.presentSortedCities(outputData1);
+
+
+
         // Create output data and pass it to the output boundary
         // Here 我们的 savedCities 是 sort好了，生成一个新的Output Data class 并扔给他 sorted list,
         SortCitiesOutputData outputData = new SortCitiesOutputData(newSavedCities);
         // 再把这个data存到 'OutputBoundary' which is used by 'Presenter'
         outputBoundary.presentSortedCities(outputData);
+
+        System.out.println("Interactor: Input city names = " + inputData.getSavedCityNames());
+
     }
 
 }

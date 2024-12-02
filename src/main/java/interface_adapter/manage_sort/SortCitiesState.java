@@ -22,5 +22,7 @@ public class SortCitiesState {
 
     public void setSortedCities(List<CommonCity> sortedCities) {
         this.sortedCities = sortedCities;
+        System.out.println("SortCitiesState: Updated sorted cities = " + sortedCities);
     }
+
 }
