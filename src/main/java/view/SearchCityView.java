@@ -17,11 +17,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchCityView extends JPanel implements ActionListener, PropertyChangeListener {
 
+    private List<String> savedCityNames;
     private final String viewName = "search city";
     private final SearchCityViewModel searchCityViewModel;
 
@@ -32,6 +34,7 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
     public SearchCityView(SearchCityViewModel searchCityViewModel) {
         this.searchCityViewModel = searchCityViewModel;
         this.searchCityViewModel.addPropertyChangeListener(this);
+        savedCityNames = searchCityViewModel.getSavedCityNames();
 
         setLayout(new BorderLayout());
 
@@ -96,17 +99,12 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
 //
 //                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
 //            }
-            searchCityController.execute(location, searchCityViewModel.getSavedCityNames());
-
-            // Prepare saved city names
-            List<String> savedCityNames = searchCityViewModel.getSavedCityNames();
-
             // Use the controller to execute the forecast use case
             searchCityController.execute(location, savedCityNames);
 
             // Update display based on the ViewModel
             SearchCityViewModel viewModel = searchCityController.getSearchCityViewModel();
-            updateForecastDisplay(viewModel, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+            updateWeatherDisplay(viewModel, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
         });
 
         // Save City Button Action
@@ -119,11 +117,17 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
 //            else if (checkCityController.isValid(location)) {
 //                // Save city list function here
 //            }
-            else {
-                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+//            else {
+//                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+//            }
+            if(!savedCityNames.contains(location)) {
+                savedCityNames.add(location);
+            }
+            listModel.clear(); // Clear the current items
+            for (String city : savedCityNames) {
+                listModel.addElement(city);
             }
         });
-
     }
 
     private DefaultListModel<String> getCityListModel(List<String> cityNames) {
@@ -136,8 +140,8 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         return model;
     }
 
-    private void updateForecastDisplay(SearchCityViewModel viewModel, JLabel locationDisplay, JLabel temperatureDisplay,
-                                       JLabel conditionDisplay, JLabel humidityDisplay) {
+    private void updateWeatherDisplay(SearchCityViewModel viewModel, JLabel locationDisplay, JLabel temperatureDisplay,
+                                      JLabel conditionDisplay, JLabel humidityDisplay) {
         locationDisplay.setText("Location: " + viewModel.getLocation());
         temperatureDisplay.setText("Temperature: " + viewModel.getTemperature() + "°C");
         conditionDisplay.setText("Condition: " + viewModel.getCondition());
@@ -149,7 +153,6 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         ManageCitiesController controller = new ManageCitiesController(new FavoriteCitiesInteractor(new FavoriteCityStorageImpl()));
         ManageCityView manageCityView = new ManageCityView(controller);
         manageCityView.setVisible(true); // Show the ManageCityView window
-
     }
 
     @Override

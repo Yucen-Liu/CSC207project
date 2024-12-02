@@ -2,6 +2,7 @@ package interface_adapter.search_city;
 
 import interface_adapter.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,5 +21,11 @@ public class SearchCityViewModel extends ViewModel<SearchCityState> {
     public Double getTemperature() { return getState().getTemperature(); }
     public String getCondition() { return getState().getCondition(); }
     public int getHumidity() { return getState().getHumidity(); }
-    public List<String> getSavedCityNames() { return getState().getSavedCityNames(); }
+    public List<String> getSavedCityNames() {
+        if (getState().getSavedCityNames() != null) {
+            return getState().getSavedCityNames();
+        }else{
+            return new ArrayList<>();
+        }
+    }
 }
