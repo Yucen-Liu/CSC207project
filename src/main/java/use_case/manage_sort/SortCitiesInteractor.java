@@ -4,52 +4,48 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import entity.CommonCity;
+
 /**
- * Interactor for the sort cities use case.
+ * Interactor for the SortCities use case.
  */
 public class SortCitiesInteractor implements SortCitiesInputBoundary {
-    private final List<String> cities; // List of saved cities
+
+    // Initialize Part
+    private final List<CommonCity> savedCities;
     private final SortCitiesOutputBoundary outputBoundary;
 
-    public SortCitiesInteractor(List<String> cities, SortCitiesOutputBoundary outputBoundary) {
-        this.cities = cities;
+    // 生成一个 'Interactor'需要input：1. list of CommonCity (saved list) 2. outputBoundary
+    public SortCitiesInteractor(List<CommonCity> savedCities, SortCitiesOutputBoundary outputBoundary) {
+        this.savedCities = savedCities;
         this.outputBoundary = outputBoundary;
     }
 
+    // Override the sort method from input boundary
+    // The only input is InputData class, and we don't care what data is that, we just assume there's correct data input
+
     @Override
-    public void sortCities(String sortBy) {
-        // Sort logic based on the sortBy criteria
-        Comparator<String> comparator;
-        switch (sortBy.toLowerCase()) {
+    public void sort(SortCitiesInputData inputData) {
+        String criterion = inputData.getCriterion();
+        switch (criterion.toLowerCase()) {
             case "temperature":
-                comparator = Comparator.comparing(city -> getTemperature(city));
+                Collections.sort(savedCities, Comparator.comparingDouble(CommonCity::getTemperature));
                 break;
             case "condition":
-                comparator = Comparator.comparing(city -> getCondition(city));
+                Collections.sort(savedCities, Comparator.comparing(CommonCity::getCondition));
                 break;
             case "humidity":
-                comparator = Comparator.comparing(city -> getHumidity(city));
+                Collections.sort(savedCities, Comparator.comparingInt(CommonCity::getHumidity));
                 break;
             default:
-                throw new IllegalArgumentException("Invalid sort criteria: " + sortBy);
+                throw new IllegalArgumentException("Invalid sort criterion: " + criterion);
         }
-        Collections.sort(cities, comparator);
-        outputBoundary.presentSortedCities(cities);
-    }
 
-    // Placeholder methods for fetching data
-    private int getTemperature(String city) {
-        // Dummy implementation
-        return 0;
-    }
+        // Create output data and pass it to the output boundary
+        // Here 我们的 savedCities 是 sort好了，生成一个新的Output Data class 并扔给他 sorted list,
+        SortCitiesOutputData outputData = new SortCitiesOutputData(savedCities);
 
-    private String getCondition(String city) {
-        // Dummy implementation
-        return "";
-    }
-
-    private int getHumidity(String city) {
-        // Dummy implementation
-        return 0;
+        // 再把这个data存到 'OutputBoundary' which is used by 'Presenter'
+        outputBoundary.presentSortedCities(outputData);
     }
 }

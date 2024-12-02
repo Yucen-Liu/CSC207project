@@ -74,7 +74,6 @@ public class NearbyCityWeatherAccessObject implements NearbyCitiesDataAccessInte
                     int nearbyHumidity = nearbyCityInformation.getJSONArray("list").getJSONObject(0).getJSONObject("main").getInt("humidity");
 
                     if(!nearbyCityNames.contains(nearbyCityInformation.getJSONObject("city").getString("name"))){
-
                         nearbyCityNames.add(nearbyCityInformation.getJSONObject("city").getString("name"));
                         nearbyCities.add(nearbyCityFactory.create(nearbyLocation, nearbyTemperature, nearbyCondition, nearbyHumidity));
                     }
