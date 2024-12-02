@@ -7,13 +7,23 @@ public class Main {
 
         WeatherAppBuilder appBuilder = new WeatherAppBuilder();
         JFrame application = appBuilder
-//                .addCheckCityView()
-                .addWeatherAppView()
+//                .addSearchCityView()
+//                .addGetDetailsView()
+//                .addWeatherAppView()
                 .addGetForecastView()
-                .addManageCityView()
+//                .addManageSortView()
+//                .addSearchCityView()
+                .addNearbyCitiesView()
+
+//                .addGetDetailsUseCase()
+//                .addWeatherAppUseCase()
+                .addGetForecastUseCase()
+//                .addManageSortUseCase()
+//                .addSearchCityUseCase()
+                .addNearbyCitiesUseCase()
                 .build();
 
-
+        application.pack();
         application.setVisible(true);
     }
 }
