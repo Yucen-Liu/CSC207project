@@ -39,7 +39,7 @@ public class GetDetailsInteractor implements GetDetailsInputBoundary{
     }
 
     @Override
-    public void switchToGetForecastView() {userPresenter.switchToGetForecastView();}
+    public void switchToGetForecastView(String cityName) {userPresenter.switchToGetForecastView(cityName);}
 
     @Override
     public void switchToGetNearbyCitiesView(String cityName) {
