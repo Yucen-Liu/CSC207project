@@ -37,7 +37,7 @@ public class SortCitiesView extends JFrame {
         temperatureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.handleSortRequest("temperature");
+                controller.handleSortRequest("temperature"); // !!!!!!!! important here: here we input the controller with criterion with温度，湿度或者是状况
                 updateDisplay();
             }
         });
