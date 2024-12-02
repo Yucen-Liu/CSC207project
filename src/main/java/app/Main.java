@@ -10,20 +10,20 @@ public class Main {
 //                .addSearchCityView()
                 .addGetDetailsView()
 //                .addWeatherAppView()
+                .addSearchCityView()
                 .addGetForecastView()
 //                .addManageSortView()
-//                .addSearchCityView()
                 .addNearbyCitiesView()
 
                 .addGetDetailsUseCase()
 //                .addWeatherAppUseCase()
                 .addGetForecastUseCase()
 //                .addManageSortUseCase()
-//                .addSearchCityUseCase()
                 .addNearbyCitiesUseCase()
+                .addSearchCityUseCase()
                 .build();
 
-        application.pack();
+
         application.setVisible(true);
     }
 }

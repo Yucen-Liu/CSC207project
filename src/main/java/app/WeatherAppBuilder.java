@@ -2,6 +2,8 @@ package app;
 
 import javax.swing.*;
 import java.awt.*;
+
+import data_access.CurWeatherInfoObject;
 import data_access.ForecastWeatherInfoObject;
 import data_access.*;
 import entity.CommonCityFactory;
@@ -13,6 +15,8 @@ import interface_adapter.get_details.GetDetailsPresenter;
 import interface_adapter.get_details.GetDetailsViewModel;
 
 import interface_adapter.search_city.SearchCityController;
+import interface_adapter.search_city.SearchCityPresenter;
+
 import interface_adapter.search_city.SearchCityViewModel;
 import use_case.get_details.GetDetailsInputBoundary;
 import use_case.get_details.GetDetailsInterator;
@@ -26,6 +30,8 @@ import interface_adapter.manage_cities.ManageCitiesController;
 import use_case.manage_cities.FavoriteCitiesInteractor;
 import use_case.search_city.SearchCityInputBoundary;
 import use_case.search_city.SearchCityInteractor;
+
+import use_case.search_city.SearchCityOutputBoundary;
 import view.*;
 import interface_adapter.manage_sort.SortCitiesViewModel;
 import interface_adapter.nearby_cities.NearbyCitiesController;
@@ -54,10 +60,11 @@ public class WeatherAppBuilder {
 
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    private final CommonCityFactory commonCityFactory = new CommonCityFactory();
+    private final CurWeatherInfoObject curWeatherInfoObject = new CurWeatherInfoObject(commonCityFactory);
 
     private final ForecastWeatherInfoObject forecastWeatherInfoObject = new ForecastWeatherInfoObject(new ForecastCityFactory());
     private final DetailedWeatherInfoObject detailedWeatherInfoObject = new DetailedWeatherInfoObject(new DetailedCityFactory());
-    private final CurWeatherInfoObject curWeatherInfoObject = new CurWeatherInfoObject(new CommonCityFactory());
     private final NearbyCityWeatherAccessObject nearbyCityWeatherAccessObject = new NearbyCityWeatherAccessObject(new NearbyCityFactory());
 
 
@@ -81,6 +88,12 @@ public class WeatherAppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
+    public WeatherAppBuilder addSearchCityView() {
+        searchCityViewModel = new SearchCityViewModel();
+        searchCityView = new SearchCityView(searchCityViewModel);
+        cardPanel.add(searchCityView, "weather app");
+        return this;
+    }
 
 //
 //        SearchCityViewModel searchCityViewModel = new SearchCityViewModel();
@@ -130,7 +143,6 @@ public class WeatherAppBuilder {
 //        cardPanel.add(view, "get forecast");
 //        return this;
 //    }
-
 
      /**
       * Adds the GetForecast View to the application.
@@ -218,6 +230,7 @@ public class WeatherAppBuilder {
         return this;
     }
 
+
     /**
      * Adds the NearbyCities Use Case to the application.
      * @return this builder
@@ -233,6 +246,7 @@ public class WeatherAppBuilder {
         getDetailsView.setGetDetailsController(controller);
         return this;
     }
+
 
 //    /**
 //     * Adds the SearchCity Use Case to the application.
