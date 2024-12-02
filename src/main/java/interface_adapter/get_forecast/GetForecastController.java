@@ -9,6 +9,7 @@ public class GetForecastController {
     private final GetForecastInputBoundary interactor;
     private final GetForecastViewModel viewModel;
 
+    //initialization
     public GetForecastController(GetForecastInputBoundary interactor, GetForecastViewModel viewModel) {
         this.interactor = interactor;
         this.viewModel = viewModel;
