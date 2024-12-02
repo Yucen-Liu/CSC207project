@@ -7,14 +7,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
+import use_case.search_city.SearchCityDataAccessInterface;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
  * Data Access Object for retrieving current weather information and validating city names.
  */
-public class CurWeatherInfoObject implements CurWeatherInfo{
+public class CurWeatherInfoObject implements CurWeatherInfo, SearchCityDataAccessInterface {
 
     private final CommonCityFactory cityFactory;
     private final OkHttpClient httpClient;

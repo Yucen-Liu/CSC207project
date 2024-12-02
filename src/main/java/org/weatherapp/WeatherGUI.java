@@ -1,6 +1,7 @@
 package org.weatherapp;
 
 import data_access.FavoriteCityStorageImpl;
+import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
 import use_case.manage_cities.FavoriteCitiesInteractor;
 import view.GetDetailsView;

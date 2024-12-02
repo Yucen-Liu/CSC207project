@@ -9,7 +9,7 @@ public class GetDetailsInterator implements GetDetailsInputBoundary{
     private final GetDetailsDataAccessInterface weatherDataAccessObject;
     private final GetDetailsOutputBoundary userPresenter;
 
-    GetDetailsInterator(GetDetailsDataAccessInterface weatherDataAccessObject,GetDetailsOutputBoundary userPresenter) {
+    public GetDetailsInterator(GetDetailsDataAccessInterface weatherDataAccessObject, GetDetailsOutputBoundary userPresenter) {
         this.weatherDataAccessObject = weatherDataAccessObject;
         this.userPresenter = userPresenter;
     }

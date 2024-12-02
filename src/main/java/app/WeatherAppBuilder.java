@@ -8,9 +8,15 @@ import entity.CommonCityFactory;
 import entity.ForecastCityFactory;
 import interface_adapter.ViewManagerModel;
 
+import interface_adapter.get_details.GetDetailsController;
+import interface_adapter.get_details.GetDetailsPresenter;
 import interface_adapter.get_details.GetDetailsViewModel;
 
+import interface_adapter.search_city.SearchCityController;
 import interface_adapter.search_city.SearchCityViewModel;
+import use_case.get_details.GetDetailsInputBoundary;
+import use_case.get_details.GetDetailsInterator;
+import use_case.get_details.GetDetailsOutputBoundary;
 import use_case.get_forecast.GetForecastInteractor;
 import data_access.FavoriteCityStorageImpl;
 import entity.*;
@@ -18,6 +24,8 @@ import entity.*;
 import interface_adapter.manage_cities.ManageCitiesController;
 
 import use_case.manage_cities.FavoriteCitiesInteractor;
+import use_case.search_city.SearchCityInputBoundary;
+import use_case.search_city.SearchCityInteractor;
 import view.*;
 import interface_adapter.manage_sort.SortCitiesViewModel;
 import interface_adapter.nearby_cities.NearbyCitiesController;
@@ -64,10 +72,10 @@ public class WeatherAppBuilder {
     private SortCitiesView sortCitiesView;
 
     private SearchCityViewModel searchCityViewModel;
-//    private SearchCityView searchCityView;
+    private SearchCityView searchCityView;
 
     private GetDetailsViewModel getDetailsViewModel;
-    private GetDetailsView getDetailsView;
+    private DetailsView getDetailsView;
 
     public WeatherAppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -135,16 +143,16 @@ public class WeatherAppBuilder {
          return this;
      }
 
-//    /**
-//     * Adds the GetDetails View to the application.
-//     * @return this builder
-//     */
-//    public WeatherAppBuilder addGetDetailsView() {
-//        getDetailsViewModel = new GetDetailsViewModel();
-//        getDetailsView = new GetDetailsView(getDetailsViewModel);
-//        cardPanel.add(getDetailsView, getDetailsView.getViewName());
-//        return this;
-//    }
+    /**
+     * Adds the GetDetails View to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addGetDetailsView() {
+        getDetailsViewModel = new GetDetailsViewModel();
+        getDetailsView = new DetailsView(getDetailsViewModel);
+        cardPanel.add(getDetailsView, getDetailsView.getViewName());
+        return this;
+    }
 
 //    /**
 //     * Adds the ManageSort View to the application.
@@ -210,18 +218,33 @@ public class WeatherAppBuilder {
         return this;
     }
 
+    /**
+     * Adds the NearbyCities Use Case to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addGetDetailsUseCase() {
+        final GetDetailsOutputBoundary outputBoundary = new GetDetailsPresenter(searchCityViewModel, getForecastViewModel,
+                nearbyCitiesViewModel,getDetailsViewModel,
+                viewManagerModel);
+        final GetDetailsInputBoundary userInteractor = new GetDetailsInterator(
+                detailedWeatherInfoObject,outputBoundary);
+
+        final GetDetailsController controller = new GetDetailsController(userInteractor,getDetailsViewModel);
+        getDetailsView.setGetDetailsController(controller);
+        return this;
+    }
 
 //    /**
 //     * Adds the SearchCity Use Case to the application.
 //     * @return this builder
 //     */
 //    public WeatherAppBuilder addSearchCityUseCase() {
-//        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter();
-//        final NearbyCitiesInputBoundary userInteractor = new NearbyCitiesInteractor(
-//                nearbyCityWeatherAccessObject,outputBoundary);
+//        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter(searchCityViewModel,viewManagerModel);
+//        final SearchCityInputBoundary userInteractor = new SearchCityInteractor(
+//                curWeatherInfoObject,outputBoundary);
 //
-//        final NearbyCitiesController controller = new NearbyCitiesController(userInteractor);
-//        getNearbyCitiesView.setNearbyCitiesController(controller);
+//        final SearchCityController controller = new SearchCityController(userInteractor, searchCityViewModel);
+//        searchCityView.setSearchCityController(controller);
 //        return this;
 //    }
 
