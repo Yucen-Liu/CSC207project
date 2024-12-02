@@ -18,7 +18,6 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
     private final JLabel temperatureLabel = new JLabel("Temperature:");
     private final JLabel humidityLabel = new JLabel("Humidity:");
     private final JLabel pressureLabel = new JLabel("Pressure:");
-    private final JLabel ConditionLabel = new JLabel("Condition:");
     private final JLabel visibilityLabel = new JLabel("Visibility:");
     private final JLabel conditionLabel = new JLabel("Condition:");
     private final JLabel tempMinLabel = new JLabel("Minimum Temperature:");

@@ -26,9 +26,6 @@ import use_case.get_details.GetDetailsOutputBoundary;
 import use_case.get_forecast.GetForecastInteractor;
 import entity.*;
 
-import interface_adapter.manage_cities.ManageCitiesController;
-
-import use_case.manage_cities.FavoriteCitiesInteractor;
 import use_case.manage_sort.SortCitiesInputBoundary;
 import use_case.manage_sort.SortCitiesInteractor;
 import use_case.manage_sort.SortCitiesOutputBoundary;

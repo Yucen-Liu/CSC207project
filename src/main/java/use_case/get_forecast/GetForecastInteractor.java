@@ -16,28 +16,24 @@ public class GetForecastInteractor implements GetForecastInputBoundary {
     }
 
     @Override
-
     public void execute(GetForecastInputData getForecastInputData) {
         if ( getForecastInputData.getCityName() == null || getForecastInputData.getCityName().isEmpty()) {
-            userPresenter.prepareFailView("City name cannot be empty.");
+            userPresenter.prepareFailView("Unable to fetch the name of the selected city.");
             return;
         }
-
         try {
 
             ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 4);
-            GetForecastOutputData getForecastoutputData = new GetForecastOutputData(
-                    forecastCity.getForecast(),
-                    getForecastInputData.getCityName(),
-                    getForecastInputData.getSavedCityNames(),
+            GetForecastOutputData getForecastoutputData = new GetForecastOutputData(forecastCity.getForecast(),
+                    getForecastInputData.getCityName(), getForecastInputData.getSavedCityNames(),
                     false
             );
             userPresenter.prepareSuccessView(getForecastoutputData);
         } catch (Exception e) {
-            userPresenter.prepareFailView("Failed to retrieve forecast: " + e.getMessage());
+            userPresenter.prepareFailView(
+                    "Unable to fetch the weather forecast information for the selected city: " + e.getMessage());
         }
     }
-
 
     @Override
     public void switchToGetDetailsView() {
