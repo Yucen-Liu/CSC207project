@@ -123,13 +123,9 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         });
 
 
-        manageCitiesButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        searchCityController.switchToSortCitiesView();
-                    }
-                }
-        );
+        manageCitiesButton.addActionListener(e -> {
+            searchCityController.switchToSortCitiesView(savedCityNames);
+        });
     }
 
     private DefaultListModel<String> getCityListModel(List<String> cityNames) {

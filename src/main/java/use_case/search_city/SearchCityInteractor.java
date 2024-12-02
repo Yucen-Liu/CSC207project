@@ -3,6 +3,8 @@ package use_case.search_city;
 import entity.City;
 import entity.CommonCity;
 
+import java.util.List;
+
 /**
  * The SearchCity Interactor.
  */
@@ -29,7 +31,9 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
     public void switchToGetDetailsView(String cityName) { userPresenter.switchToGetDetailsView(cityName); }
 
     @Override
-    public void switchToSortCitiesView() { userPresenter.switchToSortCitiesView(); }
+    public void switchToSortCitiesView(List<String> savedCityNames) {
+        userPresenter.switchToSortCitiesView(savedCityNames);
+    }
 
     @Override
     public boolean validateCity(String cityName) {
