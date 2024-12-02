@@ -10,6 +10,9 @@ public class SortCitiesPresenter implements SortCitiesOutputBoundary {
 
     private final SortCitiesState state;
 
+
+    // The only input of teh presenter is the state
+    // The only method of teh presenter is the presentSortedCities which use input 'sorted city list' from Output Data
     public SortCitiesPresenter(SortCitiesState state) {
         this.state = state;
     }
