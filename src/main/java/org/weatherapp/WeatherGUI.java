@@ -1,10 +1,9 @@
 package org.weatherapp;
 
 import data_access.FavoriteCityStorageImpl;
-import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
 import use_case.manage_cities.FavoriteCitiesInteractor;
-import view.GetDetailsView;
+import view.DetailsView;
 import view.ManageCityView;
 
 import javax.swing.*;
@@ -140,7 +139,7 @@ public class WeatherGUI {
 
     private void openCityDetails(String cityName) {
         // Link to the GetDetailsView window
-        GetDetailsView getDetailsView = new GetDetailsView(cityName);
-        getDetailsView.setVisible(true); // Show the GetDetailsView window
+        DetailsView DetailsView = new DetailsView(cityName);
+        DetailsView.setVisible(true); // Show the GetDetailsView window
     }
 }
