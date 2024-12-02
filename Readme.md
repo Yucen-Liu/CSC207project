@@ -41,7 +41,7 @@ Welcome to the Weather Application Project! This README provides an overview of 
 ## Key Features
 - **Weather Forecasts**: Get real-time weather forecast information for cities worldwide.
 - **Saved Cities**: Save cities to a personalized list for easy access.
-- **Sorting and Filtering**: Sort saved cities based on different criteria such as temperature or weather conditions.
+- **Managing and Sorting**: Sort saved cities based on different criteria such as temperature or weather conditions.
 - **Detailed Information**: View the detailed weather information for cities.
 - **Nearby Cities**: Find and filter cities near a specific location based on latitude and longitude.
 
@@ -57,11 +57,14 @@ Welcome to the Weather Application Project! This README provides an overview of 
 - After searching for a city, save it to your personalized list for quick access.
 - Manage your saved cities by sorting or removing them.
 
-### Step 3: Explore Nearby Cities
+### Step 3: Obtain Detailed Weather Information
+- Select a city from your saved list to obtain detailed weather information for it.
+
+### Step 4: Explore Nearby Cities
 - After retrieving weather data for a city, explore nearby cities based on specified criteria.
 
-### Step 4: View Weather History (IN FUTURE UPDATES?)
-- Retrieve historical weather data for the past five days for any saved city.
+### Step 5: View Weather Forecast  
+- Access the nine-hour weather forecast information for any city in your saved list.
 
 ---
 
@@ -73,9 +76,9 @@ Welcome to the Weather Application Project! This README provides an overview of 
 - **Nearby Cities**: Felix
 - **Weather Forecast**: Mengzhou
 
-- **API Calls**: Felix
 - **TestCases**: Yucen
-- **Overall Code Modifications and Refinements**: Felix & Mengzhou
+- **Layout & Adjustments for Clean Architecture**: Mengzhou & Felix 
+- **Final Code Modifications and Refinements**: Felix
 
 ---
 
