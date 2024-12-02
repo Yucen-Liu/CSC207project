@@ -34,12 +34,12 @@ public class WeatherAppView extends JPanel {
         JPanel inputPanel = new JPanel(new FlowLayout());
         JLabel locationLabel = new JLabel("Enter Location:");
         JTextField locationField = new JTextField(15);
-        JButton getForecastButton = new JButton("Get Forecast");
+        JButton getWeatherButton = new JButton("Get Weather");
         JButton saveCityButton = new JButton("Save City");
 
         inputPanel.add(locationLabel);
         inputPanel.add(locationField);
-        inputPanel.add(getForecastButton);
+        inputPanel.add(getWeatherButton);
         inputPanel.add(saveCityButton);
 
         // Forecast Display Panel
@@ -74,8 +74,8 @@ public class WeatherAppView extends JPanel {
 
 
 
-        // Get Forecast Button Action
-        getForecastButton.addActionListener(e -> {
+        // Get Weather Button Action
+        getWeatherButton.addActionListener(e -> {
             String location = locationField.getText().trim();
             if (location.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
