@@ -1,29 +1,25 @@
 package interface_adapter.manage_sort;
 
 import use_case.manage_sort.SortCitiesOutputBoundary;
-import java.util.List;
+import use_case.manage_sort.SortCitiesOutputData;
 
 /**
- * Presenter for the sort cities use case.
+ * Presenter for the SortCities use case.
  */
 public class SortCitiesPresenter implements SortCitiesOutputBoundary {
-    private List<String> sortedCities;
 
-    /**
-     * Presents the sorted list of cities.
-     * @param sortedCities the list of sorted cities.
-     */
-    @Override
-    public void presentSortedCities(List<String> sortedCities) {
-        this.sortedCities = sortedCities;
+    private final SortCitiesState state;
+
+
+    // The only input of teh presenter is the state
+    // The only method of teh presenter is the presentSortedCities which use input 'sorted city list' from Output Data
+    public SortCitiesPresenter(SortCitiesState state) {
+        this.state = state;
     }
 
-    /**
-     * Returns the sorted cities list.
-     * This method can be used by the view to update the display.
-     * @return the sorted list of cities.
-     */
-    public List<String> getSortedCities() {
-        return sortedCities;
+    @Override
+    public void presentSortedCities(SortCitiesOutputData outputData) {
+        // 将排序后的城市列表存储到状态中
+        state.setSortedCities(outputData.getSortedCities());
     }
 }
