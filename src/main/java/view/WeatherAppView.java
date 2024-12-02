@@ -83,6 +83,7 @@ public class WeatherAppView extends JPanel {
 //                checkCityController.execute(location);
 //            }
             else {
+
                 JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
 
