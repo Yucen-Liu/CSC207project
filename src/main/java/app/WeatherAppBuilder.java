@@ -2,15 +2,23 @@ package app;
 
 import javax.swing.*;
 import java.awt.*;
-
+import data_access.ForecastWeatherInfoObject;
 import data_access.*;
-
 import entity.CommonCityFactory;
 import entity.ForecastCityFactory;
 import interface_adapter.ViewManagerModel;
 
 import interface_adapter.get_details.GetDetailsViewModel;
 
+import interface_adapter.search_city.SearchCityViewModel;
+import use_case.get_forecast.GetForecastInteractor;
+import data_access.FavoriteCityStorageImpl;
+import entity.*;
+
+import interface_adapter.manage_cities.ManageCitiesController;
+
+import use_case.manage_cities.FavoriteCitiesInteractor;
+import view.*;
 import interface_adapter.manage_sort.SortCitiesViewModel;
 import interface_adapter.nearby_cities.NearbyCitiesController;
 import interface_adapter.nearby_cities.NearbyCitiesPresenter;
@@ -67,7 +75,14 @@ public class WeatherAppBuilder {
 
 
 
+        SearchCityViewModel searchCityViewModel = new SearchCityViewModel();
 
+
+        // Instantiate WeatherAppView with required dependencies
+        SearchCityView searchCityView = new SearchCityView(searchCityViewModel);
+        cardPanel.add(searchCityView, "weather app");
+        return this;
+    }
 //    public WeatherAppBuilder addWeatherAppView() {
 //        // Create dependencies for WeatherAppView
 //        CityStorage cityStorage = new CommonCityStorage(); // Replace with actual implementation
