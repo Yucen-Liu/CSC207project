@@ -1,10 +1,7 @@
 package view;
 
-import data_access.FavoriteCityStorageImpl;
-import interface_adapter.manage_cities.ManageCitiesController;
 import interface_adapter.search_city.SearchCityController;
 import interface_adapter.search_city.SearchCityViewModel;
-import use_case.manage_cities.FavoriteCitiesInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -160,12 +157,12 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         updateWeatherDisplay(viewModel);
     }
 
-    private void manageCities() {
-        // Link to the ManageCityView window
-        ManageCitiesController controller = new ManageCitiesController(new FavoriteCitiesInteractor(new FavoriteCityStorageImpl()));
-        ManageCityView manageCityView = new ManageCityView(controller);
-        manageCityView.setVisible(true); // Show the ManageCityView window
-    }
+//    private void manageCities() {
+//        // Link to the ManageCityView window
+//        ManageCitiesController controller = new ManageCitiesController(new FavoriteCitiesInteractor(new FavoriteCityStorageImpl()));
+//        ManageCityView manageCityView = new ManageCityView(controller);
+//        manageCityView.setVisible(true); // Show the ManageCityView window
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

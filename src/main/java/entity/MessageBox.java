@@ -1,4 +1,4 @@
-package org.weatherapp;
+package entity;
 
 import javax.swing.*;
 

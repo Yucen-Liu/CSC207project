@@ -1,16 +1,13 @@
 package data_access;
 
-import entity.City;
-import entity.CommonCityFactory;
 import entity.DetailedCity;
 import entity.DetailedCityFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
-import org.weatherapp.MessageBox;
+import entity.MessageBox;
 import use_case.get_details.GetDetailsDataAccessInterface;
-import use_case.get_forecast.GetForecastDataAccessInterface;
 
 import javax.swing.*;
 import java.math.RoundingMode;
