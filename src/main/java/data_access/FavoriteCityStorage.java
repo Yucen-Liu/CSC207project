@@ -7,7 +7,7 @@ import java.util.List;
  * Provides methods to add, remove, and retrieve a user's favorite cities.
  */
 public interface FavoriteCityStorage {
-
+    //very good here
     /**
      * Adds a city to the user's list of favorite cities.
      *
