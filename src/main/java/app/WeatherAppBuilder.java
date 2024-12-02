@@ -3,6 +3,7 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 
+import data_access.CurWeatherInfoObject;
 import data_access.ForecastWeatherInfoObject;
 import entity.CommonCityFactory;
 import entity.ForecastCityFactory;
@@ -13,6 +14,8 @@ import interface_adapter.get_forecast.GetForecastViewModel;
 
 import interface_adapter.get_details.GetDetailsViewModel;
 
+import interface_adapter.search_city.SearchCityController;
+import interface_adapter.search_city.SearchCityPresenter;
 import interface_adapter.search_city.SearchCityViewModel;
 import use_case.get_forecast.GetForecastInteractor;
 import data_access.FavoriteCityStorageImpl;
@@ -21,6 +24,9 @@ import entity.*;
 import interface_adapter.manage_cities.ManageCitiesController;
 
 import use_case.manage_cities.FavoriteCitiesInteractor;
+import use_case.search_city.SearchCityInputBoundary;
+import use_case.search_city.SearchCityInteractor;
+import use_case.search_city.SearchCityOutputBoundary;
 import view.*;
 
 public class WeatherAppBuilder {
@@ -29,8 +35,11 @@ public class WeatherAppBuilder {
 
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    private final CommonCityFactory commonCityFactory = new CommonCityFactory();
+    private final CurWeatherInfoObject curWeatherInfoObject = new CurWeatherInfoObject(commonCityFactory);
 
-
+    private SearchCityViewModel searchCityViewModel;
+    private SearchCityView searchCityView;
 
     private GetForecastViewModel getForecastViewModel;
     private GetDetailsViewModel getDetailsViewModel;
@@ -39,29 +48,12 @@ public class WeatherAppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
-    public WeatherAppBuilder addWeatherAppView() {
-        // Create dependencies for WeatherAppView
-        CityStorage cityStorage = new CommonCityStorage(); // Replace with actual implementation
-        CityFactory cityFactory = new CommonCityFactory(); // Replace with actual implementation
-
-        // Create GetForecastController dependencies
-        ForecastWeatherInfoObject forecastInfo = new ForecastWeatherInfoObject(new ForecastCityFactory());
-        GetForecastViewModel forecastViewModel = new GetForecastViewModel();
-        GetDetailsViewModel detailsViewModel = new GetDetailsViewModel();
-        GetForecastPresenter forecastPresenter = new GetForecastPresenter(forecastViewModel, viewManagerModel, detailsViewModel);
-        GetForecastInteractor forecastInteractor = new GetForecastInteractor(forecastInfo, forecastPresenter);
-        GetForecastController forecastController = new GetForecastController(forecastInteractor, forecastViewModel);
-
-        SearchCityViewModel searchCityViewModel = new SearchCityViewModel();
-
-
-        // Instantiate WeatherAppView with required dependencies
-        SearchCityView searchCityView = new SearchCityView(searchCityViewModel);
+    public WeatherAppBuilder addSearchCityView() {
+        searchCityViewModel = new SearchCityViewModel();
+        searchCityView = new SearchCityView(searchCityViewModel);
         cardPanel.add(searchCityView, "weather app");
         return this;
     }
-
-
 
     public WeatherAppBuilder addGetForecastView() {
         // Create dependencies for GetForecastView
@@ -140,6 +132,17 @@ public class WeatherAppBuilder {
         ManageCitiesController controller = new ManageCitiesController(interactor);
         ManageCityView view = new ManageCityView(controller);
         cardPanel.add(view, "manage cities");
+        return this;
+    }
+
+    public WeatherAppBuilder addSearchCityUseCase(){
+        final SearchCityOutputBoundary searchCityOutputBoundary =
+                new SearchCityPresenter(searchCityViewModel, viewManagerModel);
+        final SearchCityInputBoundary searchCityInteractor = new SearchCityInteractor(curWeatherInfoObject,
+                searchCityOutputBoundary);
+
+        final SearchCityController controller = new SearchCityController(searchCityInteractor, searchCityViewModel);
+        searchCityView.setSearchCityController(controller);
         return this;
     }
 
