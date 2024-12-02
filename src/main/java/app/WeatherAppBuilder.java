@@ -88,13 +88,6 @@ public class WeatherAppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
-    public WeatherAppBuilder addSearchCityView() {
-        searchCityViewModel = new SearchCityViewModel();
-        searchCityView = new SearchCityView(searchCityViewModel);
-        cardPanel.add(searchCityView, "weather app");
-        return this;
-    }
-
 //
 //        SearchCityViewModel searchCityViewModel = new SearchCityViewModel();
 //
@@ -188,6 +181,17 @@ public class WeatherAppBuilder {
         return this;
     }
 
+    /**
+     * Adds the SearchCity View to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addSearchCityView() {
+        searchCityViewModel = new SearchCityViewModel();
+        searchCityView = new SearchCityView(searchCityViewModel);
+        cardPanel.add(searchCityView, "weather app");
+        return this;
+    }
+
 
     /**
      * Adds the GetForecast Use Case to the application.
@@ -242,9 +246,9 @@ public class WeatherAppBuilder {
      * @return this builder
      */
     public WeatherAppBuilder addSearchCityUseCase() {
-        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter(searchCityViewModel,viewManagerModel);
+        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter(searchCityViewModel, viewManagerModel);
         final SearchCityInputBoundary userInteractor = new SearchCityInteractor(
-                curWeatherInfoObject,outputBoundary);
+                curWeatherInfoObject, outputBoundary);
 
         final SearchCityController controller = new SearchCityController(userInteractor, searchCityViewModel);
         searchCityView.setSearchCityController(controller);
@@ -288,6 +292,4 @@ public class WeatherAppBuilder {
 
         return application;
     }
-
-
 }

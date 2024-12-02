@@ -82,8 +82,6 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         add(cityListPanel, BorderLayout.WEST);
         add(forecastPanel, BorderLayout.CENTER);
 
-
-
         // Get Weather Button Action
         getWeatherButton.addActionListener(e -> {
             String location = locationField.getText().trim();
