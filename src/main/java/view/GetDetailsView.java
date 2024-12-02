@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,7 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
     private final JButton get;
 
     private GetDetailsController getDetailsController;
+    private DefaultTableModel tableModel;
 
     public GetDetailsView(GetDetailsViewModel getDetailsViewModel) {
         this.getDetailsViewModel = getDetailsViewModel;
@@ -54,19 +56,23 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
         citySelected.add(title);
         citySelected.add(cityNameLabel);
 
-        String[][] data ={{temperatureLabel.getText(), temperature.getText()},
+        String[][] data ={
+                {temperatureLabel.getText(), temperature.getText()},
                 {conditionLabel.getText(), condition.getText()},
-        {humidityLabel.getText(), humidity.getText()},
+                {humidityLabel.getText(), humidity.getText()},
                 {tempMinLabel.getText(), tempMin.getText()},
                 {tempMaxLabel.getText(), tempMax.getText()},
-        {pressureLabel.getText(), pressure.getText()},
-        {visibilityLabel.getText(), visibility.getText()}};
-
+                {pressureLabel.getText(), pressure.getText()},
+                {visibilityLabel.getText(), visibility.getText()}
+        };
         String[] columnNames = {"Info","Data"};
-        final JTable table = new JTable(data, columnNames);
+
+        tableModel = new DefaultTableModel(data, columnNames);
+        final JTable table = new JTable(tableModel);
 
         final JPanel buttons = new JPanel();
         get = new JButton("Get Details");
+        buttons.add(get);
         get.addActionListener(this);
         back = new JButton("Close");
         buttons.add(back);
@@ -99,21 +105,30 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
                 }
         );
 
-        get.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        final GetDetailsState currentState = getDetailsViewModel.getState();
-                        getDetailsController.execute(
-                                currentState.getCityName(), currentState.getSavedCityNames()
-                        );
-                    }
-                }
-        );
+//        get.addActionListener(
+//                new ActionListener() {
+//                    public void actionPerformed(ActionEvent e) {
+//                        final GetDetailsState currentState = getDetailsViewModel.getState();
+//                        getDetailsController.execute(
+//                                currentState.getCityName(), currentState.getSavedCityNames()
+//                        );
+//                        setFields(currentState);
+//                    }
+//                }
+//        );
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(citySelected);
-        this.add(table);
-        this.add(buttons);
+        get.addActionListener(e -> {
+            final GetDetailsState currentState = getDetailsViewModel.getState();
+            getDetailsController.execute(
+                    currentState.getCityName(), currentState.getSavedCityNames()
+            );
+            setFields(currentState);
+        });
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(citySelected);
+        add(table);
+        add(buttons);
     }
 
     /**
@@ -133,15 +148,13 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
 
     private void setFields(GetDetailsState state) {
         cityNameLabel.setText(state.getCityName());
-        temperature.setText(Double.toString(state.getTemperature()));
-        condition.setText(state.getCondition());
-        humidity.setText(String.valueOf((state.getHumidity())));
-
-        tempMax.setText(Double.toString(state.getTemp_max()));
-        tempMin.setText(Double.toString(state.getTemp_min()));
-        pressure.setText(String.valueOf(state.getPressure()));
-        visibility.setText(String.valueOf(state.getVisibility()));
-
+        tableModel.setValueAt(Double.toString(state.getTemperature()), 0, 1);
+        tableModel.setValueAt(state.getCondition(), 1, 1);
+        tableModel.setValueAt(String.valueOf(state.getHumidity()), 2, 1);
+        tableModel.setValueAt(Double.toString(state.getTemp_max()), 3, 1);
+        tableModel.setValueAt(Double.toString(state.getTemp_min()), 4, 1);
+        tableModel.setValueAt(String.valueOf(state.getPressure()), 5, 1);
+        tableModel.setValueAt(String.valueOf(state.getVisibility()), 6, 1);
     }
 
     public String getViewName() {
