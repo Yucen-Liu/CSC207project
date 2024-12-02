@@ -15,7 +15,7 @@ public class CommonCity implements City{
         this.condition = condition;
         this.humidity = humidity;
     }
-
+    // this is good
     @Override
     public String getLocation() {
         return location;
