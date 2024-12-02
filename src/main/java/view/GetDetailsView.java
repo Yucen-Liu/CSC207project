@@ -10,6 +10,8 @@ import java.beans.PropertyChangeListener;
 import interface_adapter.get_details.GetDetailsController;
 import interface_adapter.get_details.GetDetailsState;
 import interface_adapter.get_details.GetDetailsViewModel;
+import interface_adapter.get_forecast.GetForecastController;
+import interface_adapter.get_forecast.GetForecastState;
 
 
 public class GetDetailsView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -42,6 +44,7 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
     private final JButton get;
 
     private GetDetailsController getDetailsController;
+    private GetForecastController getForecastController;
     private DefaultTableModel tableModel;
 
     public GetDetailsView(GetDetailsViewModel getDetailsViewModel) {
@@ -83,13 +86,18 @@ public class GetDetailsView extends JPanel implements ActionListener, PropertyCh
 
         final GetDetailsState currentState = getDetailsViewModel.getState();
 
-        getForecast.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        getDetailsController.switchToGetForecastView();
-                    }
-                }
-        );
+//        getForecast.addActionListener(
+//                new ActionListener() {
+//                    public void actionPerformed(ActionEvent evt) {
+//                        getDetailsController.switchToGetForecastView();
+//                    }
+//                }
+//        );
+
+        getForecast.addActionListener(e -> {
+            String cityName = currentState.getCityName();
+            getDetailsController.switchToGetForecastView(cityName);
+        });
 
         getNearbyCities.addActionListener(e -> {
             String cityName = currentState.getCityName();

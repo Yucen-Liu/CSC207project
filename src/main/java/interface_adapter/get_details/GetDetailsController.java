@@ -34,7 +34,7 @@ public class GetDetailsController {
     /**
      * Switches to the GetForecast view.
      */
-    public void switchToGetForecastView() {interactor.switchToGetForecastView();}
+    public void switchToGetForecastView(String cityName) {interactor.switchToGetForecastView(cityName);}
 
     /**
      * Switches to the GetNearbyCities view.

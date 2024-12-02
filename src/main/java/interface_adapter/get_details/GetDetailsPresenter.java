@@ -1,6 +1,7 @@
 package interface_adapter.get_details;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.get_forecast.GetForecastState;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_sort.SortCitiesState;
 import interface_adapter.nearby_cities.NearbyCitiesState;
@@ -44,7 +45,12 @@ public class GetDetailsPresenter implements GetDetailsOutputBoundary {
     }
 
     @Override
-    public void switchToGetForecastView() {
+    public void switchToGetForecastView(String cityName) {
+        final GetForecastState getForecastState = getForecastViewModel.getState();
+        getForecastState.setCityName(cityName);
+        getForecastViewModel.setState(getForecastState);
+        getForecastViewModel.firePropertyChanged();
+
         viewManagerModel.setState(getForecastViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

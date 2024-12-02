@@ -18,7 +18,7 @@ public interface GetDetailsOutputBoundary {
     /**
      * Executes the switch to GetForecast view use case.
      */
-    void switchToGetForecastView();
+    void switchToGetForecastView(String cityName);
 
     /**
      * Prepares the success view for the GetHistory Use Case.
