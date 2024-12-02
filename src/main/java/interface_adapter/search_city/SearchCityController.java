@@ -20,6 +20,10 @@ public class SearchCityController {
         searchCityUseCaseInteractor.execute(searchCityInputData);
     }
 
+    public boolean isValidCityName(String cityName) {
+        return this.searchCityUseCaseInteractor.validateCity(cityName);
+    }
+
     public SearchCityViewModel getSearchCityViewModel() { return searchCityViewModel; }
     public void switchToGetDetailsView() { searchCityUseCaseInteractor.switchToGetDetailsView(); }
     public void switchToSortCitiesView() { searchCityUseCaseInteractor.switchToSortCitiesView(); }

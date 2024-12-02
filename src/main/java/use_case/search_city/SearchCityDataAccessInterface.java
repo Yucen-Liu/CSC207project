@@ -7,4 +7,5 @@ import entity.City;
  */
 public interface SearchCityDataAccessInterface {
     City getCurWeather(String location);
+    boolean existsByName(String location);
 }

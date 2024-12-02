@@ -13,7 +13,7 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
 
     public SearchCityInteractor(SearchCityDataAccessInterface searchCityDataAccessInterface,
                                 SearchCityOutputBoundary searchCityOutputBoundary) {
-        this.searchCityDataAccessObject= searchCityDataAccessInterface;
+        this.searchCityDataAccessObject = searchCityDataAccessInterface;
         this.userPresenter = searchCityOutputBoundary;
     }
 
@@ -30,5 +30,13 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
 
     @Override
     public void switchToSortCitiesView() { userPresenter.switchToSortCitiesView(); }
+
+    @Override
+    public boolean validateCity(String cityName) {
+        if(searchCityDataAccessObject.existsByName(cityName)) {
+            return true;
+        }
+        return false;
+    }
 }
 

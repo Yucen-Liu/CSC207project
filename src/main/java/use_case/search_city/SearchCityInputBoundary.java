@@ -14,4 +14,5 @@ public interface SearchCityInputBoundary {
     void execute(SearchCityInputData searchcityInputData);
     void switchToGetDetailsView();
     void switchToSortCitiesView();
+    boolean validateCity(String cityName);
 }
