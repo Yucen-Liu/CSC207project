@@ -20,7 +20,7 @@ public class Main {
                 .addGetForecastUseCase()
 //                .addManageSortUseCase()
                 .addNearbyCitiesUseCase()
-                .addSearchCityUseCase()
+//                .addSearchCityUseCase()
                 .build();
 
 
