@@ -161,4 +161,8 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
 
     }
+
+    public void setSearchCityController(SearchCityController controller) {
+        this.searchCityController = controller;
+    }
 }
