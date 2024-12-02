@@ -9,21 +9,22 @@ public class Main {
         JFrame application = appBuilder
                 .addSearchCityView()
                 .addGetDetailsView()
-//                .addWeatherAppView()
-                .addSearchCityView()
                 .addGetForecastView()
 //                .addManageSortView()
                 .addNearbyCitiesView()
+                .addSearchCityView()
 
                 .addGetDetailsUseCase()
 //                .addWeatherAppUseCase()
                 .addGetForecastUseCase()
 //                .addManageSortUseCase()
                 .addNearbyCitiesUseCase()
-//                .addSearchCityUseCase()
+                .addSearchCityUseCase()
+
                 .build();
 
-
+        application.pack();
+        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.setVisible(true);
     }
 }
