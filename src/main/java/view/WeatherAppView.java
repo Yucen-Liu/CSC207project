@@ -82,9 +82,9 @@ public class WeatherAppView extends JPanel {
                 return;
             }
             // Validate the city name
-            if (checkCityController.isValid(location)) {
-                checkCityController.execute(location);
-            } else {
+//            if (checkCityController.isValid(location)) {
+//                checkCityController.execute(location);
+             else {
                 JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
 
