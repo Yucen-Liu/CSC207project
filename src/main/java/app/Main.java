@@ -11,12 +11,12 @@ public class Main {
                 .addSearchCityView()
                 .addGetDetailsView()
                 .addGetForecastView()
-//                .addManageSortView()
+                .addSortCitiesView()
                 .addNearbyCitiesView()
 
                 .addGetDetailsUseCase()
                 .addGetForecastUseCase()
-//                .addManageSortUseCase()
+                .addSortCitiesUseCase()
                 .addNearbyCitiesUseCase()
                 .addSearchCityUseCase()
                 .build();
