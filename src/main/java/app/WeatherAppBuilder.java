@@ -74,15 +74,15 @@ public class WeatherAppBuilder {
     }
 
 
-
-        SearchCityViewModel searchCityViewModel = new SearchCityViewModel();
-
-
-        // Instantiate WeatherAppView with required dependencies
-        SearchCityView searchCityView = new SearchCityView(searchCityViewModel);
-        cardPanel.add(searchCityView, "weather app");
-        return this;
-    }
+//
+//        SearchCityViewModel searchCityViewModel = new SearchCityViewModel();
+//
+//
+//        // Instantiate WeatherAppView with required dependencies
+//        SearchCityView searchCityView = new SearchCityView(searchCityViewModel);
+//        cardPanel.add(searchCityView, "weather app");
+//        return this;
+//    }
 //    public WeatherAppBuilder addWeatherAppView() {
 //        // Create dependencies for WeatherAppView
 //        CityStorage cityStorage = new CommonCityStorage(); // Replace with actual implementation
