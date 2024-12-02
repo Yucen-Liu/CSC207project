@@ -8,19 +8,19 @@ public class Main {
         WeatherAppBuilder appBuilder = new WeatherAppBuilder();
         JFrame application = appBuilder
 //                .addSearchCityView()
-//                .addGetDetailsView()
+                .addGetDetailsView()
 //                .addWeatherAppView()
                 .addSearchCityView()
                 .addGetForecastView()
 //                .addManageSortView()
                 .addNearbyCitiesView()
 
-//                .addGetDetailsUseCase()
+                .addGetDetailsUseCase()
 //                .addWeatherAppUseCase()
                 .addGetForecastUseCase()
 //                .addManageSortUseCase()
                 .addNearbyCitiesUseCase()
-                .addSearchCityUseCase()
+//                .addSearchCityUseCase()
                 .build();
 
 

@@ -9,6 +9,7 @@ import okhttp3.Response;
 import org.json.JSONObject;
 import use_case.search_city.SearchCityDataAccessInterface;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
