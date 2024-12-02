@@ -4,7 +4,6 @@ import data_access.FavoriteCityStorageImpl;
 import entity.City;
 import entity.CityFactory;
 import entity.CityStorage;
-import interface_adapter.check_city.CheckCityController;
 import interface_adapter.get_forecast.GetForecastController;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
@@ -19,14 +18,12 @@ public class WeatherAppView extends JPanel {
     private final CityStorage cityStorage; // Dependency injected
     private final CityFactory cityFactory; // Dependency injected
     private final GetForecastController getForecastController;
-    private final CheckCityController checkCityController;
 
     public WeatherAppView(CityStorage cityStorage, CityFactory cityFactory,
-                          GetForecastController getForecastController, CheckCityController checkCityController) {
+                          GetForecastController getForecastController) {
         this.cityStorage = cityStorage;
         this.cityFactory = cityFactory;
         this.getForecastController = getForecastController;
-        this.checkCityController = checkCityController;
 
         setLayout(new BorderLayout());
 
@@ -82,9 +79,10 @@ public class WeatherAppView extends JPanel {
                 return;
             }
             // Validate the city name
-            if (checkCityController.isValid(location)) {
-                checkCityController.execute(location);
-            } else {
+//            if (checkCityController.isValid(location)) {
+//                checkCityController.execute(location);
+//            }
+            else {
                 JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
 
@@ -108,9 +106,11 @@ public class WeatherAppView extends JPanel {
             if (location.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
-            } else if (checkCityController.isValid(location)) {
-                // Save city list function here
-            } else {
+            }
+//            else if (checkCityController.isValid(location)) {
+//                // Save city list function here
+//            }
+            else {
                 JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
         });

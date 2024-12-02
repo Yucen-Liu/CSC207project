@@ -8,7 +8,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
-import use_case.check_city.CheckCityDataAccessInterface;
 
 // Service class to fetch weather data (currently simulated)
 public class WeatherService{
