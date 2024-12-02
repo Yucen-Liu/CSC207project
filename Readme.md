@@ -9,7 +9,7 @@ Welcome to the Weather Application Project! This README provides an overview of 
 ### Team Story
 1. **Detailed Weather Information**  
    As a user, I can see detailed information about the current weather for any city I want.
-    - This includes temperature, humidity, and weather conditions (e.g., sunny, cloudy, rainy).
+    - This includes temperature, humidity, weather conditions, visibility, pressure, and more.
     - The information is displayed in an intuitive and user-friendly interface.
 
 ---
@@ -20,9 +20,9 @@ Welcome to the Weather Application Project! This README provides an overview of 
     - The application can search for cities within a specified radius based on longitude and latitude.
     - Filters allow users to focus on cities above a certain population threshold.
 
-3. **Weather History (Mengzhou)**  
-   A user wants to look up weather history for the past 5 days for a city.
-    - Historical data is presented in a clear format, including daily averages and key weather events.
+3. **Weather Forecast (Mengzhou)**  
+   As a user, I want to view the weather forecast for the next 9 hours for a specific city.
+    - The weather forecast data is presented in a clear format
     - This feature helps users analyze trends and make informed decisions.
 
 4. **Manage Saved Cities List (Eric)**  
@@ -39,10 +39,10 @@ Welcome to the Weather Application Project! This README provides an overview of 
 ---
 
 ## Key Features
-- **Weather Forecasts**: Get real-time weather information for cities worldwide.
+- **Weather Forecasts**: Get real-time weather forecast information for cities worldwide.
 - **Saved Cities**: Save cities to a personalized list for easy access.
 - **Sorting and Filtering**: Sort saved cities based on different criteria such as temperature or weather conditions.
-- **Historical Data**: View the weather history for a city over the past five days.
+- **Detailed Information**: View the detailed weather information for cities.
 - **Nearby Cities**: Find and filter cities near a specific location based on latitude and longitude.
 
 ---
@@ -67,11 +67,15 @@ Welcome to the Weather Application Project! This README provides an overview of 
 
 ## Contributors
 
-- **Team Story**: Entire Team
-- **Nearby Cities**: Felix
-- **Weather History and Program Layout**: Mengzhou
+- **Search Cities**: Yucen
 - **Saved Cities Management**: Eric
-- **Search and Testcases**: Yucen
+- **Detailed Weather Information**: Mengzhou
+- **Nearby Cities**: Felix
+- **Weather Forecast**: Mengzhou
+
+- **API Calls**: Felix
+- **TestCases**: Yucen
+- **Overall Code Modifications and Refinements**: Felix & Mengzhou
 
 ---
 
