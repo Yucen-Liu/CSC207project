@@ -277,7 +277,7 @@ public class WeatherAppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(getForecastViewModel.getViewName());
+        viewManagerModel.setState(searchCityView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
