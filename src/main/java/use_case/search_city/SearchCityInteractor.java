@@ -25,7 +25,10 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
         userPresenter.searchCityInformationView(searchCityOutputData);
     }
 
-    public void switchToGetForecastView() { userPresenter.switchToGetForecastView(); }
-    public void switchToGetNearbyCitiesView() { userPresenter.switchToGetNearbyCitiesView(); }
+    @Override
+    public void switchToGetDetailsView() { userPresenter.switchToGetDetailsView(); }
+
+    @Override
+    public void switchToSortCitiesView() { userPresenter.switchToSortCitiesView(); }
 }
 
