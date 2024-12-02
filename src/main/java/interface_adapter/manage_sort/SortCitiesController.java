@@ -20,7 +20,7 @@ public class SortCitiesController {
      * @param criterion The criterion to sort by (e.g., temperature, condition, humidity).
      */
     public void handleSortRequest(String criterion) {
-        SortCitiesInputData inputData = new SortCitiesInputData(criterion);
+        SortCitiesInputData inputData = new SortCitiesInputData(criterion); // 从用户界面(View)中，比如用户点击了 Temperature as criterion，就生成一个新的inputdata并给他criterion
         inputBoundary.sort(inputData);
     }
 }

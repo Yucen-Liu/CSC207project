@@ -81,7 +81,7 @@ public class GetForecastView extends JPanel implements ActionListener, PropertyC
         back.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        getForecastController.switchGetDetailsView();
+                        getForecastController.switchToGetDetailsView();
                     }
                 }
                 );

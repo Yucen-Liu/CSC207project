@@ -1,6 +1,5 @@
 package use_case.search_city;
 
-import use_case.check_city.CheckCityInputData;
 
 /**
  * Input Boundary for actions which are related to the home page.

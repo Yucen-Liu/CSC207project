@@ -4,7 +4,6 @@ import data_access.FavoriteCityStorageImpl;
 import entity.City;
 import entity.CityFactory;
 import entity.CityStorage;
-import interface_adapter.check_city.CheckCityController;
 import interface_adapter.get_forecast.GetForecastController;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
@@ -19,14 +18,12 @@ public class WeatherAppView extends JPanel {
     private final CityStorage cityStorage; // Dependency injected
     private final CityFactory cityFactory; // Dependency injected
     private final GetForecastController getForecastController;
-    private final CheckCityController checkCityController;
 
     public WeatherAppView(CityStorage cityStorage, CityFactory cityFactory,
-                          GetForecastController getForecastController, CheckCityController checkCityController) {
+                          GetForecastController getForecastController) {
         this.cityStorage = cityStorage;
         this.cityFactory = cityFactory;
         this.getForecastController = getForecastController;
-        this.checkCityController = checkCityController;
 
         setLayout(new BorderLayout());
 
@@ -34,12 +31,12 @@ public class WeatherAppView extends JPanel {
         JPanel inputPanel = new JPanel(new FlowLayout());
         JLabel locationLabel = new JLabel("Enter Location:");
         JTextField locationField = new JTextField(15);
-        JButton getForecastButton = new JButton("Get Forecast");
+        JButton getWeatherButton = new JButton("Get Weather");
         JButton saveCityButton = new JButton("Save City");
 
         inputPanel.add(locationLabel);
         inputPanel.add(locationField);
-        inputPanel.add(getForecastButton);
+        inputPanel.add(getWeatherButton);
         inputPanel.add(saveCityButton);
 
         // Forecast Display Panel
@@ -74,8 +71,8 @@ public class WeatherAppView extends JPanel {
 
 
 
-        // Get Forecast Button Action
-        getForecastButton.addActionListener(e -> {
+        // Get Weather Button Action
+        getWeatherButton.addActionListener(e -> {
             String location = locationField.getText().trim();
             if (location.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -84,7 +81,9 @@ public class WeatherAppView extends JPanel {
             // Validate the city name
 //            if (checkCityController.isValid(location)) {
 //                checkCityController.execute(location);
-             else {
+//            }
+            else {
+
                 JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
 
@@ -108,9 +107,11 @@ public class WeatherAppView extends JPanel {
             if (location.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
-            } else if (checkCityController.isValid(location)) {
-                // Save city list function here
-            } else {
+            }
+//            else if (checkCityController.isValid(location)) {
+//                // Save city list function here
+//            }
+            else {
                 JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
         });

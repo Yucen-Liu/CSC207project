@@ -9,5 +9,7 @@ public interface SortCitiesInputBoundary {
      *
      * @param inputData The input data containing the sort criterion.
      */
+
+    // The only function we have here is sort (InputData)
     void sort(SortCitiesInputData inputData);
 }

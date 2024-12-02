@@ -1,13 +1,11 @@
 package use_case.get_details;
 
-import use_case.get_forecast.GetForecastInputData;
-
 public interface GetDetailsInputBoundary {
     /**
      * Executes the getForecast use case.
      * @param getForecastInputData the input data
      */
-    void execute(GetForecastInputData getForecastInputData);
+    void execute(GetDetailsInputData getForecastInputData);
 
     /**
      * Executes the switch to GetForecast view use case.
@@ -17,7 +15,7 @@ public interface GetDetailsInputBoundary {
     /**
      * Executes the switch to GetNearbyCities view use case.
      */
-    void switchToGetGetNearbyCitiesView();
+    void switchToGetNearbyCitiesView();
 
     /**
      * Executes the switch to SearchCity view use case.

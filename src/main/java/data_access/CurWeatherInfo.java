@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.City;
+import entity.CommonCity;
 
 public interface CurWeatherInfo {
     /**

@@ -22,6 +22,8 @@ public class Main_Code_to_Run_Sort {
         // 创建 State, Presenter 和 Interactor
         SortCitiesState state = new SortCitiesState();
         SortCitiesPresenter presenter = new SortCitiesPresenter(state);
+
+        // 这里是唯一一处调用了 'interactor' 然后input Saved Cities List
         SortCitiesInteractor interactor = new SortCitiesInteractor(savedCities, presenter);
 
         // 创建 Controller 和 ViewModel

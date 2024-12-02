@@ -15,20 +15,16 @@ import interface_adapter.get_forecast.GetForecastViewModel;
 
 import interface_adapter.get_details.GetDetailsViewModel;
 
-import use_case.check_city.CheckCityDataAccessInterface;
-
 import use_case.get_forecast.GetForecastDataAccessInterface;
 import use_case.get_forecast.GetForecastInputBoundary;
 import use_case.get_forecast.GetForecastInteractor;
 import use_case.get_forecast.GetForecastOutputBoundary;
 import data_access.FavoriteCityStorageImpl;
 import entity.*;
-import interface_adapter.check_city.CheckCityController;
-import interface_adapter.check_city.CheckCityPresenter;
-import interface_adapter.check_city.CheckCityViewModel;
+
 import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
-import use_case.check_city.CheckCityInteractor;
+
 import use_case.manage_cities.FavoriteCitiesInteractor;
 import view.*;
 import interface_adapter.ViewManagerModel;
@@ -67,15 +63,9 @@ public class WeatherAppBuilder {
         GetForecastInteractor forecastInteractor = new GetForecastInteractor(forecastInfo, forecastPresenter);
         GetForecastController forecastController = new GetForecastController(forecastInteractor, forecastViewModel);
 
-        // Create CheckCityController dependencies
-        CurWeatherInfoObject weatherInfo = new CurWeatherInfoObject(new CommonCityFactory());
-        CheckCityViewModel checkCityViewModel = new CheckCityViewModel();
-        CheckCityPresenter checkCityPresenter = new CheckCityPresenter(checkCityViewModel);
-        CheckCityInteractor checkCityInteractor = new CheckCityInteractor(weatherInfo, checkCityPresenter);
-        CheckCityController checkCityController = new CheckCityController(checkCityInteractor);
 
         // Instantiate WeatherAppView with required dependencies
-        WeatherAppView weatherAppView = new WeatherAppView(cityStorage, cityFactory, forecastController, checkCityController);
+        WeatherAppView weatherAppView = new WeatherAppView(cityStorage, cityFactory, forecastController);
         cardPanel.add(weatherAppView, "weather app");
         return this;
     }

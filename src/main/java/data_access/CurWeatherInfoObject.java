@@ -1,12 +1,12 @@
 package data_access;
 
 import entity.City;
+import entity.CommonCity;
 import entity.CommonCityFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
-import use_case.check_city.CheckCityDataAccessInterface;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
 /**
  * Data Access Object for retrieving current weather information and validating city names.
  */
-public class CurWeatherInfoObject implements CurWeatherInfo, CheckCityDataAccessInterface {
+public class CurWeatherInfoObject implements CurWeatherInfo{
 
     private final CommonCityFactory cityFactory;
     private final OkHttpClient httpClient;

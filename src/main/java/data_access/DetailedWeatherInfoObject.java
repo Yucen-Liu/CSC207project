@@ -49,6 +49,13 @@ public class DetailedWeatherInfoObject implements GetDetailsDataAccessInterface 
         String condition = information.getJSONArray("weather").getJSONObject(0).getString("description");
         int humidity = information.getJSONObject("main").getInt("humidity");
 
-        return cityFactory.create(location, temperature, condition, humidity);
+        double temp_min = Double.parseDouble(df.format(information.getJSONObject("main").getDouble("temp_min") - 273.15));
+        double temp_max = Double.parseDouble(df.format(information.getJSONObject("main").getDouble("temp_max") - 273.15));
+        int pressure = information.getJSONObject("main").getInt("pressure");
+        int visibility = information.getInt("visibility");
+
+
+
+        return cityFactory.create(location, temperature, condition, humidity, temp_max, temp_min, pressure, visibility);
     }
 }
