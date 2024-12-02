@@ -26,23 +26,16 @@ public class GetForecastInteractor implements GetForecastInputBoundary {
         try {
 
             ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 4);
-            GetForecastOutputData outputData = new GetForecastOutputData(
+            GetForecastOutputData getForecastoutputData = new GetForecastOutputData(
                     forecastCity.getForecast(),
                     getForecastInputData.getCityName(),
                     getForecastInputData.getSavedCityNames(),
                     false
             );
-            userPresenter.prepareSuccessView(outputData);
+            userPresenter.prepareSuccessView(getForecastoutputData);
         } catch (Exception e) {
             userPresenter.prepareFailView("Failed to retrieve forecast: " + e.getMessage());
         }
-
-
-         final ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 4);
-         final GetForecastOutputData getForecastOutputData = new GetForecastOutputData((forecastCity.getForecast()),
-                 getForecastInputData.getCityName(), getForecastInputData.getSavedCityNames(),false);
-        userPresenter.prepareSuccessView(getForecastOutputData);
-
     }
 
 

@@ -42,8 +42,8 @@ public class DetailedCity implements City{
         return humidity;
     }
 
-    public double getTemp_min() {return temp_min;}
-    public double getTemp_max() {return temp_max;}
+    public double getTempMin() {return temp_min;}
+    public double getTempMax() {return temp_max;}
     public int getVisibility() {return visibility;}
     public int getPressure() {return pressure;}
 }
