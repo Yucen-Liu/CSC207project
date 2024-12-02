@@ -21,7 +21,7 @@ import interface_adapter.search_city.SearchCityPresenter;
 
 import interface_adapter.search_city.SearchCityViewModel;
 import use_case.get_details.GetDetailsInputBoundary;
-import use_case.get_details.GetDetailsInterator;
+import use_case.get_details.GetDetailsInteractor;
 import use_case.get_details.GetDetailsOutputBoundary;
 import use_case.get_forecast.GetForecastInteractor;
 import entity.*;
@@ -256,7 +256,7 @@ public class WeatherAppBuilder {
         final GetDetailsOutputBoundary outputBoundary = new GetDetailsPresenter(searchCityViewModel, getForecastViewModel,
                 nearbyCitiesViewModel,getDetailsViewModel,
                 viewManagerModel);
-        final GetDetailsInputBoundary userInteractor = new GetDetailsInterator(
+        final GetDetailsInputBoundary userInteractor = new GetDetailsInteractor(
                 detailedWeatherInfoObject,outputBoundary);
 
         final GetDetailsController controller = new GetDetailsController(userInteractor,getDetailsViewModel);

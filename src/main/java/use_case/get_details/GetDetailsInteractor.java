@@ -1,15 +1,13 @@
 package use_case.get_details;
 
 import entity.DetailedCity;
-import entity.ForecastCity;
-import use_case.get_forecast.GetForecastOutputData;
 
-public class GetDetailsInterator implements GetDetailsInputBoundary{
+public class GetDetailsInteractor implements GetDetailsInputBoundary{
 
     private final GetDetailsDataAccessInterface weatherDataAccessObject;
     private final GetDetailsOutputBoundary userPresenter;
 
-    public GetDetailsInterator(GetDetailsDataAccessInterface weatherDataAccessObject, GetDetailsOutputBoundary userPresenter) {
+    public GetDetailsInteractor(GetDetailsDataAccessInterface weatherDataAccessObject, GetDetailsOutputBoundary userPresenter) {
         this.weatherDataAccessObject = weatherDataAccessObject;
         this.userPresenter = userPresenter;
     }

@@ -3,15 +3,37 @@ package entity;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class DetailedCityTest {
+import entity.DetailedCity;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class DetailedCityTest {
 
     @Test
-    void testDetailedCityProperties() {
-        DetailedCity city = new DetailedCity("Los Angeles", 30.0, "Clear", 50);
+    public void testDetailedCityAttributes() {
+        // Arrange
+        String location = "CityA";
+        double temperature = 25.5;
+        String condition = "Sunny";
+        int humidity = 60;
+        double tempMin = 20.0;
+        double tempMax = 30.0;
+        int pressure = 1013;
+        int visibility = 10000;
 
-        assertEquals("Los Angeles", city.getLocation());
-        assertEquals(30.0, city.getTemperature());
-        assertEquals("Clear", city.getCondition());
-        assertEquals(50, city.getHumidity());
+        // Act
+        DetailedCity city = new DetailedCity(location, temperature, condition, humidity, tempMax, tempMin, pressure, visibility);
+
+        // Assert
+        assertEquals(location, city.getLocation());
+        assertEquals(temperature, city.getTemperature());
+        assertEquals(condition, city.getCondition());
+        assertEquals(humidity, city.getHumidity());
+        assertEquals(tempMin, city.getTempMin());
+        assertEquals(tempMax, city.getTempMax());
+        assertEquals(pressure, city.getPressure());
+        assertEquals(visibility, city.getVisibility());
     }
 }
+
