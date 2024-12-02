@@ -18,7 +18,7 @@ public class SortCitiesState {
     public List<String> getCityNames() {
         return cityNames;
     }
-    public void setCityNames(List<String> cityNames) {}
+    public void setCityNames(List<String> cityNames) {this.cityNames = cityNames;}
 
     public void setSortedCities(List<CommonCity> sortedCities) {
         this.sortedCities = sortedCities;
