@@ -12,7 +12,7 @@ public interface SearchCityInputBoundary {
      * @param searchcityInputData the input data
      */
     void execute(SearchCityInputData searchcityInputData);
-    void switchToGetDetailsView();
+    void switchToGetDetailsView(String cityName);
     void switchToSortCitiesView();
     boolean validateCity(String cityName);
 }

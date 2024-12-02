@@ -1,6 +1,7 @@
 package interface_adapter.search_city;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.get_details.GetDetailsState;
 import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_cities.ManageCitiesViewModel;
@@ -34,7 +35,12 @@ public class SearchCityPresenter implements SearchCityOutputBoundary {
     }
 
     @Override
-    public void switchToGetDetailsView() {
+    public void switchToGetDetailsView(String cityName) {
+        final GetDetailsState getDetailsState = getDetailsViewModel.getState();
+        getDetailsState.setCityName(cityName);
+        getDetailsViewModel.setState(getDetailsState);
+        getDetailsViewModel.firePropertyChanged();
+
         viewManagerModel.setState(getDetailsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

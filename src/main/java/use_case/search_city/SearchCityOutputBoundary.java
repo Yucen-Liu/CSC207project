@@ -5,6 +5,6 @@ package use_case.search_city;
  */
 public interface SearchCityOutputBoundary {
     void searchCityInformationView(SearchCityOutputData searchCityOutputData);
-    void switchToGetDetailsView();
+    void switchToGetDetailsView(String cityName);
     void switchToSortCitiesView();
 }

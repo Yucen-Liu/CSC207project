@@ -1,11 +1,6 @@
 package view;
 
 import data_access.FavoriteCityStorageImpl;
-import entity.City;
-import entity.CityFactory;
-import entity.CityStorage;
-import interface_adapter.get_forecast.GetForecastController;
-import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_cities.ManageCitiesController;
 import interface_adapter.search_city.SearchCityController;
 import interface_adapter.search_city.SearchCityViewModel;
@@ -17,9 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SearchCityView extends JPanel implements ActionListener, PropertyChangeListener {
     private List<String> savedCityNames;
@@ -110,24 +103,23 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-//            else if (checkCityController.isValid(location)) {
-//                // Save city list function here
-//            }
-//            else {
-//                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-//            }
-            if(!savedCityNames.contains(location)) {
-                savedCityNames.add(location);
+            if (searchCityController.isValidCityName(location)) {
+                if(!savedCityNames.contains(location)) {
+                    savedCityNames.add(location);
+                }
+                listModel.clear(); // Clear the current items
+                for (String city : savedCityNames) {
+                    listModel.addElement(city);
+                }
             }
-            listModel.clear(); // Clear the current items
-            for (String city : savedCityNames) {
-                listModel.addElement(city);
+            else {
+                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         savedCitiesList.addListSelectionListener(e -> {
             String selectedCity = savedCitiesList.getSelectedValue();
-            searchCityController.switchToGetDetailsView();
+            searchCityController.switchToGetDetailsView(selectedCity);
         });
 
 
