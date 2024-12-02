@@ -90,16 +90,13 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
                 JOptionPane.showMessageDialog(this, "Please enter a location.", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            // Validate the city name
-//            if (checkCityController.isValid(location)) {
-//                checkCityController.execute(location);
-//            }
-//            else {
-//
-//                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-//            }
-            // Use the controller to execute the forecast use case
-            searchCityController.execute(location, savedCityNames);
+            if (searchCityController.isValidCityName(location)) {
+                // Use the controller to execute the forecast use case
+                searchCityController.execute(location, savedCityNames);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Invalid city! Please enter a valid city.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            }
 
             // Update display based on the ViewModel
             SearchCityViewModel viewModel = searchCityController.getSearchCityViewModel();
