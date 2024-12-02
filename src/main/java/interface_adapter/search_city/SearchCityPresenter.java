@@ -5,10 +5,13 @@ import interface_adapter.get_details.GetDetailsState;
 import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.get_forecast.GetForecastViewModel;
 import interface_adapter.manage_cities.ManageCitiesViewModel;
+import interface_adapter.manage_sort.SortCitiesState;
 import interface_adapter.manage_sort.SortCitiesViewModel;
 import interface_adapter.nearby_cities.NearbyCitiesViewModel;
 import use_case.search_city.SearchCityOutputBoundary;
 import use_case.search_city.SearchCityOutputData;
+
+import java.util.List;
 
 public class SearchCityPresenter implements SearchCityOutputBoundary {
     private final SearchCityViewModel searchCityViewModel;
@@ -46,7 +49,12 @@ public class SearchCityPresenter implements SearchCityOutputBoundary {
     }
 
     @Override
-    public void switchToSortCitiesView() {
+    public void switchToSortCitiesView(List<String> savedCityNames) {
+        final SortCitiesState sortCitiesState = sortCitiesViewModel.getState();
+        sortCitiesState.setCityNames(savedCityNames);
+        sortCitiesViewModel.setState(sortCitiesState);
+        sortCitiesViewModel.firePropertyChanged();
+
         viewManagerModel.setState(sortCitiesViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

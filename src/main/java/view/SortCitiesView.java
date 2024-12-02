@@ -126,8 +126,6 @@ public class SortCitiesView extends JPanel implements ActionListener, PropertyCh
         for(String cityName: state.getCityNames()) {
             panel.add(new JLabel(getFormattedCities(cityName,state)));
         }
-
-
     }
 
     public String getViewName() {

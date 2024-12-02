@@ -30,5 +30,7 @@ public class SearchCityController {
     public void switchToGetDetailsView(String selectedCity) {
         searchCityUseCaseInteractor.switchToGetDetailsView(selectedCity);
     }
-    public void switchToSortCitiesView() { searchCityUseCaseInteractor.switchToSortCitiesView(); }
+    public void switchToSortCitiesView(List<String> savedCityNames) {
+        searchCityUseCaseInteractor.switchToSortCitiesView(savedCityNames);
+    }
 }
