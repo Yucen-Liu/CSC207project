@@ -13,15 +13,12 @@ public class Main {
                 .addGetForecastView()
                 .addSortCitiesView()
                 .addNearbyCitiesView()
-                .addSearchCityView()
 
                 .addGetDetailsUseCase()
                 .addGetForecastUseCase()
                 .addSortCitiesUseCase()
                 .addNearbyCitiesUseCase()
                 .addSearchCityUseCase()
-
-
                 .build();
 
         application.pack();

@@ -21,4 +21,6 @@ public class SearchCityController {
     }
 
     public SearchCityViewModel getSearchCityViewModel() { return searchCityViewModel; }
+    public void switchToGetForecastView(){ searchCityUseCaseInteractor.switchToGetForecastView(); }
+    public void switchToGetNearbyCitiesView(){ searchCityUseCaseInteractor.switchToGetNearbyCitiesView(); }
 }

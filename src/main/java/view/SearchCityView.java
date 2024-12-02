@@ -22,14 +22,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchCityView extends JPanel implements ActionListener, PropertyChangeListener {
-
     private List<String> savedCityNames;
     private final String viewName = "search city";
     private final SearchCityViewModel searchCityViewModel;
 
     private final JTextField locationField = new JTextField(15);
+    private JLabel locationDisplay;
+    private JLabel temperatureDisplay;
+    private JLabel conditionDisplay;
+    private JLabel humidityDisplay;
 
     private SearchCityController searchCityController;
+
+    private JButton showForecastButton;
+    private JButton nearbyCitiesButton;
 
     public SearchCityView(SearchCityViewModel searchCityViewModel) {
         this.searchCityViewModel = searchCityViewModel;
@@ -52,12 +58,12 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         inputPanel.add(getWeatherButton);
         inputPanel.add(saveCityButton);
 
-        // Forecast Display Panel
+        // Weather Display Panel
         JPanel forecastPanel = new JPanel(new GridLayout(4, 1));
-        JLabel locationDisplay = new JLabel("Location: ");
-        JLabel temperatureDisplay = new JLabel("Temperature: ");
-        JLabel conditionDisplay = new JLabel("Condition: ");
-        JLabel humidityDisplay = new JLabel("Humidity: ");
+        locationDisplay = new JLabel("Location: ");
+        temperatureDisplay = new JLabel("Temperature: ");
+        conditionDisplay = new JLabel("Condition: ");
+        humidityDisplay = new JLabel("Humidity: ");
 
         forecastPanel.add(locationDisplay);
         forecastPanel.add(temperatureDisplay);
@@ -77,12 +83,18 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         cityListPanel.add(manageCitiesButton, BorderLayout.NORTH);
         cityListPanel.add(new JScrollPane(savedCitiesList), BorderLayout.CENTER);
 
+        JPanel advancedPanel = new JPanel(new FlowLayout());
+        showForecastButton = new JButton("Show Forecast");
+        nearbyCitiesButton = new JButton("Nearby Cities");
+
+        advancedPanel.add(showForecastButton);
+        advancedPanel.add(nearbyCitiesButton);
+
         // Adding Components to Main Panel
         add(inputPanel, BorderLayout.NORTH);
         add(cityListPanel, BorderLayout.WEST);
         add(forecastPanel, BorderLayout.CENTER);
-
-
+        add(advancedPanel, BorderLayout.SOUTH);
 
         // Get Weather Button Action
         getWeatherButton.addActionListener(e -> {
@@ -104,7 +116,7 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
 
             // Update display based on the ViewModel
             SearchCityViewModel viewModel = searchCityController.getSearchCityViewModel();
-            updateWeatherDisplay(viewModel, locationDisplay, temperatureDisplay, conditionDisplay, humidityDisplay);
+            updateWeatherDisplay(viewModel);
         });
 
         // Save City Button Action
@@ -128,6 +140,29 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
                 listModel.addElement(city);
             }
         });
+
+        savedCitiesList.addListSelectionListener(e -> {
+            String selectedCity = savedCitiesList.getSelectedValue();
+            if (selectedCity != null) {
+                fetchAndDisplayWeatherForCity(selectedCity);
+            }
+        });
+
+        showForecastButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        searchCityController.switchToGetForecastView();
+                    }
+                }
+        );
+
+        nearbyCitiesButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        searchCityController.switchToGetNearbyCitiesView();
+                    }
+                }
+        );
     }
 
     private DefaultListModel<String> getCityListModel(List<String> cityNames) {
@@ -140,12 +175,22 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
         return model;
     }
 
-    private void updateWeatherDisplay(SearchCityViewModel viewModel, JLabel locationDisplay, JLabel temperatureDisplay,
-                                      JLabel conditionDisplay, JLabel humidityDisplay) {
+    private void updateWeatherDisplay(SearchCityViewModel viewModel) {
         locationDisplay.setText("Location: " + viewModel.getLocation());
         temperatureDisplay.setText("Temperature: " + viewModel.getTemperature() + "°C");
         conditionDisplay.setText("Condition: " + viewModel.getCondition());
         humidityDisplay.setText("Humidity: " + viewModel.getHumidity() + "%");
+    }
+
+    private void fetchAndDisplayWeatherForCity(String city) {
+        // Execute the search city use case
+        searchCityController.execute(city, searchCityViewModel.getSavedCityNames());
+
+        // Retrieve the updated ViewModel
+        SearchCityViewModel viewModel = searchCityController.getSearchCityViewModel();
+
+        // Update the weather display
+        updateWeatherDisplay(viewModel);
     }
 
     private void manageCities() {
@@ -167,5 +212,9 @@ public class SearchCityView extends JPanel implements ActionListener, PropertyCh
 
     public void setSearchCityController(SearchCityController controller) {
         this.searchCityController = controller;
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }

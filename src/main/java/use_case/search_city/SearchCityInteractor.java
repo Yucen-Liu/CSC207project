@@ -24,5 +24,8 @@ public class SearchCityInteractor implements SearchCityInputBoundary {
                 city.getTemperature(), city.getCondition(), city.getHumidity(), searchCityInputData.getSavedCityNames());
         userPresenter.searchCityInformationView(searchCityOutputData);
     }
+
+    public void switchToGetForecastView() { userPresenter.switchToGetForecastView(); }
+    public void switchToGetNearbyCitiesView() { userPresenter.switchToGetNearbyCitiesView(); }
 }
 

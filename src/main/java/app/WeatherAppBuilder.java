@@ -24,7 +24,6 @@ import use_case.get_details.GetDetailsInputBoundary;
 import use_case.get_details.GetDetailsInterator;
 import use_case.get_details.GetDetailsOutputBoundary;
 import use_case.get_forecast.GetForecastInteractor;
-import data_access.FavoriteCityStorageImpl;
 import entity.*;
 
 import interface_adapter.manage_cities.ManageCitiesController;
@@ -33,6 +32,7 @@ import use_case.manage_cities.FavoriteCitiesInteractor;
 import use_case.manage_sort.SortCitiesInputBoundary;
 import use_case.manage_sort.SortCitiesInteractor;
 import use_case.manage_sort.SortCitiesOutputBoundary;
+
 import use_case.search_city.SearchCityInputBoundary;
 import use_case.search_city.SearchCityInteractor;
 
@@ -42,22 +42,15 @@ import interface_adapter.manage_sort.SortCitiesViewModel;
 import interface_adapter.nearby_cities.NearbyCitiesController;
 import interface_adapter.nearby_cities.NearbyCitiesPresenter;
 import interface_adapter.nearby_cities.NearbyCitiesViewModel;
-import interface_adapter.search_city.SearchCityPresenter;
-import interface_adapter.search_city.SearchCityViewModel;
 import use_case.get_forecast.GetForecastInputBoundary;
-import use_case.get_forecast.GetForecastInteractor;
 import use_case.get_forecast.GetForecastOutputBoundary;
-import entity.*;
 
 import use_case.nearby_cities.NearbyCitiesInputBoundary;
 import use_case.nearby_cities.NearbyCitiesInteractor;
 import use_case.nearby_cities.NearbyCitiesOutputBoundary;
-import use_case.search_city.SearchCityOutputBoundary;
-import view.*;
 import interface_adapter.get_forecast.GetForecastController;
 import interface_adapter.get_forecast.GetForecastPresenter;
 import interface_adapter.get_forecast.GetForecastViewModel;
-import data_access.ForecastWeatherInfoObject;
 
 public class WeatherAppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -87,17 +80,10 @@ public class WeatherAppBuilder {
     private SearchCityView searchCityView;
 
     private GetDetailsViewModel getDetailsViewModel;
-    private DetailsView getDetailsView;
+    private GetDetailsView getDetailsView;
 
     public WeatherAppBuilder() {
         cardPanel.setLayout(cardLayout);
-    }
-
-    public WeatherAppBuilder addSearchCityView() {
-        searchCityViewModel = new SearchCityViewModel();
-        searchCityView = new SearchCityView(searchCityViewModel);
-        cardPanel.add(searchCityView, "weather app");
-        return this;
     }
 
 //
@@ -177,7 +163,7 @@ public class WeatherAppBuilder {
      */
     public WeatherAppBuilder addGetDetailsView() {
         getDetailsViewModel = new GetDetailsViewModel();
-        getDetailsView = new DetailsView(getDetailsViewModel);
+        getDetailsView = new GetDetailsView(getDetailsViewModel);
         cardPanel.add(getDetailsView, getDetailsView.getViewName());
         return this;
     }
@@ -201,6 +187,17 @@ public class WeatherAppBuilder {
         nearbyCitiesViewModel = new NearbyCitiesViewModel();
         getNearbyCitiesView = new GetNearbyCitiesView(nearbyCitiesViewModel);
         cardPanel.add(getNearbyCitiesView, getNearbyCitiesView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the SearchCity View to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addSearchCityView() {
+        searchCityViewModel = new SearchCityViewModel();
+        searchCityView = new SearchCityView(searchCityViewModel);
+        cardPanel.add(searchCityView, "weather app");
         return this;
     }
 
@@ -273,9 +270,10 @@ public class WeatherAppBuilder {
      * @return this builder
      */
     public WeatherAppBuilder addSearchCityUseCase() {
-        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter(searchCityViewModel,viewManagerModel);
+        final SearchCityOutputBoundary outputBoundary = new SearchCityPresenter(searchCityViewModel,
+                getForecastViewModel, nearbyCitiesViewModel, viewManagerModel);
         final SearchCityInputBoundary userInteractor = new SearchCityInteractor(
-                curWeatherInfoObject,outputBoundary);
+                curWeatherInfoObject, outputBoundary);
 
         final SearchCityController controller = new SearchCityController(userInteractor, searchCityViewModel);
         searchCityView.setSearchCityController(controller);
@@ -314,11 +312,9 @@ public class WeatherAppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(getForecastViewModel.getViewName());
+        viewManagerModel.setState(searchCityView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
     }
-
-
 }
