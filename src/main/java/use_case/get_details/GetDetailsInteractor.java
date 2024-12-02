@@ -2,9 +2,11 @@ package use_case.get_details;
 
 import entity.DetailedCity;
 
+
 /**
  * The GetDetails Interactor.
  */
+
 public class GetDetailsInteractor implements GetDetailsInputBoundary{
 
     private final GetDetailsDataAccessInterface weatherDataAccessObject;
@@ -18,6 +20,7 @@ public class GetDetailsInteractor implements GetDetailsInputBoundary{
     @Override
     public void execute(GetDetailsInputData getDetailsInputData) {
         if ( getDetailsInputData.getCityName() == null || getDetailsInputData.getCityName().isEmpty()) {
+
             userPresenter.prepareFailView("Unable to fetch the name of the selected city:");
             return;
         }

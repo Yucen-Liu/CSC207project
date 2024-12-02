@@ -1,22 +1,25 @@
 package interface_adapter.search_city;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.get_details.GetDetailsViewModel;
 import interface_adapter.get_forecast.GetForecastViewModel;
+import interface_adapter.manage_cities.ManageCitiesViewModel;
+import interface_adapter.manage_sort.SortCitiesViewModel;
 import interface_adapter.nearby_cities.NearbyCitiesViewModel;
 import use_case.search_city.SearchCityOutputBoundary;
 import use_case.search_city.SearchCityOutputData;
 
 public class SearchCityPresenter implements SearchCityOutputBoundary {
     private final SearchCityViewModel searchCityViewModel;
-    private final GetForecastViewModel getForecastViewModel;
-    private final NearbyCitiesViewModel nearbyCitiesViewModel;
+    private final GetDetailsViewModel getDetailsViewModel;
+    private final SortCitiesViewModel sortCitiesViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public SearchCityPresenter(SearchCityViewModel searchCityViewModel, GetForecastViewModel getForecastViewModel,
-                               NearbyCitiesViewModel nearbyCitiesViewModel, ViewManagerModel viewManagerModel) {
+    public SearchCityPresenter(SearchCityViewModel searchCityViewModel, GetDetailsViewModel getDetailsViewModel,
+                               SortCitiesViewModel sortCitiesViewModel, ViewManagerModel viewManagerModel) {
         this.searchCityViewModel = searchCityViewModel;
-        this.getForecastViewModel = getForecastViewModel;
-        this.nearbyCitiesViewModel = nearbyCitiesViewModel;
+        this.getDetailsViewModel = getDetailsViewModel;
+        this.sortCitiesViewModel = sortCitiesViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -31,13 +34,14 @@ public class SearchCityPresenter implements SearchCityOutputBoundary {
     }
 
     @Override
-    public void switchToGetForecastView() {
-        viewManagerModel.setState(getForecastViewModel.getViewName());
+    public void switchToGetDetailsView() {
+        viewManagerModel.setState(getDetailsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
-    public void switchToGetNearbyCitiesView() {
-        viewManagerModel.setState(nearbyCitiesViewModel.getViewName());
+    @Override
+    public void switchToSortCitiesView() {
+        viewManagerModel.setState(sortCitiesViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }
