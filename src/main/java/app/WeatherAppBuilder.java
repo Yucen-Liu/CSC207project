@@ -14,6 +14,8 @@ import interface_adapter.get_details.GetDetailsController;
 import interface_adapter.get_details.GetDetailsPresenter;
 import interface_adapter.get_details.GetDetailsViewModel;
 
+import interface_adapter.manage_sort.SortCitiesController;
+import interface_adapter.manage_sort.SortCitiesPresenter;
 import interface_adapter.search_city.SearchCityController;
 import interface_adapter.search_city.SearchCityPresenter;
 
@@ -23,6 +25,13 @@ import use_case.get_details.GetDetailsInterator;
 import use_case.get_details.GetDetailsOutputBoundary;
 import use_case.get_forecast.GetForecastInteractor;
 import entity.*;
+
+import interface_adapter.manage_cities.ManageCitiesController;
+
+import use_case.manage_cities.FavoriteCitiesInteractor;
+import use_case.manage_sort.SortCitiesInputBoundary;
+import use_case.manage_sort.SortCitiesInteractor;
+import use_case.manage_sort.SortCitiesOutputBoundary;
 
 import use_case.search_city.SearchCityInputBoundary;
 import use_case.search_city.SearchCityInteractor;
@@ -138,6 +147,17 @@ public class WeatherAppBuilder {
     }
 
     /**
+     * Adds the SortCities View to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addSortCitiesView() {
+        sortCitiesViewModel = new SortCitiesViewModel();
+        sortCitiesView = new SortCitiesView(sortCitiesViewModel);
+        cardPanel.add(sortCitiesView, sortCitiesView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the GetDetails View to the application.
      * @return this builder
      */
@@ -209,6 +229,21 @@ public class WeatherAppBuilder {
 
         final NearbyCitiesController controller = new NearbyCitiesController(userInteractor);
         getNearbyCitiesView.setNearbyCitiesController(controller);
+        return this;
+    }
+
+    /**
+     * Adds the SortCities Use Case to the application.
+     * @return this builder
+     */
+    public WeatherAppBuilder addSortCitiesUseCase() {
+        final SortCitiesOutputBoundary outputBoundary = new SortCitiesPresenter(searchCityViewModel,sortCitiesViewModel,
+                viewManagerModel);
+        final SortCitiesInputBoundary userInteractor = new SortCitiesInteractor(
+                curWeatherInfoObject,outputBoundary);
+
+        final SortCitiesController controller = new SortCitiesController(userInteractor,sortCitiesViewModel);
+        sortCitiesView.setSortCitiesController(controller);
         return this;
     }
 
