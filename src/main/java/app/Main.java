@@ -7,10 +7,19 @@ public class Main {
 
         WeatherAppBuilder appBuilder = new WeatherAppBuilder();
         JFrame application = appBuilder
-//                .addCheckCityView()
+//                .addSearchCityView()
+//                .addGetDetailsView()
+//                .addWeatherAppView()
                 .addSearchCityView()
                 .addGetForecastView()
-                .addManageCityView()
+//                .addManageSortView()
+                .addNearbyCitiesView()
+
+//                .addGetDetailsUseCase()
+//                .addWeatherAppUseCase()
+                .addGetForecastUseCase()
+//                .addManageSortUseCase()
+                .addNearbyCitiesUseCase()
                 .addSearchCityUseCase()
                 .build();
 
