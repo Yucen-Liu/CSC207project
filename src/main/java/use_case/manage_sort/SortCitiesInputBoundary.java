@@ -11,5 +11,11 @@ public interface SortCitiesInputBoundary {
      */
 
     // The only function we have here is sort (InputData).
-    void sort(SortCitiesInputData inputData);
+    void execute(SortCitiesInputData inputData);
+
+    /**
+     * Executes the switch to SearchCity view use case.
+     */
+    void switchToSearchCityView();
+
 }

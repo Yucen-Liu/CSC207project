@@ -13,4 +13,7 @@ public interface SortCitiesOutputBoundary {
      * @param outputData The sorted cities data.
      */
     void presentSortedCities(SortCitiesOutputData outputData);
+
+    void switchToSearchCityView();
+
 }

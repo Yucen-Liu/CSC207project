@@ -1,5 +1,6 @@
 package use_case.manage_sort;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,12 +13,12 @@ import entity.CommonCity;
 public class SortCitiesInteractor implements SortCitiesInputBoundary {
 
     // Initialize Part
-    private final List<CommonCity> savedCities;
+    private final SortCitiesDataAccessInterface dataAccess;
     private final SortCitiesOutputBoundary outputBoundary;
 
     // 生成一个 'Interactor'需要input：1. list of CommonCity (saved list) 2. outputBoundary
-    public SortCitiesInteractor(List<CommonCity> savedCities, SortCitiesOutputBoundary outputBoundary) {
-        this.savedCities = savedCities;
+    public SortCitiesInteractor(SortCitiesDataAccessInterface dataAccess, SortCitiesOutputBoundary outputBoundary) {
+        this.dataAccess = dataAccess;
         this.outputBoundary = outputBoundary;
     }
 
@@ -25,8 +26,13 @@ public class SortCitiesInteractor implements SortCitiesInputBoundary {
     // The only input is InputData class, and we don't care what data is that, we just assume there's correct data input
 
     @Override
-    public void sort(SortCitiesInputData inputData) {
+    public void execute(SortCitiesInputData inputData) {
         String criterion = inputData.getCriterion();
+        List<CommonCity> savedCities = new ArrayList<>();
+        for (String name: inputData.getSavedCityNames()){
+            CommonCity city = (CommonCity) dataAccess.getCurWeather(name);
+            savedCities.add(city);}
+
         switch (criterion.toLowerCase()) {
             case "temperature":
                 Collections.sort(savedCities, Comparator.comparingDouble(CommonCity::getTemperature));
@@ -48,4 +54,9 @@ public class SortCitiesInteractor implements SortCitiesInputBoundary {
         // 再把这个data存到 'OutputBoundary' which is used by 'Presenter'
         outputBoundary.presentSortedCities(outputData);
     }
-}
+
+    @Override
+    public void switchToSearchCityView() {outputBoundary.switchToSearchCityView();}
+
+    }
+

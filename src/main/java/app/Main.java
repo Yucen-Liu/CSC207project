@@ -11,14 +11,13 @@ public class Main {
                 .addSearchCityView()
                 .addGetDetailsView()
                 .addGetForecastView()
-//                .addManageSortView()
+                .addSortCitiesView()
                 .addNearbyCitiesView()
                 .addSearchCityView()
 
                 .addGetDetailsUseCase()
-//                .addWeatherAppUseCase()
                 .addGetForecastUseCase()
-//                .addManageSortUseCase()
+                .addSortCitiesUseCase()
                 .addNearbyCitiesUseCase()
                 .addSearchCityUseCase()
 
