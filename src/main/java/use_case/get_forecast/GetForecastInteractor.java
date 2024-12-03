@@ -24,11 +24,11 @@ public class GetForecastInteractor implements GetForecastInputBoundary {
         try {
 
             ForecastCity forecastCity = weatherDataAccessObject.getWeatherForecast(getForecastInputData.getCityName(), 4);
-            GetForecastOutputData getForecastoutputData = new GetForecastOutputData(forecastCity.getForecast(),
+            GetForecastOutputData getForecastOutputData = new GetForecastOutputData(forecastCity.getForecast(),
                     getForecastInputData.getCityName(), getForecastInputData.getSavedCityNames(),
                     false
             );
-            userPresenter.prepareSuccessView(getForecastoutputData);
+            userPresenter.prepareSuccessView(getForecastOutputData);
         } catch (Exception e) {
             userPresenter.prepareFailView(
                     "Unable to fetch the weather forecast information for the selected city: " + e.getMessage());

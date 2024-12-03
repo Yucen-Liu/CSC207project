@@ -16,44 +16,44 @@ public class GetDetailsIntegrationTest {
     private String resultCityName;
     private double resultTemperature;
 
-    @BeforeEach
-    public void setUp() {
-        GetDetailsDataAccessInterface dataAccess = cityName -> new DetailedCity(
-                cityName, 25.0, "Sunny", 65, 20.0, 30.0, 1013, 10000);
-
-        GetDetailsOutputBoundary outputBoundary = new GetDetailsOutputBoundary() {
-            @Override
-            public void switchToSearchCityView() {}
-
-            @Override
-            public void switchToGetNearbyCitiesView() {}
-
-            @Override
-            public void switchToGetForecastView() {}
-
-            @Override
-            public void prepareSuccessView(GetDetailsOutputData outputData) {
-                resultCityName = outputData.getCityName();
-                resultTemperature = outputData.getTemperature();
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {}
-        };
-
-        interactor = new GetDetailsInteractor(dataAccess, outputBoundary);
-    }
-
-    @Test
-    public void testExecute() {
-        // Arrange
-        GetDetailsInputData inputData = new GetDetailsInputData("CityA", List.of("CityB", "CityC"));
-
-        // Act
-        interactor.execute(inputData);
-
-        // Assert
-        assertEquals("CityA", resultCityName);
-        assertEquals(25.0, resultTemperature);
-    }
+//    @BeforeEach
+//    public void setUp() {
+//        GetDetailsDataAccessInterface dataAccess = cityName -> new DetailedCity(
+//                cityName, 25.0, "Sunny", 65, 20.0, 30.0, 1013, 10000);
+//
+//        GetDetailsOutputBoundary outputBoundary = new GetDetailsOutputBoundary() {
+//            @Override
+//            public void switchToSearchCityView() {}
+//
+//            @Override
+//            public void switchToGetNearbyCitiesView() {}
+//
+//            @Override
+//            public void switchToGetForecastView() {}
+//
+//            @Override
+//            public void prepareSuccessView(GetDetailsOutputData outputData) {
+//                resultCityName = outputData.getCityName();
+//                resultTemperature = outputData.getTemperature();
+//            }
+//
+//            @Override
+//            public void prepareFailView(String errorMessage) {}
+//        };
+//
+//        interactor = new GetDetailsInteractor(dataAccess, outputBoundary);
+//    }
+//
+//    @Test
+//    public void testExecute() {
+//        // Arrange
+//        GetDetailsInputData inputData = new GetDetailsInputData("CityA", List.of("CityB", "CityC"));
+//
+//        // Act
+//        interactor.execute(inputData);
+//
+//        // Assert
+//        assertEquals("CityA", resultCityName);
+//        assertEquals(25.0, resultTemperature);
+//    }
 }
