@@ -1,60 +1,94 @@
 package use_case.nearby_cities;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import data_access.NearbyCityWeatherAccessObject;
 import entity.NearbyCity;
+import entity.NearbyCityFactory;
+import interface_adapter.nearby_cities.NearbyCitiesController;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class NearbyCitiesInteractorTest {
-
-    private NearbyCitiesDataAccessInterface dataAccessMock;
-    private NearbyCitiesOutputBoundary outputBoundaryMock;
-    private NearbyCitiesInteractor interactor;
-
-    @BeforeEach
-    public void setUp() {
-        dataAccessMock = mock(NearbyCitiesDataAccessInterface.class);
-        outputBoundaryMock = mock(NearbyCitiesOutputBoundary.class);
-        interactor = new NearbyCitiesInteractor(dataAccessMock, outputBoundaryMock);
-    }
+class NearbyCitiesInteractorTest {
 
     @Test
-    public void testExecute() {
-        // Arrange
-        NearbyCity nearbyCity1 = mock(NearbyCity.class);
-        NearbyCity nearbyCity2 = mock(NearbyCity.class);
+    void successTest() {
+        // Prepare input data
+        List<String> savedCities = new ArrayList<>();
+        savedCities.add("Toronto");
+        NearbyCitiesInputData inputData = new NearbyCitiesInputData("Toronto", savedCities);
 
-        when(nearbyCity1.getLocation()).thenReturn("CityB");
-        when(nearbyCity2.getLocation()).thenReturn("CityC");
+        // Prepare data access mock
+        NearbyCitiesDataAccessInterface nearbyCityRepository = new NearbyCityWeatherAccessObject(new NearbyCityFactory());
 
-        ArrayList<NearbyCity> nearbyCities = new ArrayList<>();
-        nearbyCities.add(nearbyCity1);
-        nearbyCities.add(nearbyCity2);
+        // Create output boundary
+        NearbyCitiesOutputBoundary successPresenter = new NearbyCitiesOutputBoundary() {
+            @Override
+            public void switchToGetDetailsView() {
+                // Empty implementation for the test
+            }
 
-        when(dataAccessMock.getNearbyCities("CityA")).thenReturn(nearbyCities);
+            @Override
+            public void nearbyCitiesInformationView(NearbyCitiesOutputData nearbyCitiesOutputData) {
+                assertNotNull(nearbyCitiesOutputData);
+                assertTrue(nearbyCitiesOutputData.getNearbyCities().size() > 0);
+            }
+        };
 
-        List<String> savedCityNames = List.of("CityX", "CityY");
-        NearbyCitiesInputData inputData = new NearbyCitiesInputData("CityA", savedCityNames);
-
-        // Act
+        // Create the interactor
+        NearbyCitiesInputBoundary interactor = new NearbyCitiesInteractor(nearbyCityRepository, successPresenter);
         interactor.execute(inputData);
-
-        // Assert
-        verify(dataAccessMock, times(1)).getNearbyCities("CityA");
-        verify(outputBoundaryMock, times(1)).nearbyCitiesInformationView(any(NearbyCitiesOutputData.class));
     }
 
     @Test
-    public void testSwitchToGetDetailsView() {
-        // Act
-        interactor.switchToGetDetailsView();
+    void testControllerSwitchToGetDetailsView() {
+        // Mock dependencies
+        NearbyCitiesDataAccessInterface nearbyCityRepository = mock(NearbyCitiesDataAccessInterface.class);
+        NearbyCitiesOutputBoundary outputBoundary = mock(NearbyCitiesOutputBoundary.class);
+        NearbyCitiesInputBoundary interactor = new NearbyCitiesInteractor(nearbyCityRepository, outputBoundary);
 
-        // Assert
-        verify(outputBoundaryMock, times(1)).switchToGetDetailsView();
+        // Create controller with mocked interactor
+        NearbyCitiesController controller = new NearbyCitiesController(interactor);
+
+        // Call the method directly
+        controller.switchGetDetailsView();
+
+        // Verify that switchToGetDetailsView() was called in the interactor
+        verify(outputBoundary, times(1)).switchToGetDetailsView();
+    }
+
+    @Test
+    void testNearbyCitiesOutputDataAccessors() {
+        // Sample data for testing
+        String cityName = "Toronto";
+        List<String> savedCityNames = new ArrayList<>();
+        savedCityNames.add("New York");
+        savedCityNames.add("Chicago");
+
+        List<NearbyCity> nearbyCities = new ArrayList<>();
+        nearbyCities.add(new NearbyCity("Hamilton", 20.5, "Sunny", 65));
+        nearbyCities.add(new NearbyCity("Mississauga", 18.0, "Cloudy", 70));
+
+        // Create NearbyCitiesOutputData instance
+        NearbyCitiesOutputData outputData = new NearbyCitiesOutputData(nearbyCities, cityName, savedCityNames);
+
+        // Verify accessors (getters)
+        assertEquals(cityName, outputData.getCityName());
+        assertEquals(savedCityNames, outputData.getSavedCityNames());
+        assertEquals(nearbyCities, outputData.getNearbyCities());
+
+        // Verify derived lists
+        List<String> expectedNearbyCityNames = List.of("Hamilton", "Mississauga");
+        List<Double> expectedTemperatures = List.of(20.5, 18.0);
+        List<String> expectedConditions = List.of("Sunny", "Cloudy");
+        List<Integer> expectedHumidities = List.of(65, 70);
+
+        assertEquals(expectedNearbyCityNames, outputData.getNearbyCityNames());
+        assertEquals(expectedTemperatures, outputData.getNearbyCitiesTemperature());
+        assertEquals(expectedConditions, outputData.getNearbyCitiesCondition());
+        assertEquals(expectedHumidities, outputData.getNearbyCitiesHumidity());
     }
 }
