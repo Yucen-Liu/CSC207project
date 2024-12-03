@@ -1,74 +1,75 @@
 package use_case.get_forecast;
-
 import entity.ForecastCity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_case.get_forecast.*;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import java.util.ArrayList;
 import java.util.List;
-
 import static org.mockito.Mockito.*;
 
-public class GetForecastInteractorTest {
-
-    private GetForecastDataAccessInterface dataAccessMock;
-    private GetForecastOutputBoundary outputBoundaryMock;
-    private GetForecastInteractor interactor;
+class GetForecastInteractorTest {
+    @Mock
+    private GetForecastDataAccessInterface mockGetForecastDataAccessInterface;
+    @Mock
+    private GetForecastOutputBoundary mockGetForecastOutputBoundary;
+    private GetForecastInteractor getForecastInteractor;
 
     @BeforeEach
-    public void setUp() {
-        dataAccessMock = mock(GetForecastDataAccessInterface.class);
-        outputBoundaryMock = mock(GetForecastOutputBoundary.class);
-        interactor = new GetForecastInteractor(dataAccessMock, outputBoundaryMock);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        getForecastInteractor = new GetForecastInteractor(mockGetForecastDataAccessInterface, mockGetForecastOutputBoundary);
     }
 
     @Test
-    public void testExecuteSuccess() {
-        // Arrange
-        String cityName = "CityA";
-        List<List<String>> mockWeatherHistory = List.of(
-                List.of("25°C", "Sunny", "60%"),
-                List.of("20°C", "Rainy", "70%"),
-                List.of("22°C", "Cloudy", "65%")
+    void successSwitchToGetDetailsTest() {
+        getForecastInteractor.switchToGetDetailsView();
+        verify(mockGetForecastOutputBoundary).switchToGetDetailsView();
+    }
+
+    @Test
+    void successTest() {
+        String cityName = "Osaka";
+        List<List<String>> forecastDetails = new ArrayList<>();
+        forecastDetails.add(List.of("13", "Sunny", "89"));
+        forecastDetails.add(List.of("14", "Cloudy", "90"));
+        forecastDetails.add(List.of("12", "Snowy", "101"));
+        ForecastCity mockForecast = new ForecastCity(cityName, 11, "Windy", 90, forecastDetails);
+        when(mockGetForecastDataAccessInterface.getWeatherForecast(cityName, 4)).thenReturn(mockForecast);
+        GetForecastInputData getForecastInputData = new GetForecastInputData(cityName, new ArrayList<>());
+        getForecastInteractor.execute(getForecastInputData);
+        verify(mockGetForecastOutputBoundary).prepareSuccessView(any(GetForecastOutputData.class));
+    }
+
+    @Test
+    void failureCityNameEmptyTest() {
+        GetForecastInputData inputData = new GetForecastInputData("", new ArrayList<>());
+        getForecastInteractor.execute(inputData);
+        verify(mockGetForecastOutputBoundary).prepareFailView("Unable to fetch the name of the selected city.");
+    }
+
+    @Test
+    void failureForecastCityNullPrepareFailViewTest() {
+        String cityName = "Shanghai";
+        when(mockGetForecastDataAccessInterface.getWeatherForecast(cityName, 4)).thenReturn(null);
+        GetForecastInputData inputData = new GetForecastInputData(cityName, new ArrayList<>());
+        getForecastInteractor.execute(inputData);
+        verify(mockGetForecastOutputBoundary).prepareFailView(
+                "Unable to fetch the weather forecast information for the selected city: Cannot invoke \"entity.ForecastCity.getForecast()\" because \"forecastCity\" is null"
         );
-        when(dataAccessMock.getWeatherForecast(cityName, 4)).thenReturn((ForecastCity) mockWeatherHistory);
-
-        GetForecastInputData inputData = new GetForecastInputData(cityName, List.of("CityB", "CityC"));
-
-        // Act
-        interactor.execute(inputData);
-
-        // Assert
-        verify(dataAccessMock, times(1)).getWeatherForecast(cityName, 4);
-        verify(outputBoundaryMock, times(1)).prepareSuccessView(any(GetForecastOutputData.class));
     }
 
     @Test
-    public void testExecuteFailure() {
-        // Arrange
-        String cityName = "CityA";
-        when(dataAccessMock.getWeatherForecast(cityName, 4)).thenThrow(new RuntimeException("Data fetch error"));
-
-        GetForecastInputData inputData = new GetForecastInputData(cityName, List.of("CityB", "CityC"));
-
-        // Act
-        interactor.execute(inputData);
-
-        // Assert
-        verify(dataAccessMock, times(1)).getWeatherForecast(cityName, 4);
-        verify(outputBoundaryMock, times(1)).prepareFailView("Failed to retrieve forecast: Data fetch error");
-    }
+    void failureCityNamePrepareFailViewTest() {
+        GetForecastInputData inputData = new GetForecastInputData(null, new ArrayList<>());
+        getForecastInteractor.execute(inputData);
+        verify(mockGetForecastOutputBoundary).prepareFailView("Unable to fetch the name of the selected city.");}
 
     @Test
-    public void testExecuteEmptyCityName() {
-        // Arrange
-        GetForecastInputData inputData = new GetForecastInputData("", List.of("CityB", "CityC"));
-
-        // Act
-        interactor.execute(inputData);
-
-        // Assert
-        verify(outputBoundaryMock, times(1)).prepareFailView("City name cannot be empty.");
-    }
-}
-
+    void failurePrepareDataAccessFailViewTest() {
+        String cityName = "Tokyo";
+        String errorMessage = "Unable to fetch the weather forecast information for the selected city: Data access error";
+        when(mockGetForecastDataAccessInterface.getWeatherForecast(cityName, 4)).thenThrow(new RuntimeException("Data access error"));
+        GetForecastInputData inputData = new GetForecastInputData(cityName, new ArrayList<>());
+        getForecastInteractor.execute(inputData);
+        verify(mockGetForecastOutputBoundary).prepareFailView(errorMessage);}}
