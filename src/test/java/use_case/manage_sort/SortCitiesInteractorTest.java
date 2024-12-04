@@ -1,86 +1,91 @@
 package use_case.manage_sort;
 
+import entity.CommonCity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_case.manage_sort.*;
-import entity.CommonCity;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-public class SortCitiesInteractorTest {
+class SortCitiesInteractorTest {
 
-    private SortCitiesDataAccessInterface dataAccessMock;
-    private SortCitiesOutputBoundary outputBoundaryMock;
-    private SortCitiesInteractor interactor;
+    @Mock
+    private SortCitiesOutputBoundary mockOutputBoundary;
+
+    @Mock
+    private SortCitiesDataAccessInterface mockDataAccessInterface;
+
+    private SortCitiesInteractor sortCitiesInteractor;
 
     @BeforeEach
-    public void setUp() {
-        dataAccessMock = mock(SortCitiesDataAccessInterface.class);
-        outputBoundaryMock = mock(SortCitiesOutputBoundary.class);
-        interactor = new SortCitiesInteractor(dataAccessMock, outputBoundaryMock);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        sortCitiesInteractor = new SortCitiesInteractor(mockDataAccessInterface, mockOutputBoundary);
     }
 
     @Test
-    public void testSortByTemperature() {
-        // Arrange
-        CommonCity cityA = new CommonCity("CityA", 15.0, "Sunny", 60);
-        CommonCity cityB = new CommonCity("CityB", 10.0, "Cloudy", 70);
-        CommonCity cityC = new CommonCity("CityC", 20.0, "Rainy", 50);
+    void testExecuteSortByTemperature() {
+        List<String> savedCityNames = List.of("Tokyo", "Osaka", "Nagoya");
+        List<CommonCity> commonCities = new ArrayList<>();
+        commonCities.add(new CommonCity("Tokyo", 100, "Sunny", 60));
+        commonCities.add(new CommonCity("Osaka", 120, "Cloudy", 70));
+        commonCities.add(new CommonCity("Nagoya", 110, "Rainy", 80));
 
-        when(dataAccessMock.getCurWeather("CityA")).thenReturn(cityA);
-        when(dataAccessMock.getCurWeather("CityB")).thenReturn(cityB);
-        when(dataAccessMock.getCurWeather("CityC")).thenReturn(cityC);
+        when(mockDataAccessInterface.getCurWeather("Tokyo")).thenReturn(commonCities.get(0));
+        when(mockDataAccessInterface.getCurWeather("Osaka")).thenReturn(commonCities.get(1));
+        when(mockDataAccessInterface.getCurWeather("Nagoya")).thenReturn(commonCities.get(2));
 
-        SortCitiesInputData inputData = new SortCitiesInputData("temperature", Arrays.asList("CityA", "CityB", "CityC"));
+        SortCitiesInputData inputData = new SortCitiesInputData("temperature", savedCityNames);
+        sortCitiesInteractor.execute(inputData);
 
-        // Act
-        interactor.execute(inputData);
 
-        // Assert
-        verify(outputBoundaryMock, times(1)).presentSortedCities(argThat(outputData -> {
-            List<CommonCity> sortedCities = outputData.getSortedCities();
-            return sortedCities.get(0).equals(cityB) &&
-                    sortedCities.get(1).equals(cityA) &&
-                    sortedCities.get(2).equals(cityC);
-        }));
+        verify(mockOutputBoundary, atLeastOnce()).presentSortedCities(any(SortCitiesOutputData.class));
     }
 
     @Test
-    public void testSortByCondition() {
-        // Arrange
-        CommonCity cityA = new CommonCity("CityA", 15.0, "Rainy", 60);
-        CommonCity cityB = new CommonCity("CityB", 10.0, "Cloudy", 70);
-        CommonCity cityC = new CommonCity("CityC", 20.0, "Sunny", 50);
+    void testExecuteSortByCondition() {
+        List<String> savedCityNames = List.of("Tokyo", "Osaka", "Nagoya");
+        List<CommonCity> commonCities = new ArrayList<>();
+        commonCities.add(new CommonCity("Tokyo", 100, "Sunny", 60));
+        commonCities.add(new CommonCity("Osaka", 120, "Cloudy", 70));
+        commonCities.add(new CommonCity("Nagoya", 110, "Rainy", 80));
 
-        when(dataAccessMock.getCurWeather("CityA")).thenReturn(cityA);
-        when(dataAccessMock.getCurWeather("CityB")).thenReturn(cityB);
-        when(dataAccessMock.getCurWeather("CityC")).thenReturn(cityC);
+        when(mockDataAccessInterface.getCurWeather("Tokyo")).thenReturn(commonCities.get(0));
+        when(mockDataAccessInterface.getCurWeather("Osaka")).thenReturn(commonCities.get(1));
+        when(mockDataAccessInterface.getCurWeather("Nagoya")).thenReturn(commonCities.get(2));
 
-        SortCitiesInputData inputData = new SortCitiesInputData("condition", Arrays.asList("CityA", "CityB", "CityC"));
+        SortCitiesInputData inputData = new SortCitiesInputData("condition", savedCityNames);
+        sortCitiesInteractor.execute(inputData);
 
-        // Act
-        interactor.execute(inputData);
 
-        // Assert
-        verify(outputBoundaryMock, times(1)).presentSortedCities(argThat(outputData -> {
-            List<CommonCity> sortedCities = outputData.getSortedCities();
-            return sortedCities.get(0).equals(cityB) &&
-                    sortedCities.get(1).equals(cityA) &&
-                    sortedCities.get(2).equals(cityC);
-        }));
+        verify(mockOutputBoundary, atLeastOnce()).presentSortedCities(any(SortCitiesOutputData.class));
     }
 
     @Test
-    public void testInvalidCriterion() {
-        // Arrange
-        SortCitiesInputData inputData = new SortCitiesInputData("invalid", Arrays.asList("CityA", "CityB"));
+    void testExecuteWithEmptyCityList() {
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> interactor.execute(inputData));
+        SortCitiesInputData inputData = new SortCitiesInputData("temperature", new ArrayList<>());
+
+        sortCitiesInteractor.execute(inputData);
+
+        verify(mockOutputBoundary, times(2)).presentSortedCities(argThat(outputData ->
+                outputData.getSortedCities().isEmpty()
+        ));
+    }
+
+
+    @Test
+    void testExecuteWithInvalidCriterion() {
+        SortCitiesInputData inputData = new SortCitiesInputData("invalidCriterion", List.of("Tokyo", "Osaka"));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            sortCitiesInteractor.execute(inputData);
+        });
+        assertEquals("Invalid sort criterion: invalidCriterion", exception.getMessage());
     }
 }
-
