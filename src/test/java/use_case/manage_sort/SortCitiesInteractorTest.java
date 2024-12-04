@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+// Test for interactor
 class SortCitiesInteractorTest {
 
     @Mock
@@ -28,7 +29,7 @@ class SortCitiesInteractorTest {
         MockitoAnnotations.openMocks(this);
         sortCitiesInteractor = new SortCitiesInteractor(mockDataAccessInterface, mockOutputBoundary);
     }
-
+    // Test for temperature
     @Test
     void testExecuteSortByTemperature() {
         List<String> savedCityNames = List.of("Tokyo", "Osaka", "Nagoya");
@@ -48,6 +49,7 @@ class SortCitiesInteractorTest {
         verify(mockOutputBoundary, atLeastOnce()).presentSortedCities(any(SortCitiesOutputData.class));
     }
 
+    // Test for condition
     @Test
     void testExecuteSortByCondition() {
         List<String> savedCityNames = List.of("Tokyo", "Osaka", "Nagoya");
@@ -67,6 +69,7 @@ class SortCitiesInteractorTest {
         verify(mockOutputBoundary, atLeastOnce()).presentSortedCities(any(SortCitiesOutputData.class));
     }
 
+    // Test for nothing input
     @Test
     void testExecuteWithEmptyCityList() {
 
@@ -79,7 +82,7 @@ class SortCitiesInteractorTest {
         ));
     }
 
-
+    // Test for invaild Criterion
     @Test
     void testExecuteWithInvalidCriterion() {
         SortCitiesInputData inputData = new SortCitiesInputData("invalidCriterion", List.of("Tokyo", "Osaka"));
